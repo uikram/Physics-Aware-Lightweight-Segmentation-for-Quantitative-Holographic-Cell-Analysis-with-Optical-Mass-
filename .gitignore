@@ -1,4 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
 
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Data, caches and large binaries (not distributed with the repository)
+dataset/
+cache/
+weights/*.pth
+weights/*.pt
 *.pt
-*.png
+*.onnx
+**/checkpoints/
 
+# Manuscript source (kept locally)
+Paper/
+
+# Regenerable plot outputs
+visualization/figures/
+morphology_analysis/
+training_validation_plots/
+global_ablations_and_comparisons/

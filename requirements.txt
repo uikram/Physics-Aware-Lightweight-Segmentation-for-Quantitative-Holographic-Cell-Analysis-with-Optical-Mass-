@@ -1,0 +1,25 @@
+# Install PyTorch first (matching your CUDA version): https://pytorch.org
+# Tested with torch 2.0.1 + CUDA 11.7, Python 3.10.
+torch>=2.0
+torchvision>=0.15
+numpy
+scipy
+scikit-image
+opencv-python
+pandas
+matplotlib
+seaborn
+PyYAML
+tifffile
+Pillow
+tqdm
+timm
+
+# ONNX export / benchmarking (benchmark/benchmark.py)
+onnx
+onnxruntime-gpu>=1.16
+onnxconverter-common
+
+# Backbone packages (installed from source, see README):
+#   pip install git+https://github.com/ChaoningZhang/MobileSAM.git
+#   git clone https://github.com/chongzhou/EdgeSAM.git && pip install -e EdgeSAM

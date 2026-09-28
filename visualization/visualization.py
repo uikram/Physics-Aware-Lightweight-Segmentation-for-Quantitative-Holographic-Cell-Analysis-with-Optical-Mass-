@@ -2,21 +2,22 @@
 """
 visualization.py - regenerate every data-driven figure in the manuscript.
 
-    python visualization.py
+    python visualization/visualization.py
 
-Reads the JSON files in ./data/ and writes the PNGs one directory up, into the
-manuscript folder, overwriting the existing figures.
+Reads the JSON files in visualization/data/ and writes the PNGs to
+visualization/figures/ (created if missing).
 
-Only figures produced from data are handled here. Figure 1 (framework overview)
-and Figures 8-10 (microscopy montages) are not data-driven and are left alone.
+Only figures produced from tabulated data are handled here. Fig. 1 (framework
+overview) is a hand-built diagram, and Figs. 7, 9 and 11 are image montages
+produced from model predictions by extract_visual.py + analysis/plot_trends.py.
 
     Fig. 2   per_class_dice.png          per-class Dice at r=8
     Fig. 3   radar_chart.png             aggregate performance radar
     Fig. 4   ablation_curve.png          LoRA rank sweep
     Fig. 5   pareto_frontier.png         accuracy vs throughput
     Fig. 6   lora_vs_full_finetune.png   LoRA versus full fine-tuning
-    Fig. 7   loss_ablation.png           loss-component ablation
-    Fig. 11  population_shift.png        morphology composition over storage
+    Fig. 8   loss_ablation.png           loss-component ablation
+    Fig. 10  population_shift.png        morphology composition over storage
     Fig. 12  drymass_validation.png      dry-mass agreement and trajectory
 """
 
@@ -37,7 +38,7 @@ from matplotlib.patches import Patch
 # ===========================================================================
 
 DATA_DIR = Path(__file__).parent / "data"
-OUTPUT_DIR = Path(__file__).parent.parent/"visualization/figures"
+OUTPUT_DIR = Path(__file__).parent / "figures"
 
 STYLE = {
     "width_single_col": 3.50,
@@ -117,6 +118,7 @@ def apply_axis_style(ax, grid_axis: str = "both") -> None:
         ax.spines[spine].set_visible(False)
 
 def save(fig, filename: str) -> None:
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     path = OUTPUT_DIR / filename
     fig.savefig(path, dpi=STYLE["dpi"], bbox_inches="tight",
                 facecolor=STYLE["facecolor"])
@@ -388,8 +390,8 @@ def figure06_lora_vs_full() -> None:
 #  Figure 7 - loss-component ablation
 # ===========================================================================
 
-def figure07_loss_ablation() -> None:
-    d = load("figure07.json")
+def figure08_loss_ablation() -> None:
+    d = load("figure08.json")
     labels = ["$\\mathcal{L}_{Dice}$", "$+\\mathcal{L}_{PMC}$",
               "$+\\mathcal{L}_{BGA}$", "Full $\\mathcal{L}$"]
     x = np.arange(len(labels))
@@ -434,8 +436,8 @@ def figure07_loss_ablation() -> None:
 #  Figure 11 - morphology composition across storage
 # ===========================================================================
 
-def figure11_population_shift() -> None:
-    d = load("figure11.json")
+def figure10_population_shift() -> None:
+    d = load("figure10.json")
     days = d["storage_days"]
     totals = np.array(d["total_per_day"], dtype=float)
     positions = np.arange(len(days))
@@ -547,8 +549,8 @@ FIGURES = [
     ("Fig. 4  LoRA rank sweep",           figure04_rank_sweep),
     ("Fig. 5  accuracy vs throughput",    figure05_pareto),
     ("Fig. 6  LoRA vs full fine-tuning",  figure06_lora_vs_full),
-    ("Fig. 7  loss-component ablation",   figure07_loss_ablation),
-    ("Fig. 11 morphology composition",    figure11_population_shift),
+    ("Fig. 8  loss-component ablation",   figure08_loss_ablation),
+    ("Fig. 10 morphology composition",    figure10_population_shift),
     ("Fig. 12 dry-mass validation",       figure12_drymass_validation),
 ]
 

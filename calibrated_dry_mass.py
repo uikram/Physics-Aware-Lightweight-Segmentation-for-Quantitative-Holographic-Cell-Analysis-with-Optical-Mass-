@@ -1,6 +1,10 @@
 """Standalone: two-pass calibrated dry mass from the 8-bit TIFFs.
 
-  python calib_demo.py --tif-dir dataset/X_val --target-mch 30
+  # dry mass on annotation (ground-truth) masks -> results/dry_mass_calibrated.csv
+  python calibrated_dry_mass.py --tif-dir dataset/X_val --mask-dir dataset/Y_val
+
+  # dry mass on EdgeSAM (LoRA r=8) predicted masks -> results/dry_mass_pred.csv
+  python calibrated_dry_mass.py --use-model --out results/dry_mass_pred.csv
 
 Pass 1  per cell, sum (I - I_background) in 8-bit units, background anchored
         per image at the modal non-cell level (removes per-image offset).
