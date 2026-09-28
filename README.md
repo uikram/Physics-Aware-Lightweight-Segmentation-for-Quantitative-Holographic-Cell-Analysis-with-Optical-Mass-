@@ -3,7 +3,6 @@
 **Usama Ikram**¹, **Youhyun Kim**², and **Inkyu Moon**¹²\*
 ¹ Department of Artificial Intelligence, DGIST, Daegu, South Korea
 ² Department of Robotics & Mechatronics Engineering, DGIST, Daegu, South Korea
-\* Corresponding author: inkyu.moon@dgist.ac.kr
 
 Official PyTorch implementation of a **physics-aware, LoRA-adapted lightweight segmentation framework** for red blood cell (RBC) quantitative phase images (QPI) acquired with digital holographic microscopy (DHM).
 
@@ -411,4 +410,4 @@ This work builds on [EdgeSAM](https://github.com/chongzhou/EdgeSAM), [MobileSAM]
 
 ## Contact
 
-Usama Ikram · Inkyu Moon (inkyu.moon@dgist.ac.kr), Department of Artificial Intelligence, DGIST
+Usama Ikram, Department of Artificial Intelligence, DGIST
