@@ -12,7 +12,8 @@ Labels, legends, colour-bar numbers and 20 µm scale bars are ordinary, editable
 Slide 1 (Fig. 1), corrections to match the code and the manuscript:
   input standardisation is a per-image z-score (not RGB statistics); the loss sees the background-referenced phase (not raw);
   mask value 2 = spherocyte and 3 = echinocyte (legend was swapped); class colours as in Figs. 6 and 7; readout formulas use
-  S = sum(phi_i - phi_bg) dx^2 and m = (lambda / 2 pi alpha) S (Eqs. 9-10); LoRA placement and trainable parts as in
+  A = N_Omega dx_eff^2, C = 4 pi A / P^2, S = sum_{i in Omega}(phi_i - phi_bg) dx_eff^2 and m = (lambda / 2 pi alpha) S
+  (Eqs. 7-10); "Integrated phase" as in the text; LoRA placement and trainable parts as in
   Section 2.4; "Ttrainable" typo. Equation objects that were edited are converted to plain text (Cambria Math characters),
   so every viewer shows the same, current text.
 """
@@ -249,8 +250,16 @@ def slide1(prs, s):
     plain_equation_box(s, "TextBox 103", "Background-referenced phase 𝝓 (radians) enters the loss directly")
     plain_equation_box(s, "TextBox 120", "Standardised input 𝚽")
     plain_equation_box(s, "TextBox 43", "W′ = W + (𝜶 / 𝒓) BA")
-    replace_equation_box(s, "TextBox 236", [("𝑺 = 𝚺(𝝓", None), ("i", "sub"), (" − 𝝓", None), ("bg", "sub"),
-                                            (") · 𝚫𝒙", None), ("2", "sup")])
+    # readout formulas as Eqs. 7-10 of the manuscript (N_Ω pixels in the domain Ω, effective pixel pitch Δx_eff),
+    # all four in the same plain-text style
+    replace_equation_box(s, "TextBox 225", [("𝑨 = 𝑵", None), ("Ω", "sub"), (" · 𝚫𝒙", None), ("eff", "sub"),
+                                            ("2", "sup")])
+    replace_equation_box(s, "TextBox 232", [("𝑪 = 𝟒𝝅𝑨 / 𝑷", None), ("2", "sup")])
+    eq_s = replace_equation_box(s, "TextBox 236", [("𝑺 = 𝚺", None), ("i∈Ω", "sub"), ("(𝝓", None), ("i", "sub"),
+                                                   ("−𝝓", None), ("bg", "sub"), (")·𝚫𝒙", None), ("eff", "sub"),
+                                                   ("2", "sup")])
+    eq_s.find(".//a:xfrm/a:ext", NS).set("cx", str(int(1.9 * 914400)))      # one line up to the panel edge
+    set_paragraphs(by["TextBox 237"][0], ["Integrated phase"])
     plain_equation_box(s, "TextBox 239", "𝒎 = (𝝀 / 𝟐𝝅𝜶) · 𝑺")
     # the separate colour-bar numbers are printed inside the new objects (panel + colour bar as one image)
     for nm in ("TextBox 160", "TextBox 161", "TextBox 162", "TextBox 166", "TextBox 167", "TextBox 175", "TextBox 176",

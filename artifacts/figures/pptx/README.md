@@ -31,7 +31,8 @@ row, and the colour-bar limits of Fig. 1.
 - network input: per-image z-score (zero mean, unit variance), not RGB pretraining statistics
 - the loss uses the background-referenced phase, not the raw phase
 - class legend: mask value 2 = spherocyte, 3 = echinocyte (was swapped); colours as in Figs. 6 and 7
-- readout: S = Σ(φᵢ − φ_bg)·Δx² and m = (λ/2πα)·S (Eqs. 9 and 10); "Integrated phase and dry mass"
+- readout formulas as Eqs. 7–10: A = N_Ω·Δx_eff², C = 4πA/P², S = Σ_{i∈Ω}(φᵢ − φ_bg)·Δx_eff², m = (λ/2πα)·S; S is
+  labelled "Integrated phase" (was "Phase-integrated optical quantity"); "Integrated phase and dry mass"
 - LoRA placement ("attention, linear and convolution layers"), gradients update "LoRA adapters, stem, normalisation and
   decoder"; trainable share given for EdgeSAM (r = 32); "Ttrainable" typo fixed
 - the edited equation boxes are now plain text (Cambria Math characters) and render the same in every viewer
