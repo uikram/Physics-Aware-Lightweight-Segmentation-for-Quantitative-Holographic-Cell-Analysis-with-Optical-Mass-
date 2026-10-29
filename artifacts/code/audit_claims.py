@@ -28,7 +28,7 @@ from common import (ART, ARCHS, config_key, CLASSES, COLLAPSE_DICE, LOSSES, RANK
                     compiled, metric, paired_diff, runs_frame)
 
 RNG_SEED = 20261029
-N_PERM, N_BOOT = 10000, 2000
+N_PERM, N_BOOT = 20000, 20000
 EARLY, LATE = (0, 5, 8), (37, 47)
 
 
