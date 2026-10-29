@@ -19,8 +19,13 @@ In PowerPoint, right-click the placeholder with the same file name > Change Pict
       objects.json   colour-bar limits, chosen images/windows, storage days, scale-bar lengths
 
 Selection rules (deterministic, annotation only):
-  Fig. 1 and Fig. S-4: the validation image with the most annotated foreground pixels and, in it, the 256 x 256 px window
-                       with the most foreground (32 px grid); the same window as the S-4 panel in the SI.
+  Fig. 1: the 256 x 256 px window (32 px grid, all validation images) that shows the most of the four classes in BOTH the
+          annotation and the EdgeSAM (r=32) prediction (a class counts when it covers >= MIN_CLASS_PX pixels, about half
+          a cell, in both); ties go to the window whose least-represented class is largest (per class, the smaller of the
+          annotated and predicted pixel counts), then to the most annotated pixels. Discocytes cover ~84% of the
+          predicted cell pixels, so a window chosen by foreground alone shows one class only.
+  Fig. S-4: the validation image with the most annotated foreground pixels and, in it, the 256 x 256 px window with the
+            most foreground (32 px grid); the same window as the S-4 panel in the SI.
   Fig. 6: per class, the image with the most pixels of that class and, in it, the 256 x 256 px window with the most pixels
           of that class (32 px grid); all predictions from training seed --seed.
   Fig. S-5: the first validation image (alphabetical) of storage days 0, 8, 19, 27 and 47; contours of EdgeSAM (r=32).
@@ -49,6 +54,7 @@ PX_UM = 0.1441
 CLASS_RGB = {1: (0, 114, 178), 2: (0, 158, 115), 3: (213, 94, 0), 4: (204, 121, 167)}   # same colours as Figs. 6, 7
 OUTSIDE_RGB = (189, 189, 189)
 ARCH_RGB = {"edge_sam": (42, 120, 214), "mobile_sam": (235, 104, 52)}   # #2a78d6, #eb6834 as in the manuscript figures
+MIN_CLASS_PX = 1000                                        # ~21 µm², about half a cell: a class "is shown" in a window
 CBAR_W_IN, CBAR_GAP_IN = 0.28, 0.03                       # Fig. 1 colour bar with labels, right of the panel (inches)
 PANEL_H_IN = {"p1_phase": 1.344, "p2_norm": 1.329, "p4_volume": 1.622}   # panel height on slide 1 (inches)
 SHOW = [("mobilenet_unet", 8, "mobilenet_unet_r8"), ("mobile_sam", 8, "mobilesam_r8"), ("edge_sam", 8, "edgesam_r8"),
@@ -169,11 +175,30 @@ def background(phase, gt_fg, valid, excl=5):
 
 
 # ------------------------------------------------------------------------------------------------ figures
+def class_window(val, pred, size=256, stride=32):
+    """Window with the most classes shown in both annotation and prediction (see the module docstring)."""
+    best, out = None, None
+    for stem in sorted(val):
+        v = val[stem]
+        integ = []
+        for lab in (v["gt"], pred[stem]):
+            for c in (1, 2, 3, 4):
+                m = ((lab == c) & v["valid"]).astype(np.int64)
+                integ.append(np.pad(m.cumsum(0).cumsum(1), ((1, 0), (1, 0))))
+        for y in range(0, v["gt"].shape[0] - size + 1, stride):
+            for x in range(0, v["gt"].shape[1] - size + 1, stride):
+                n = [int(I[y + size, x + size] - I[y, x + size] - I[y + size, x] + I[y, x]) for I in integ]
+                both = [min(a, b) for a, b in zip(n[:4], n[4:])]
+                shown = [b for b in both if b >= MIN_CLASS_PX]
+                key = (len(shown), min(shown) if shown else 0, sum(n[:4]))
+                if best is None or key > best:
+                    best, out = key, (stem, y, x, n[:4], n[4:])
+    return out
+
+
 def fig1(val, pred_e32, meta):
-    stems = sorted(val)
-    stem = max(stems, key=lambda s: (int(((val[s]["gt"] > 0) & val[s]["valid"]).sum()), -stems.index(s)))
+    stem, y, x, n_gt, n_pred = class_window(val, pred_e32)
     v = val[stem]
-    y, x = best_window(v["gt"] > 0, v["valid"])
     sl = (slice(y, y + 256), slice(x, x + 256))
     ph = v["phase"]
     lo, hi = np.percentile(ph[sl], [1, 99.5])
@@ -195,6 +220,8 @@ def fig1(val, pred_e32, meta):
     save_with_colorbar(upscale(vol, k), OUT / "Fig1" / "p4_volume.png", "p4_volume", "viridis", vlo, vhi,
                        [(vhi, "high"), (vlo, "low")])
     meta["Fig1"] = {"image": stem, "storage_day": v["day"], "window_yx": [y, x], "window_px": 256,
+                    "class_pixels_annotation": dict(zip(C.CLASSES, n_gt)),
+                    "class_pixels_edgesam_r32": dict(zip(C.CLASSES, n_pred)),
                     "p1_phase_colorbar_rad": [round(float(lo), 2), round(float(hi), 2)],
                     "p2_norm_colorbar": [-3, 3], "p4_volume_colorbar_rad": [vlo, round(vhi, 2)],
                     "p4_volume_colorbar_labels": ["low", "high"], "object_size_in": {k: [round(h + CBAR_GAP_IN + CBAR_W_IN, 3), h] for k, h in PANEL_H_IN.items()},
