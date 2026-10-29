@@ -5,7 +5,7 @@ Run on the machine that has data/processed, from the repository root:
 
     python artifacts/code/make_figure_objects.py [--processed-root data/processed] [--seed 42]
 
-Every panel is a bare image (no axes, titles, scale bars or text): labels, legends and 20 µm scale bars are editable shapes
+Every panel is a bare image with a thin dark frame (no axes, titles, scale bars or text): labels, legends and 20 µm scale bars are editable shapes
 on the slides. The Fig. 1 phase, z-score and volume panels include their colour bar with printed tick values, as one image
 (panel PANEL_H_IN high + 0.03 in gap + CBAR_W_IN bar and labels), so the values always line up with the bar; each image has
 the aspect ratio of its placeholder on slide 1.
@@ -87,7 +87,23 @@ def upscale(rgb, k):
     return np.kron(rgb, np.ones((k, k, 1))) if k > 1 else rgb
 
 
+FRAME_RGB = (40, 40, 40)
+
+
+def frame_px(rgb):
+    return max(3, round(rgb.shape[1] / 170))                # 6 px on a 1024 px panel, 9 px on a 1536 px panel
+
+
+def framed(rgb, width=None):
+    """Thin dark border on the panel edge (drawn inside the image, so the size is unchanged)."""
+    w = width or frame_px(rgb)
+    out = np.array(rgb, dtype=float, copy=True)
+    out[:w], out[-w:], out[:, :w], out[:, -w:] = FRAME_RGB, FRAME_RGB, FRAME_RGB, FRAME_RGB
+    return out
+
+
 def save(rgb, path: Path):
+    rgb = framed(rgb)
     path.parent.mkdir(parents=True, exist_ok=True)
     Image.fromarray(np.clip(rgb, 0, 255).astype(np.uint8)).save(path, dpi=(300, 300))
 
@@ -115,7 +131,7 @@ def _font(px):
     return ImageFont.truetype(path, px)
 
 
-def colorbar(cmap: str, lo, hi, ticks, w_in, h_in, dpi, pt=7.0):
+def colorbar(cmap: str, lo, hi, ticks, w_in, h_in, dpi, pt=7.0, lw=None):
     """Vertical colour bar image (top = hi) with tick marks and printed values, w_in x h_in inches at dpi.
     ticks: list of (value, text); a value outside [lo, hi] is clamped to the end. The top and bottom labels are aligned to
     the ends of the bar so that nothing is cut off; the font shrinks (down to 5 pt) if the widest label does not fit."""
@@ -125,8 +141,8 @@ def colorbar(cmap: str, lo, hi, ticks, w_in, h_in, dpi, pt=7.0):
     g = np.linspace(1, 0, H)[:, None].repeat(bar_w, axis=1)
     im.paste(Image.fromarray((255 * colormaps[cmap](g)[..., :3]).astype(np.uint8)), (0, 0))
     d = ImageDraw.Draw(im)
-    lw = max(2, round(dpi / 200))
-    d.rectangle((0, 0, bar_w - 1, H - 1), outline=(0, 0, 0), width=lw)
+    lw = lw or max(2, round(dpi / 200))
+    d.rectangle((0, 0, bar_w - 1, H - 1), outline=FRAME_RGB, width=lw)
     room = W - bar_w - tick - gap
     while True:
         font = _font(round(pt * dpi / 72))
@@ -136,7 +152,7 @@ def colorbar(cmap: str, lo, hi, ticks, w_in, h_in, dpi, pt=7.0):
     for val, text in ticks:
         f = float(np.clip((val - lo) / (hi - lo), 0, 1)) if hi > lo else 0.5
         yc = round((1 - f) * (H - 1))
-        d.line((bar_w, yc, bar_w + tick, yc), fill=(0, 0, 0), width=lw)
+        d.line((bar_w, yc, bar_w + tick, yc), fill=FRAME_RGB, width=lw)
         top, bottom = d.textbbox((0, 0), text, font=font)[1::2]
         th = bottom - top
         ty = min(max(yc - th / 2, 0), H - th) - top
@@ -148,7 +164,9 @@ def save_with_colorbar(rgb, path: Path, key, cmap, lo, hi, ticks):
     """Panel and its labelled colour bar as one image; printed size PANEL_H_IN[key] high (dpi set accordingly)."""
     h_in = PANEL_H_IN[key]
     dpi = rgb.shape[0] / h_in
-    bar = colorbar(cmap, lo, hi, ticks, CBAR_W_IN, h_in, dpi)
+    w = frame_px(rgb)
+    rgb = framed(rgb, w)
+    bar = colorbar(cmap, lo, hi, ticks, CBAR_W_IN, h_in, dpi, lw=w)          # same line weight as the panel frame
     gap = round(CBAR_GAP_IN * dpi)
     im = Image.new("RGB", (rgb.shape[1] + gap + bar.width, rgb.shape[0]), (255, 255, 255))
     im.paste(Image.fromarray(np.clip(rgb, 0, 255).astype(np.uint8)), (0, 0))
