@@ -1,0 +1,664 @@
+[13:52:19] multi-seed experiment started; project /sda/usama/lightweight_qpi_segmentation_fixes
+[13:52:19] >>> python environment
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/requests/__init__.py:92: RequestsDependencyWarning: Unable to find acceptable character detection dependency (chardet or charset_normalizer).
+  warnings.warn(
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/timm/models/layers/__init__.py:49: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/timm/models/registry.py:4: FutureWarning: Importing from timm.models.registry is deprecated, please import via timm.models
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.models", FutureWarning)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_5m_224 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_5m_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_11m_224 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_11m_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_224 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_384 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_384. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_512 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_512. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+  interpreter /home/usama/anaconda3/envs/segmentation/bin/python
+  python 3.10.18  torch 2.0.1+cu117  onnxruntime providers ['TensorrtExecutionProvider', 'CUDAExecutionProvider', 'AzureExecutionProvider', 'CPUExecutionProvider']
+[13:52:22] <<< python environment (3 s)
+[13:52:22] >>> GPU policy (GPUs 2,3 only)
+  visible cuda:0 -> physical GPU 2: NVIDIA RTX A5000, 23.7 GiB
+  visible cuda:1 -> physical GPU 3: NVIDIA RTX A5000, 23.7 GiB
+[13:52:23] <<< GPU policy (GPUs 2,3 only) (1 s)
+[13:52:23] >>> pretrained weights
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/requests/__init__.py:92: RequestsDependencyWarning: Unable to find acceptable character detection dependency (chardet or charset_normalizer).
+  warnings.warn(
+  MobileNetV2 ImageNet weights available
+[13:52:25] <<< pretrained weights (2 s)
+[13:52:25] >>> seed-42 runs, dataset and configuration match
+[prereq] PROBLEM: data/processed/manifest.csv differs from the one the seed-42 runs were trained on (None vs ab31b31b677ac6733728925347265ce309a71cede056d4dc2842812c3d9a70e1)
+[prereq] FAILED
+
+[FATAL] pipeline stopped (exit 1) in step: seed-42 runs, dataset and configuration match
+[15:15:57] multi-seed experiment started (stages 1 to 1); project /sda/usama/lightweight_qpi_segmentation_fixes
+[15:15:57] >>> python environment
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/requests/__init__.py:92: RequestsDependencyWarning: Unable to find acceptable character detection dependency (chardet or charset_normalizer).
+  warnings.warn(
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/timm/models/layers/__init__.py:49: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/timm/models/registry.py:4: FutureWarning: Importing from timm.models.registry is deprecated, please import via timm.models
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.models", FutureWarning)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_5m_224 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_5m_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_11m_224 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_11m_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_224 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_384 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_384. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_512 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_512. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+  interpreter /home/usama/anaconda3/envs/segmentation/bin/python
+  python 3.10.18  torch 2.0.1+cu117  onnxruntime providers ['TensorrtExecutionProvider', 'CUDAExecutionProvider', 'AzureExecutionProvider', 'CPUExecutionProvider']
+[15:16:00] <<< python environment (3 s)
+[15:16:00] >>> GPU policy (GPUs 2,3 only)
+  visible cuda:0 -> physical GPU 2: NVIDIA RTX A5000, 23.7 GiB
+  visible cuda:1 -> physical GPU 3: NVIDIA RTX A5000, 23.7 GiB
+[15:16:01] <<< GPU policy (GPUs 2,3 only) (1 s)
+[15:16:01] >>> pretrained weights
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/requests/__init__.py:92: RequestsDependencyWarning: Unable to find acceptable character detection dependency (chardet or charset_normalizer).
+  warnings.warn(
+  MobileNetV2 ImageNet weights available
+[15:16:03] <<< pretrained weights (2 s)
+[15:16:03] >>> seed-42 runs, dataset and configuration match
+[prereq] seed-42 runs, dataset and base configuration are consistent
+[15:16:04] <<< seed-42 runs, dataset and configuration match (1 s)
+[15:16:04] >>> record run metadata (start)
+[record_run] start -> /sda/usama/lightweight_qpi_segmentation_fixes/outputs/multiseed/run_metadata.json
+[15:16:06] <<< record run metadata (start) (2 s)
+[15:16:06] >>> write experiment grid
+wrote /sda/usama/lightweight_qpi_segmentation_fixes/outputs/multiseed/grid.json (68 entries)
+[15:16:06] <<< write experiment grid (0 s)
+[15:16:06] >>> train the multi-seed runs of stages 1-1 (2 GPU slots)
+[queue] 32 runs, 2 slot(s)
+[queue] start edge_sam_lora_r16__s43 on visible GPU 0
+[queue] start edge_sam_lora_r16__s44 on visible GPU 1
+[queue] done edge_sam_lora_r16__s44 (exit 0)
+[queue] start edge_sam_lora_r16__s45 on visible GPU 1
+[queue] done edge_sam_lora_r16__s43 (exit 0)
+[queue] start edge_sam_lora_r16__s46 on visible GPU 0
+[queue] done edge_sam_lora_r16__s45 (exit 0)
+[queue] start edge_sam_lora_r2__s43 on visible GPU 1
+[queue] done edge_sam_lora_r16__s46 (exit 0)
+[queue] start edge_sam_lora_r2__s44 on visible GPU 0
+[queue] done edge_sam_lora_r2__s43 (exit 0)
+[queue] start edge_sam_lora_r2__s45 on visible GPU 1
+[queue] done edge_sam_lora_r2__s44 (exit 0)
+[queue] start edge_sam_lora_r2__s46 on visible GPU 0
+[queue] done edge_sam_lora_r2__s45 (exit 0)
+[queue] start edge_sam_lora_r32__s43 on visible GPU 1
+[queue] done edge_sam_lora_r2__s46 (exit 0)
+[queue] start edge_sam_lora_r32__s44 on visible GPU 0
+[queue] done edge_sam_lora_r32__s43 (exit 0)
+[queue] start edge_sam_lora_r32__s45 on visible GPU 1
+[queue] done edge_sam_lora_r32__s44 (exit 0)
+[queue] start edge_sam_lora_r32__s46 on visible GPU 0
+[16:05:54] multi-seed experiment started (stages 1 to 3); project /sda/usama/lightweight_qpi_segmentation_fixes
+[16:05:55] >>> python environment
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/requests/__init__.py:92: RequestsDependencyWarning: Unable to find acceptable character detection dependency (chardet or charset_normalizer).
+  warnings.warn(
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/timm/models/layers/__init__.py:49: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/timm/models/registry.py:4: FutureWarning: Importing from timm.models.registry is deprecated, please import via timm.models
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.models", FutureWarning)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_5m_224 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_5m_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_11m_224 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_11m_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_224 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_384 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_384. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_512 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_512. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+  interpreter /home/usama/anaconda3/envs/segmentation/bin/python
+  python 3.10.18  torch 2.0.1+cu117  onnxruntime providers ['TensorrtExecutionProvider', 'CUDAExecutionProvider', 'AzureExecutionProvider', 'CPUExecutionProvider']
+[16:05:57] <<< python environment (2 s)
+[16:05:57] >>> GPU policy
+[16:05:57] GPU policy lifted for this launch (D-23): physical GPUs 0,1,2,3,4,5,6
+  visible cuda:0 -> physical GPU 0: NVIDIA RTX A5000, 23.7 GiB
+  visible cuda:1 -> physical GPU 1: NVIDIA RTX A5000, 23.7 GiB
+  visible cuda:2 -> physical GPU 2: NVIDIA RTX A5000, 23.7 GiB
+  visible cuda:3 -> physical GPU 3: NVIDIA RTX A5000, 23.7 GiB
+  visible cuda:4 -> physical GPU 4: NVIDIA RTX A5000, 23.7 GiB
+  visible cuda:5 -> physical GPU 5: NVIDIA RTX A5000, 23.7 GiB
+  visible cuda:6 -> physical GPU 6: NVIDIA RTX A5000, 23.7 GiB
+[16:05:59] <<< GPU policy (2 s)
+[16:05:59] >>> pretrained weights
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/requests/__init__.py:92: RequestsDependencyWarning: Unable to find acceptable character detection dependency (chardet or charset_normalizer).
+  warnings.warn(
+  MobileNetV2 ImageNet weights available
+[16:06:01] <<< pretrained weights (2 s)
+[16:06:01] >>> seed-42 runs, dataset and configuration match
+[prereq] seed-42 runs, dataset and base configuration are consistent
+[16:06:01] <<< seed-42 runs, dataset and configuration match (0 s)
+[16:06:01] >>> mirror the seed-42 runs next to the new seeds (hard links)
+[link_seed42] 27 mirrored, 0 already there and identical, 0 main runs not finished (skipped)
+[16:06:02] <<< mirror the seed-42 runs next to the new seeds (hard links) (1 s)
+[16:06:02] >>> record run metadata (start)
+[record_run] start -> /sda/usama/lightweight_qpi_segmentation_fixes/outputs/multiseed/run_metadata.json
+[16:06:04] <<< record run metadata (start) (2 s)
+[16:06:04] >>> write experiment grid
+wrote /sda/usama/lightweight_qpi_segmentation_fixes/outputs/multiseed/grid.json (162 entries)
+[16:06:04] <<< write experiment grid (0 s)
+[16:06:04] >>> train the multi-seed runs of stages 1-3 (7 GPU slots)
+[queue] 162 runs: 6 already finished, 156 to train, 7 slot(s)
+[queue] start edge_sam_abl_dice_only__s43 on visible GPU 0
+[queue] start edge_sam_abl_dice_only__s44 on visible GPU 1
+[queue] start edge_sam_abl_pmc__s43 on visible GPU 2
+[queue] start edge_sam_abl_pmc__s44 on visible GPU 3
+[queue] start edge_sam_abl_pmc_bga__s43 on visible GPU 4
+[queue] start edge_sam_abl_pmc_bga__s44 on visible GPU 5
+[queue] start edge_sam_full_finetune__s43 on visible GPU 6
+[16:12:43] multi-seed experiment started (stages 1 to 3); project /sda/usama/lightweight_qpi_segmentation_fixes
+[16:12:43] >>> python environment
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/requests/__init__.py:92: RequestsDependencyWarning: Unable to find acceptable character detection dependency (chardet or charset_normalizer).
+  warnings.warn(
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/timm/models/layers/__init__.py:49: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/timm/models/registry.py:4: FutureWarning: Importing from timm.models.registry is deprecated, please import via timm.models
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.models", FutureWarning)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_5m_224 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_5m_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_11m_224 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_11m_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_224 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_384 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_384. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_512 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_512. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+  interpreter /home/usama/anaconda3/envs/segmentation/bin/python
+  python 3.10.18  torch 2.0.1+cu117  onnxruntime providers ['TensorrtExecutionProvider', 'CUDAExecutionProvider', 'AzureExecutionProvider', 'CPUExecutionProvider']
+[16:12:46] <<< python environment (3 s)
+[16:12:46] >>> GPU policy
+[16:12:46] GPU policy lifted for this launch (D-23): physical GPUs 0,1,2,3,4,5,6
+  visible cuda:0 -> physical GPU 0: NVIDIA RTX A5000, 23.7 GiB
+  visible cuda:1 -> physical GPU 1: NVIDIA RTX A5000, 23.7 GiB
+  visible cuda:2 -> physical GPU 2: NVIDIA RTX A5000, 23.7 GiB
+  visible cuda:3 -> physical GPU 3: NVIDIA RTX A5000, 23.7 GiB
+  visible cuda:4 -> physical GPU 4: NVIDIA RTX A5000, 23.7 GiB
+  visible cuda:5 -> physical GPU 5: NVIDIA RTX A5000, 23.7 GiB
+  visible cuda:6 -> physical GPU 6: NVIDIA RTX A5000, 23.7 GiB
+[16:12:47] <<< GPU policy (1 s)
+[16:12:47] >>> pretrained weights
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/requests/__init__.py:92: RequestsDependencyWarning: Unable to find acceptable character detection dependency (chardet or charset_normalizer).
+  warnings.warn(
+  MobileNetV2 ImageNet weights available
+[16:12:49] <<< pretrained weights (2 s)
+[16:12:49] >>> seed-42 runs, dataset and configuration match
+[prereq] seed-42 runs, dataset and base configuration are consistent
+[16:12:50] <<< seed-42 runs, dataset and configuration match (1 s)
+[16:12:50] >>> mirror the seed-42 runs next to the new seeds (hard links)
+[link_seed42] 0 mirrored, 27 already there and identical, 0 main runs not finished (skipped)
+[16:12:50] <<< mirror the seed-42 runs next to the new seeds (hard links) (0 s)
+[16:12:50] >>> record run metadata (start)
+[record_run] start -> /sda/usama/lightweight_qpi_segmentation_fixes/outputs/multiseed/run_metadata.json
+[16:12:52] <<< record run metadata (start) (2 s)
+[16:12:52] >>> write experiment grid
+wrote /sda/usama/lightweight_qpi_segmentation_fixes/outputs/multiseed/grid.json (156 entries)
+[16:12:52] <<< write experiment grid (0 s)
+[16:12:52] >>> train the multi-seed runs of stages 1-3 (7 GPU slots)
+[queue] 156 runs: 6 already finished, 150 to train, 7 slot(s)
+[queue] start edge_sam_abl_dice_only__s43 on visible GPU 0
+[queue] start edge_sam_abl_dice_only__s44 on visible GPU 1
+[queue] start edge_sam_abl_pmc__s43 on visible GPU 2
+[queue] start edge_sam_abl_pmc__s44 on visible GPU 3
+[queue] start edge_sam_abl_pmc_bga__s43 on visible GPU 4
+[queue] start edge_sam_abl_pmc_bga__s44 on visible GPU 5
+[queue] start edge_sam_lora_r4__s43 on visible GPU 6
+[queue] done edge_sam_abl_pmc_bga__s44 (exit 0)
+[queue] progress [#.............................]   4% 7/156  running 6  waiting 143
+[queue] start edge_sam_lora_r4__s44 on visible GPU 5
+[queue] done edge_sam_abl_pmc__s44 (exit 0)
+[queue] progress [##............................]   5% 8/156  running 6  waiting 142
+[queue] start edge_sam_lora_r8__s43 on visible GPU 3
+[queue] done edge_sam_abl_pmc_bga__s43 (exit 0)
+[queue] progress [##............................]   6% 9/156  running 6  waiting 141
+[queue] start edge_sam_lora_r8__s44 on visible GPU 4
+[queue] done edge_sam_lora_r4__s43 (exit 0)
+[queue] progress [##............................]   6% 10/156  running 6  waiting 140
+[queue] start edge_sam_abl_dice_only_r16__s42 on visible GPU 6
+[queue] done edge_sam_abl_dice_only__s44 (exit 0)
+[queue] progress [##............................]   7% 11/156  running 6  waiting 139
+[queue] start edge_sam_abl_dice_only_r16__s43 on visible GPU 1
+[queue] done edge_sam_abl_pmc__s43 (exit 0)
+[queue] progress [##............................]   8% 12/156  running 6  waiting 138
+[queue] start edge_sam_abl_dice_only_r16__s44 on visible GPU 2
+[queue] done edge_sam_lora_r8__s44 (exit 0)
+[queue] progress [##............................]   8% 13/156  running 6  waiting 137
+[queue] start edge_sam_abl_dice_only_r2__s42 on visible GPU 4
+[queue] done edge_sam_lora_r8__s43 (exit 0)
+[queue] progress [###...........................]   9% 14/156  running 6  waiting 136
+[queue] start edge_sam_abl_dice_only_r2__s43 on visible GPU 3
+[queue] done edge_sam_lora_r4__s44 (exit 0)
+[queue] progress [###...........................]  10% 15/156  running 6  waiting 135
+[queue] start edge_sam_abl_dice_only_r2__s44 on visible GPU 5
+[queue] done edge_sam_abl_dice_only_r16__s42 (exit 0)
+[queue] progress [###...........................]  10% 16/156  running 6  waiting 134
+[queue] start edge_sam_abl_dice_only_r32__s42 on visible GPU 6
+[queue] done edge_sam_abl_dice_only_r16__s44 (exit 0)
+[queue] progress [###...........................]  11% 17/156  running 6  waiting 133
+[queue] start edge_sam_abl_dice_only_r32__s43 on visible GPU 2
+[queue] done edge_sam_abl_dice_only_r2__s44 (exit 0)
+[queue] progress [###...........................]  12% 18/156  running 6  waiting 132
+[queue] start edge_sam_abl_dice_only_r32__s44 on visible GPU 5
+[queue] done edge_sam_abl_dice_only__s43 (exit 0)
+[queue] progress [####..........................]  12% 19/156  running 6  waiting 131
+[queue] start edge_sam_abl_dice_only_r4__s42 on visible GPU 0
+[queue] done edge_sam_abl_dice_only_r2__s43 (exit 0)
+[queue] progress [####..........................]  13% 20/156  running 6  waiting 130
+[queue] start edge_sam_abl_dice_only_r4__s43 on visible GPU 3
+[queue] done edge_sam_abl_dice_only_r32__s42 (exit 0)
+[queue] progress [####..........................]  13% 21/156  running 6  waiting 129
+[queue] start edge_sam_abl_dice_only_r4__s44 on visible GPU 6
+[queue] done edge_sam_abl_dice_only_r32__s44 (exit 0)
+[queue] progress [####..........................]  14% 22/156  running 6  waiting 128
+[queue] start edge_sam_abl_pmc_bga_r16__s42 on visible GPU 5
+[queue] done edge_sam_abl_dice_only_r16__s43 (exit 0)
+[queue] progress [####..........................]  15% 23/156  running 6  waiting 127
+[queue] start edge_sam_abl_pmc_bga_r16__s43 on visible GPU 1
+[queue] done edge_sam_abl_dice_only_r2__s42 (exit 0)
+[queue] progress [#####.........................]  15% 24/156  running 6  waiting 126
+[queue] start edge_sam_abl_pmc_bga_r16__s44 on visible GPU 4
+[queue] done edge_sam_abl_dice_only_r4__s42 (exit 0)
+[queue] progress [#####.........................]  16% 25/156  running 6  waiting 125
+[queue] start edge_sam_abl_pmc_bga_r2__s42 on visible GPU 0
+[queue] done edge_sam_abl_dice_only_r4__s44 (exit 0)
+[queue] progress [#####.........................]  17% 26/156  running 6  waiting 124
+[queue] start edge_sam_abl_pmc_bga_r2__s43 on visible GPU 6
+[queue] done edge_sam_abl_pmc_bga_r16__s42 (exit 0)
+[queue] progress [#####.........................]  17% 27/156  running 6  waiting 123
+[queue] start edge_sam_abl_pmc_bga_r2__s44 on visible GPU 5
+[queue] done edge_sam_abl_pmc_bga_r16__s43 (exit 0)
+[queue] progress [#####.........................]  18% 28/156  running 6  waiting 122
+[queue] start edge_sam_abl_pmc_bga_r32__s42 on visible GPU 1
+[queue] done edge_sam_abl_dice_only_r32__s43 (exit 0)
+[queue] progress [######........................]  19% 29/156  running 6  waiting 121
+[queue] start edge_sam_abl_pmc_bga_r32__s43 on visible GPU 2
+[queue] done edge_sam_abl_pmc_bga_r16__s44 (exit 0)
+[queue] progress [######........................]  19% 30/156  running 6  waiting 120
+[queue] start edge_sam_abl_pmc_bga_r32__s44 on visible GPU 4
+[queue] done edge_sam_abl_pmc_bga_r2__s42 (exit 0)
+[queue] progress [######........................]  20% 31/156  running 6  waiting 119
+[queue] start edge_sam_abl_pmc_bga_r4__s42 on visible GPU 0
+[queue] done edge_sam_abl_pmc_bga_r2__s43 (exit 0)
+[queue] progress [######........................]  21% 32/156  running 6  waiting 118
+[queue] start edge_sam_abl_pmc_bga_r4__s43 on visible GPU 6
+[queue] done edge_sam_abl_pmc_bga_r2__s44 (exit 0)
+[queue] progress [######........................]  21% 33/156  running 6  waiting 117
+[queue] start edge_sam_abl_pmc_bga_r4__s44 on visible GPU 5
+[queue] done edge_sam_abl_pmc_bga_r32__s42 (exit 0)
+[queue] progress [#######.......................]  22% 34/156  running 6  waiting 116
+[queue] start edge_sam_abl_pmc_r16__s42 on visible GPU 1
+[queue] done edge_sam_abl_pmc_bga_r32__s43 (exit 0)
+[queue] progress [#######.......................]  22% 35/156  running 6  waiting 115
+[queue] start edge_sam_abl_pmc_r16__s43 on visible GPU 2
+[queue] done edge_sam_abl_pmc_bga_r32__s44 (exit 0)
+[queue] progress [#######.......................]  23% 36/156  running 6  waiting 114
+[queue] start edge_sam_abl_pmc_r16__s44 on visible GPU 4
+[queue] done edge_sam_abl_pmc_bga_r4__s42 (exit 0)
+[queue] progress [#######.......................]  24% 37/156  running 6  waiting 113
+[queue] start edge_sam_abl_pmc_r2__s42 on visible GPU 0
+[queue] done edge_sam_abl_pmc_bga_r4__s44 (exit 0)
+[queue] progress [#######.......................]  24% 38/156  running 6  waiting 112
+[queue] start edge_sam_abl_pmc_r2__s43 on visible GPU 5
+[queue] done edge_sam_abl_pmc_bga_r4__s43 (exit 0)
+[queue] progress [########......................]  25% 39/156  running 6  waiting 111
+[queue] start edge_sam_abl_pmc_r2__s44 on visible GPU 6
+[queue] done edge_sam_abl_pmc_r16__s42 (exit 0)
+[queue] progress [########......................]  26% 40/156  running 6  waiting 110
+[queue] start edge_sam_abl_pmc_r32__s42 on visible GPU 1
+[queue] done edge_sam_abl_dice_only_r4__s43 (exit 0)
+[queue] progress [########......................]  26% 41/156  running 6  waiting 109
+[queue] start edge_sam_abl_pmc_r32__s43 on visible GPU 3
+[queue] done edge_sam_abl_pmc_r16__s43 (exit 0)
+[queue] progress [########......................]  27% 42/156  running 6  waiting 108
+[queue] start edge_sam_abl_pmc_r32__s44 on visible GPU 2
+[queue] done edge_sam_abl_pmc_r16__s44 (exit 0)
+[queue] progress [########......................]  28% 43/156  running 6  waiting 107
+[queue] start edge_sam_abl_pmc_r4__s42 on visible GPU 4
+[queue] done edge_sam_abl_pmc_r2__s44 (exit 0)
+[queue] progress [########......................]  28% 44/156  running 6  waiting 106
+[queue] start edge_sam_abl_pmc_r4__s43 on visible GPU 6
+[queue] done edge_sam_abl_pmc_r2__s42 (exit 0)
+[queue] progress [#########.....................]  29% 45/156  running 6  waiting 105
+[queue] start edge_sam_abl_pmc_r4__s44 on visible GPU 0
+[queue] done edge_sam_abl_pmc_r32__s42 (exit 0)
+[queue] progress [#########.....................]  29% 46/156  running 6  waiting 104
+[queue] start mobile_sam_abl_dice_only__s43 on visible GPU 1
+[queue] done edge_sam_abl_pmc_r32__s43 (exit 0)
+[queue] progress [#########.....................]  30% 47/156  running 6  waiting 103
+[queue] start mobile_sam_abl_dice_only__s44 on visible GPU 3
+[queue] done edge_sam_abl_pmc_r2__s43 (exit 0)
+[queue] progress [#########.....................]  31% 48/156  running 6  waiting 102
+[queue] start mobile_sam_abl_pmc__s43 on visible GPU 5
+[queue] done edge_sam_abl_pmc_r32__s44 (exit 0)
+[queue] progress [#########.....................]  31% 49/156  running 6  waiting 101
+[queue] start mobile_sam_abl_pmc__s44 on visible GPU 2
+[queue] done edge_sam_abl_pmc_r4__s42 (exit 0)
+[queue] progress [##########....................]  32% 50/156  running 6  waiting 100
+[queue] start mobile_sam_abl_pmc_bga__s43 on visible GPU 4
+[queue] done edge_sam_abl_pmc_r4__s44 (exit 0)
+[queue] progress [##########....................]  33% 51/156  running 6  waiting 99
+[queue] start mobile_sam_abl_pmc_bga__s44 on visible GPU 0
+[queue] done edge_sam_abl_pmc_r4__s43 (exit 0)
+[queue] progress [##########....................]  33% 52/156  running 6  waiting 98
+[queue] start mobile_sam_lora_r16__s43 on visible GPU 6
+[queue] done mobile_sam_abl_dice_only__s43 (exit 0)
+[queue] progress [##########....................]  34% 53/156  running 6  waiting 97
+[queue] start mobile_sam_lora_r16__s44 on visible GPU 1
+[queue] done mobile_sam_abl_dice_only__s44 (exit 0)
+[queue] progress [##########....................]  35% 54/156  running 6  waiting 96
+[queue] start mobile_sam_lora_r2__s43 on visible GPU 3
+[queue] done mobile_sam_abl_pmc__s44 (exit 0)
+[queue] progress [###########...................]  35% 55/156  running 6  waiting 95
+[queue] start mobile_sam_lora_r2__s44 on visible GPU 2
+[queue] done mobile_sam_abl_pmc__s43 (exit 0)
+[queue] progress [###########...................]  36% 56/156  running 6  waiting 94
+[queue] start mobile_sam_lora_r32__s43 on visible GPU 5
+[queue] done mobile_sam_abl_pmc_bga__s43 (exit 0)
+[queue] progress [###########...................]  37% 57/156  running 6  waiting 93
+[queue] start mobile_sam_lora_r32__s44 on visible GPU 4
+[queue] done mobile_sam_abl_pmc_bga__s44 (exit 0)
+[queue] progress [###########...................]  37% 58/156  running 6  waiting 92
+[queue] start mobile_sam_lora_r4__s43 on visible GPU 0
+[queue] done mobile_sam_lora_r16__s43 (exit 0)
+[queue] progress [###########...................]  38% 59/156  running 6  waiting 91
+[queue] start mobile_sam_lora_r4__s44 on visible GPU 6
+[queue] done mobile_sam_lora_r16__s44 (exit 0)
+[queue] progress [############..................]  38% 60/156  running 6  waiting 90
+[queue] start mobile_sam_lora_r8__s43 on visible GPU 1
+[queue] done mobile_sam_lora_r2__s43 (exit 0)
+[queue] progress [############..................]  39% 61/156  running 6  waiting 89
+[queue] start mobile_sam_lora_r8__s44 on visible GPU 3
+[queue] done mobile_sam_lora_r2__s44 (exit 0)
+[queue] progress [############..................]  40% 62/156  running 6  waiting 88
+[queue] start mobile_sam_abl_dice_only_r16__s42 on visible GPU 2
+[queue] done mobile_sam_lora_r32__s43 (exit 0)
+[queue] progress [############..................]  40% 63/156  running 6  waiting 87
+[queue] start mobile_sam_abl_dice_only_r16__s43 on visible GPU 5
+[queue] done mobile_sam_lora_r32__s44 (exit 0)
+[queue] progress [############..................]  41% 64/156  running 6  waiting 86
+[queue] start mobile_sam_abl_dice_only_r16__s44 on visible GPU 4
+[queue] done mobile_sam_lora_r4__s43 (exit 0)
+[queue] progress [############..................]  42% 65/156  running 6  waiting 85
+[queue] start mobile_sam_abl_dice_only_r2__s42 on visible GPU 0
+[queue] done mobile_sam_lora_r4__s44 (exit 0)
+[queue] progress [#############.................]  42% 66/156  running 6  waiting 84
+[queue] start mobile_sam_abl_dice_only_r2__s43 on visible GPU 6
+[queue] done mobile_sam_lora_r8__s43 (exit 0)
+[queue] progress [#############.................]  43% 67/156  running 6  waiting 83
+[queue] start mobile_sam_abl_dice_only_r2__s44 on visible GPU 1
+[queue] done mobile_sam_lora_r8__s44 (exit 0)
+[queue] progress [#############.................]  44% 68/156  running 6  waiting 82
+[queue] start mobile_sam_abl_dice_only_r32__s42 on visible GPU 3
+[queue] done mobile_sam_abl_dice_only_r16__s42 (exit 0)
+[queue] progress [#############.................]  44% 69/156  running 6  waiting 81
+[queue] start mobile_sam_abl_dice_only_r32__s43 on visible GPU 2
+[queue] done mobile_sam_abl_dice_only_r16__s44 (exit 0)
+[queue] progress [#############.................]  45% 70/156  running 6  waiting 80
+[queue] start mobile_sam_abl_dice_only_r32__s44 on visible GPU 4
+[queue] done mobile_sam_abl_dice_only_r16__s43 (exit 0)
+[queue] progress [##############................]  46% 71/156  running 6  waiting 79
+[queue] start mobile_sam_abl_dice_only_r4__s42 on visible GPU 5
+[queue] done mobile_sam_abl_dice_only_r2__s42 (exit 0)
+[queue] progress [##############................]  46% 72/156  running 6  waiting 78
+[queue] start mobile_sam_abl_dice_only_r4__s43 on visible GPU 0
+[queue] done mobile_sam_abl_dice_only_r2__s43 (exit 0)
+[queue] progress [##############................]  47% 73/156  running 6  waiting 77
+[queue] start mobile_sam_abl_dice_only_r4__s44 on visible GPU 6
+[queue] done mobile_sam_abl_dice_only_r2__s44 (exit 0)
+[queue] progress [##############................]  47% 74/156  running 6  waiting 76
+[queue] start mobile_sam_abl_pmc_bga_r16__s42 on visible GPU 1
+[queue] done mobile_sam_abl_dice_only_r32__s42 (exit 0)
+[queue] progress [##############................]  48% 75/156  running 6  waiting 75
+[queue] start mobile_sam_abl_pmc_bga_r16__s43 on visible GPU 3
+[queue] done mobile_sam_abl_dice_only_r32__s43 (exit 0)
+[queue] progress [###############...............]  49% 76/156  running 6  waiting 74
+[queue] start mobile_sam_abl_pmc_bga_r16__s44 on visible GPU 2
+[queue] done mobile_sam_abl_dice_only_r32__s44 (exit 0)
+[queue] progress [###############...............]  49% 77/156  running 6  waiting 73
+[queue] start mobile_sam_abl_pmc_bga_r2__s42 on visible GPU 4
+[queue] done mobile_sam_abl_dice_only_r4__s42 (exit 0)
+[queue] progress [###############...............]  50% 78/156  running 6  waiting 72
+[queue] start mobile_sam_abl_pmc_bga_r2__s43 on visible GPU 5
+[queue] done mobile_sam_abl_dice_only_r4__s43 (exit 0)
+[queue] progress [###############...............]  51% 79/156  running 6  waiting 71
+[queue] start mobile_sam_abl_pmc_bga_r2__s44 on visible GPU 0
+[queue] done mobile_sam_abl_dice_only_r4__s44 (exit 0)
+[queue] progress [###############...............]  51% 80/156  running 6  waiting 70
+[queue] start mobile_sam_abl_pmc_bga_r32__s42 on visible GPU 6
+[queue] done mobile_sam_abl_pmc_bga_r16__s42 (exit 0)
+[queue] progress [################..............]  52% 81/156  running 6  waiting 69
+[queue] start mobile_sam_abl_pmc_bga_r32__s43 on visible GPU 1
+[queue] done mobile_sam_abl_pmc_bga_r16__s43 (exit 0)
+[queue] progress [################..............]  53% 82/156  running 6  waiting 68
+[queue] start mobile_sam_abl_pmc_bga_r32__s44 on visible GPU 3
+[queue] done mobile_sam_abl_pmc_bga_r2__s42 (exit 0)
+[queue] progress [################..............]  53% 83/156  running 6  waiting 67
+[queue] start mobile_sam_abl_pmc_bga_r4__s42 on visible GPU 4
+[queue] done mobile_sam_abl_pmc_bga_r16__s44 (exit 0)
+[queue] progress [################..............]  54% 84/156  running 6  waiting 66
+[queue] start mobile_sam_abl_pmc_bga_r4__s43 on visible GPU 2
+[queue] done mobile_sam_abl_pmc_bga_r2__s43 (exit 0)
+[queue] progress [################..............]  54% 85/156  running 6  waiting 65
+[queue] start mobile_sam_abl_pmc_bga_r4__s44 on visible GPU 5
+[queue] done mobile_sam_abl_pmc_bga_r2__s44 (exit 0)
+[queue] progress [#################.............]  55% 86/156  running 6  waiting 64
+[queue] start mobile_sam_abl_pmc_r16__s42 on visible GPU 0
+[queue] done mobile_sam_abl_pmc_bga_r32__s42 (exit 0)
+[queue] progress [#################.............]  56% 87/156  running 6  waiting 63
+[queue] start mobile_sam_abl_pmc_r16__s43 on visible GPU 6
+[queue] done mobile_sam_abl_pmc_bga_r32__s43 (exit 0)
+[queue] progress [#################.............]  56% 88/156  running 6  waiting 62
+[queue] start mobile_sam_abl_pmc_r16__s44 on visible GPU 1
+[queue] done mobile_sam_abl_pmc_bga_r32__s44 (exit 0)
+[queue] progress [#################.............]  57% 89/156  running 6  waiting 61
+[queue] start mobile_sam_abl_pmc_r2__s42 on visible GPU 3
+[queue] done mobile_sam_abl_pmc_bga_r4__s42 (exit 0)
+[queue] progress [#################.............]  58% 90/156  running 6  waiting 60
+[queue] start mobile_sam_abl_pmc_r2__s43 on visible GPU 4
+[queue] done mobile_sam_abl_pmc_bga_r4__s43 (exit 0)
+[queue] progress [##################............]  58% 91/156  running 6  waiting 59
+[queue] start mobile_sam_abl_pmc_r2__s44 on visible GPU 2
+[queue] done mobile_sam_abl_pmc_bga_r4__s44 (exit 0)
+[queue] progress [##################............]  59% 92/156  running 6  waiting 58
+[queue] start mobile_sam_abl_pmc_r32__s42 on visible GPU 5
+[queue] done mobile_sam_abl_pmc_r16__s42 (exit 0)
+[queue] progress [##################............]  60% 93/156  running 6  waiting 57
+[queue] start mobile_sam_abl_pmc_r32__s43 on visible GPU 0
+[queue] done mobile_sam_abl_pmc_r16__s43 (exit 0)
+[queue] progress [##################............]  60% 94/156  running 6  waiting 56
+[queue] start mobile_sam_abl_pmc_r32__s44 on visible GPU 6
+[queue] done mobile_sam_abl_pmc_r16__s44 (exit 0)
+[queue] progress [##################............]  61% 95/156  running 6  waiting 55
+[queue] start mobile_sam_abl_pmc_r4__s42 on visible GPU 1
+[queue] done mobile_sam_abl_pmc_r2__s42 (exit 0)
+[queue] progress [##################............]  62% 96/156  running 6  waiting 54
+[queue] start mobile_sam_abl_pmc_r4__s43 on visible GPU 3
+[queue] done mobile_sam_abl_pmc_r2__s43 (exit 0)
+[queue] progress [###################...........]  62% 97/156  running 6  waiting 53
+[queue] start mobile_sam_abl_pmc_r4__s44 on visible GPU 4
+[queue] done mobile_sam_abl_pmc_r2__s44 (exit 0)
+[queue] progress [###################...........]  63% 98/156  running 6  waiting 52
+[queue] start mobilenet_unet_abl_dice_only__s43 on visible GPU 2
+[queue] done mobile_sam_abl_pmc_r32__s42 (exit 0)
+[queue] progress [###################...........]  63% 99/156  running 6  waiting 51
+[queue] start mobilenet_unet_abl_dice_only__s44 on visible GPU 5
+[queue] done mobile_sam_abl_pmc_r32__s43 (exit 0)
+[queue] progress [###################...........]  64% 100/156  running 6  waiting 50
+[queue] start mobilenet_unet_abl_pmc__s43 on visible GPU 0
+[queue] done mobilenet_unet_abl_dice_only__s43 (exit 0)
+[queue] progress [###################...........]  65% 101/156  running 6  waiting 49
+[queue] start mobilenet_unet_abl_pmc__s44 on visible GPU 2
+[queue] done mobilenet_unet_abl_dice_only__s44 (exit 0)
+[queue] progress [####################..........]  65% 102/156  running 6  waiting 48
+[queue] start mobilenet_unet_abl_pmc_bga__s43 on visible GPU 5
+[queue] done mobilenet_unet_abl_pmc__s43 (exit 0)
+[queue] progress [####################..........]  66% 103/156  running 6  waiting 47
+[queue] start mobilenet_unet_abl_pmc_bga__s44 on visible GPU 0
+[queue] done mobile_sam_abl_pmc_r32__s44 (exit 0)
+[queue] progress [####################..........]  67% 104/156  running 6  waiting 46
+[queue] start mobilenet_unet_lora_r16__s43 on visible GPU 6
+[queue] done mobilenet_unet_abl_pmc__s44 (exit 0)
+[queue] progress [####################..........]  67% 105/156  running 6  waiting 45
+[queue] start mobilenet_unet_lora_r16__s44 on visible GPU 2
+[queue] done mobilenet_unet_abl_pmc_bga__s43 (exit 0)
+[queue] progress [####################..........]  68% 106/156  running 6  waiting 44
+[queue] start mobilenet_unet_lora_r2__s43 on visible GPU 5
+[queue] done mobilenet_unet_abl_pmc_bga__s44 (exit 0)
+[queue] progress [#####################.........]  69% 107/156  running 6  waiting 43
+[queue] start mobilenet_unet_lora_r2__s44 on visible GPU 0
+[queue] done mobilenet_unet_lora_r16__s43 (exit 0)
+[queue] progress [#####################.........]  69% 108/156  running 6  waiting 42
+[queue] start mobilenet_unet_lora_r32__s43 on visible GPU 6
+[queue] done mobilenet_unet_lora_r16__s44 (exit 0)
+[queue] progress [#####################.........]  70% 109/156  running 6  waiting 41
+[queue] start mobilenet_unet_lora_r32__s44 on visible GPU 2
+[queue] done mobilenet_unet_lora_r2__s43 (exit 0)
+[queue] progress [#####################.........]  71% 110/156  running 6  waiting 40
+[queue] start mobilenet_unet_lora_r4__s43 on visible GPU 5
+[queue] done mobilenet_unet_lora_r2__s44 (exit 0)
+[queue] progress [#####################.........]  71% 111/156  running 6  waiting 39
+[queue] start mobilenet_unet_lora_r4__s44 on visible GPU 0
+[queue] done mobilenet_unet_lora_r32__s43 (exit 0)
+[queue] progress [######################........]  72% 112/156  running 6  waiting 38
+[queue] start mobilenet_unet_lora_r8__s43 on visible GPU 6
+[queue] done mobilenet_unet_lora_r32__s44 (exit 0)
+[queue] progress [######################........]  72% 113/156  running 6  waiting 37
+[queue] start mobilenet_unet_lora_r8__s44 on visible GPU 2
+[queue] done mobilenet_unet_lora_r4__s43 (exit 0)
+[queue] progress [######################........]  73% 114/156  running 6  waiting 36
+[queue] start mobilenet_unet_abl_dice_only_r16__s42 on visible GPU 5
+[queue] done mobilenet_unet_lora_r4__s44 (exit 0)
+[queue] progress [######################........]  74% 115/156  running 6  waiting 35
+[queue] start mobilenet_unet_abl_dice_only_r16__s43 on visible GPU 0
+[queue] done mobilenet_unet_lora_r8__s43 (exit 0)
+[queue] progress [######################........]  74% 116/156  running 6  waiting 34
+[queue] start mobilenet_unet_abl_dice_only_r16__s44 on visible GPU 6
+[queue] done mobilenet_unet_lora_r8__s44 (exit 0)
+[queue] progress [######################........]  75% 117/156  running 6  waiting 33
+[queue] start mobilenet_unet_abl_dice_only_r2__s42 on visible GPU 2
+[queue] done mobilenet_unet_abl_dice_only_r16__s42 (exit 0)
+[queue] progress [#######################.......]  76% 118/156  running 6  waiting 32
+[queue] start mobilenet_unet_abl_dice_only_r2__s43 on visible GPU 5
+[queue] done mobilenet_unet_abl_dice_only_r16__s43 (exit 0)
+[queue] progress [#######################.......]  76% 119/156  running 6  waiting 31
+[queue] start mobilenet_unet_abl_dice_only_r2__s44 on visible GPU 0
+[queue] done mobilenet_unet_abl_dice_only_r16__s44 (exit 0)
+[queue] progress [#######################.......]  77% 120/156  running 6  waiting 30
+[queue] start mobilenet_unet_abl_dice_only_r32__s42 on visible GPU 6
+[queue] done mobilenet_unet_abl_dice_only_r2__s42 (exit 0)
+[queue] progress [#######################.......]  78% 121/156  running 6  waiting 29
+[queue] start mobilenet_unet_abl_dice_only_r32__s43 on visible GPU 2
+[queue] done mobilenet_unet_abl_dice_only_r2__s43 (exit 0)
+[queue] progress [#######################.......]  78% 122/156  running 6  waiting 28
+[queue] start mobilenet_unet_abl_dice_only_r32__s44 on visible GPU 5
+[queue] done mobilenet_unet_abl_dice_only_r2__s44 (exit 0)
+[queue] progress [########################......]  79% 123/156  running 6  waiting 27
+[queue] start mobilenet_unet_abl_dice_only_r4__s42 on visible GPU 0
+[queue] done mobile_sam_abl_pmc_r4__s42 (exit 0)
+[queue] progress [########################......]  79% 124/156  running 6  waiting 26
+[queue] done mobilenet_unet_abl_dice_only_r32__s42 (exit 0)
+[queue] progress [########################......]  80% 125/156  running 5  waiting 26
+[queue] start mobilenet_unet_abl_dice_only_r4__s43 on visible GPU 1
+[queue] start mobilenet_unet_abl_dice_only_r4__s44 on visible GPU 6
+[queue] done mobile_sam_abl_pmc_r4__s43 (exit 0)
+[queue] progress [########################......]  81% 126/156  running 6  waiting 24
+[queue] start mobilenet_unet_abl_pmc_bga_r16__s42 on visible GPU 3
+[queue] done mobile_sam_abl_pmc_r4__s44 (exit 0)
+[queue] progress [########################......]  81% 127/156  running 6  waiting 23
+[queue] start mobilenet_unet_abl_pmc_bga_r16__s43 on visible GPU 4
+[queue] done mobilenet_unet_abl_dice_only_r32__s43 (exit 0)
+[queue] progress [#########################.....]  82% 128/156  running 6  waiting 22
+[queue] start mobilenet_unet_abl_pmc_bga_r16__s44 on visible GPU 2
+[queue] done mobilenet_unet_abl_dice_only_r32__s44 (exit 0)
+[queue] progress [#########################.....]  83% 129/156  running 6  waiting 21
+[queue] start mobilenet_unet_abl_pmc_bga_r2__s42 on visible GPU 5
+[queue] done mobilenet_unet_abl_dice_only_r4__s42 (exit 0)
+[queue] progress [#########################.....]  83% 130/156  running 6  waiting 20
+[queue] done mobilenet_unet_abl_dice_only_r4__s44 (exit 0)
+[queue] progress [#########################.....]  84% 131/156  running 5  waiting 20
+[queue] start mobilenet_unet_abl_pmc_bga_r2__s43 on visible GPU 0
+[queue] start mobilenet_unet_abl_pmc_bga_r2__s44 on visible GPU 6
+[queue] done mobilenet_unet_abl_dice_only_r4__s43 (exit 0)
+[queue] progress [#########################.....]  85% 132/156  running 6  waiting 18
+[queue] start mobilenet_unet_abl_pmc_bga_r32__s42 on visible GPU 1
+[queue] done mobilenet_unet_abl_pmc_bga_r16__s42 (exit 0)
+[queue] progress [##########################....]  85% 133/156  running 6  waiting 17
+[queue] start mobilenet_unet_abl_pmc_bga_r32__s43 on visible GPU 3
+[queue] done mobilenet_unet_abl_pmc_bga_r16__s43 (exit 0)
+[queue] progress [##########################....]  86% 134/156  running 6  waiting 16
+[queue] start mobilenet_unet_abl_pmc_bga_r32__s44 on visible GPU 4
+[queue] done mobilenet_unet_abl_pmc_bga_r16__s44 (exit 0)
+[queue] progress [##########################....]  87% 135/156  running 6  waiting 15
+[queue] start mobilenet_unet_abl_pmc_bga_r4__s42 on visible GPU 2
+[queue] done mobilenet_unet_abl_pmc_bga_r2__s42 (exit 0)
+[queue] progress [##########################....]  87% 136/156  running 6  waiting 14
+[queue] start mobilenet_unet_abl_pmc_bga_r4__s43 on visible GPU 5
+[queue] done mobilenet_unet_abl_pmc_bga_r2__s43 (exit 0)
+[queue] progress [##########################....]  88% 137/156  running 6  waiting 13
+[queue] start mobilenet_unet_abl_pmc_bga_r4__s44 on visible GPU 0
+[queue] done mobilenet_unet_abl_pmc_bga_r32__s42 (exit 0)
+[queue] progress [###########################...]  88% 138/156  running 6  waiting 12
+[queue] start mobilenet_unet_abl_pmc_r16__s42 on visible GPU 1
+[queue] done mobilenet_unet_abl_pmc_bga_r2__s44 (exit 0)
+[queue] progress [###########################...]  89% 139/156  running 6  waiting 11
+[queue] start mobilenet_unet_abl_pmc_r16__s43 on visible GPU 6
+[queue] done mobilenet_unet_abl_pmc_bga_r32__s43 (exit 0)
+[queue] progress [###########################...]  90% 140/156  running 6  waiting 10
+[queue] start mobilenet_unet_abl_pmc_r16__s44 on visible GPU 3
+[queue] done mobilenet_unet_abl_pmc_bga_r32__s44 (exit 0)
+[queue] progress [###########################...]  90% 141/156  running 6  waiting 9
+[queue] start mobilenet_unet_abl_pmc_r2__s42 on visible GPU 4
+[queue] done mobilenet_unet_abl_pmc_bga_r4__s42 (exit 0)
+[queue] progress [###########################...]  91% 142/156  running 6  waiting 8
+[queue] start mobilenet_unet_abl_pmc_r2__s43 on visible GPU 2
+[queue] done mobilenet_unet_abl_pmc_bga_r4__s43 (exit 0)
+[queue] progress [############################..]  92% 143/156  running 6  waiting 7
+[queue] start mobilenet_unet_abl_pmc_r2__s44 on visible GPU 5
+[queue] done mobilenet_unet_abl_pmc_r16__s42 (exit 0)
+[queue] progress [############################..]  92% 144/156  running 6  waiting 6
+[queue] start mobilenet_unet_abl_pmc_r32__s42 on visible GPU 1
+[queue] done mobilenet_unet_abl_pmc_bga_r4__s44 (exit 0)
+[queue] progress [############################..]  93% 145/156  running 6  waiting 5
+[queue] start mobilenet_unet_abl_pmc_r32__s43 on visible GPU 0
+[queue] done mobilenet_unet_abl_pmc_r16__s43 (exit 0)
+[queue] progress [############################..]  94% 146/156  running 6  waiting 4
+[queue] start mobilenet_unet_abl_pmc_r32__s44 on visible GPU 6
+[queue] done mobilenet_unet_abl_pmc_r16__s44 (exit 0)
+[queue] progress [############################..]  94% 147/156  running 6  waiting 3
+[queue] start mobilenet_unet_abl_pmc_r4__s42 on visible GPU 3
+[queue] done mobilenet_unet_abl_pmc_r2__s42 (exit 0)
+[queue] progress [############################..]  95% 148/156  running 6  waiting 2
+[queue] start mobilenet_unet_abl_pmc_r4__s43 on visible GPU 4
+[queue] done mobilenet_unet_abl_pmc_r2__s43 (exit 0)
+[queue] progress [#############################.]  96% 149/156  running 6  waiting 1
+[queue] start mobilenet_unet_abl_pmc_r4__s44 on visible GPU 2
+[queue] done mobilenet_unet_abl_pmc_r2__s44 (exit 0)
+[queue] progress [#############################.]  96% 150/156  running 6  waiting 0
+[queue] done mobilenet_unet_abl_pmc_r32__s42 (exit 0)
+[queue] progress [#############################.]  97% 151/156  running 5  waiting 0
+[queue] done mobilenet_unet_abl_pmc_r32__s43 (exit 0)
+[queue] progress [#############################.]  97% 152/156  running 4  waiting 0
+[queue] done mobilenet_unet_abl_pmc_r32__s44 (exit 0)
+[queue] progress [#############################.]  98% 153/156  running 3  waiting 0
+[queue] done mobilenet_unet_abl_pmc_r4__s42 (exit 0)
+[queue] progress [##############################]  99% 154/156  running 2  waiting 0
+[queue] done mobilenet_unet_abl_pmc_r4__s43 (exit 0)
+[queue] progress [##############################]  99% 155/156  running 1  waiting 0
+[queue] done mobilenet_unet_abl_pmc_r4__s44 (exit 0)
+[queue] progress [##############################] 100% 156/156  running 0  waiting 0
+[queue] all runs finished
+[22:48:10] <<< train the multi-seed runs of stages 1-3 (7 GPU slots) (23718 s)
+[22:48:10] >>> aggregate (tables, run index)
+[multiseed] 180 runs indexed, 0 missing/unfinished -> /sda/usama/lightweight_qpi_segmentation_fixes/outputs/multiseed/summary
+[22:48:11] <<< aggregate (tables, run index) (1 s)
+[22:48:11] >>> record run metadata (end)
+[record_run] end -> /sda/usama/lightweight_qpi_segmentation_fixes/outputs/multiseed/run_metadata.json
+[22:48:13] <<< record run metadata (end) (2 s)
+[22:48:13] pipeline finished successfully in 23730 s

@@ -1,0 +1,102 @@
+{
+  "run": {
+    "run_id": "mobile_sam_abl_pmc_r32__s42",
+    "group": "ablation_rank",
+    "arch": "mobile_sam",
+    "image_size": 1024,
+    "batch_size": 8,
+    "learning_rate": 0.0005,
+    "pretrained_weights": "mobile_sam.pt",
+    "lora": {
+      "r": 32,
+      "alpha": 32.0,
+      "dropout": 0.0,
+      "insertion_strategy": "attention_blocks"
+    },
+    "loss": {
+      "type": "physics_aware",
+      "lambda_pmc": 0.1,
+      "lambda_bga": 0.0,
+      "lambda_pv": 0.0,
+      "pmc_margin": 0.1,
+      "class_weights": [
+        0.5,
+        1.0,
+        1.5,
+        2.0,
+        2.0
+      ],
+      "pv_epsilon": 0.0001
+    },
+    "training": {
+      "epochs": 50,
+      "optimizer": "AdamW",
+      "mixed_precision": "fp16",
+      "sampler": "shuffle",
+      "drop_last": true,
+      "log_every_steps": 10
+    },
+    "seed": 42,
+    "num_classes": 5,
+    "ignore_index": 255
+  },
+  "run_spec": {
+    "run_id": "mobile_sam_abl_pmc_r32__s42",
+    "group": "ablation_rank",
+    "arch": "mobile_sam",
+    "lora_r": 32,
+    "loss_type": "physics_aware",
+    "lambda_pmc": 0.1,
+    "lambda_bga": 0.0,
+    "lambda_pv": 0.0,
+    "alias_of": null,
+    "seed": 42,
+    "sampler": null,
+    "base_id": "mobile_sam_abl_pmc_r32",
+    "block": "mobile_sam_ablation_other_ranks",
+    "priority": 2,
+    "stage": 2
+  },
+  "mode": "full",
+  "data": {
+    "num_classes": 5,
+    "ignore_index": 255,
+    "class_names": [
+      "background",
+      "discocyte",
+      "echinocyte",
+      "spherocyte",
+      "stomatocyte"
+    ],
+    "native_size": 768,
+    "train_rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "val_rotations": [
+      0
+    ],
+    "day0_date": "2011-05-11",
+    "phase_reference": "background",
+    "background_exclusion_px": 5,
+    "num_workers": 4,
+    "max_train_samples": null,
+    "max_val_samples": null
+  },
+  "evaluation": {
+    "checkpoint": "last",
+    "also_evaluate_best": true,
+    "boundary_tolerance_px": 2,
+    "cell_area_range_um2": [
+      15.0,
+      200.0
+    ],
+    "match_iou": 0.5,
+    "background_exclusion_px": 5,
+    "bootstrap_resamples": 2000,
+    "bootstrap_seed": 0
+  },
+  "overlay": "/sda/usama/lightweight_qpi_segmentation_fixes/configs/multiseed.yaml"
+}

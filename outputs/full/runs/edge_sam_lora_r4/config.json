@@ -1,0 +1,101 @@
+{
+  "run": {
+    "run_id": "edge_sam_lora_r4",
+    "group": "rank_sweep",
+    "arch": "edge_sam",
+    "image_size": 256,
+    "batch_size": 16,
+    "learning_rate": 0.0005,
+    "pretrained_weights": "edge_sam_3x.pth",
+    "lora": {
+      "r": 4,
+      "alpha": 4.0,
+      "dropout": 0.0,
+      "insertion_strategy": "encoder_only"
+    },
+    "loss": {
+      "type": "physics_aware",
+      "lambda_pmc": 0.1,
+      "lambda_bga": 0.05,
+      "lambda_pv": 0.1,
+      "pmc_margin": 0.1,
+      "class_weights": [
+        0.5,
+        1.0,
+        1.5,
+        2.0,
+        2.0
+      ],
+      "pv_epsilon": 0.0001
+    },
+    "training": {
+      "epochs": 50,
+      "optimizer": "AdamW",
+      "mixed_precision": "fp16",
+      "sampler": "shuffle",
+      "drop_last": true,
+      "log_every_steps": 10
+    },
+    "seed": 42,
+    "num_classes": 5,
+    "ignore_index": 255
+  },
+  "run_spec": {
+    "run_id": "edge_sam_lora_r4",
+    "group": "rank_sweep",
+    "arch": "edge_sam",
+    "lora_r": 4,
+    "loss_type": "physics_aware",
+    "lambda_pmc": 0.1,
+    "lambda_bga": 0.05,
+    "lambda_pv": 0.1,
+    "alias_of": null,
+    "seed": null,
+    "sampler": null,
+    "base_id": null,
+    "block": "",
+    "priority": 5
+  },
+  "mode": "full",
+  "data": {
+    "num_classes": 5,
+    "ignore_index": 255,
+    "class_names": [
+      "background",
+      "discocyte",
+      "echinocyte",
+      "spherocyte",
+      "stomatocyte"
+    ],
+    "native_size": 768,
+    "train_rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "val_rotations": [
+      0
+    ],
+    "day0_date": "2011-05-11",
+    "phase_reference": "background",
+    "background_exclusion_px": 5,
+    "num_workers": 4,
+    "max_train_samples": null,
+    "max_val_samples": null
+  },
+  "evaluation": {
+    "checkpoint": "last",
+    "also_evaluate_best": true,
+    "boundary_tolerance_px": 2,
+    "cell_area_range_um2": [
+      15.0,
+      200.0
+    ],
+    "match_iou": 0.5,
+    "background_exclusion_px": 5,
+    "bootstrap_resamples": 2000,
+    "bootstrap_seed": 0
+  },
+  "overlay": null
+}

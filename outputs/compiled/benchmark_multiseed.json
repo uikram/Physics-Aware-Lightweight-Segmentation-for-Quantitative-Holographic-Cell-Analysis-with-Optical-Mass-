@@ -1,0 +1,943 @@
+{
+  "schema_version": 1,
+  "kind": "benchmark_multiseed",
+  "generated_utc": "2026-10-27T07:18:48+00:00",
+  "aggregation": {
+    "mean_over": "seeds",
+    "sd": "sample SD (n - 1); null when fewer than two seeds",
+    "min_max": "over seeds",
+    "per_seed": "stored for every statistic",
+    "collapsed_runs": "included (a class with Dice < 0.05 counts as collapsed)",
+    "missing_or_failed": "excluded and listed under problems; never counted as zero"
+  },
+  "inputs": [
+    {
+      "path": "outputs/analysis/benchmark/edge_sam__onnx__s42.json",
+      "bytes": 1494,
+      "sha256": "768df4b58b1e7df9ece9ef9d4037e1492ef56ead613602d3a4dad6a499a0595f"
+    },
+    {
+      "path": "outputs/analysis/benchmark/edge_sam__onnx__s43.json",
+      "bytes": 1505,
+      "sha256": "3b547d16e0602c88963408152c4f2a5157b97466f0328e7d28655fd26a5d7bde"
+    },
+    {
+      "path": "outputs/analysis/benchmark/edge_sam__onnx__s44.json",
+      "bytes": 1496,
+      "sha256": "e1759b932d028a14596ee5a753064fec6809a1c179a7e9be558e915bce7e78e3"
+    },
+    {
+      "path": "outputs/analysis/benchmark/edge_sam__pytorch__s42.json",
+      "bytes": 1270,
+      "sha256": "040106fa9fc628dd7f8b24659328e73ce0084cbe15f5db51156ab220cbdb4c93"
+    },
+    {
+      "path": "outputs/analysis/benchmark/edge_sam__pytorch__s43.json",
+      "bytes": 1273,
+      "sha256": "fbc174da200e2de89607663896bd720257eb1038d8b440cc479a017950899075"
+    },
+    {
+      "path": "outputs/analysis/benchmark/edge_sam__pytorch__s44.json",
+      "bytes": 1271,
+      "sha256": "4f785b01c06f24ff53752149fc010a3978c1dc2a37887f3c8548991586653548"
+    },
+    {
+      "path": "outputs/analysis/benchmark/mobile_sam__onnx__s42.json",
+      "bytes": 1498,
+      "sha256": "a375e3c8144ac48e332961877ed970eb9703d6394e1d10b1d5734d0dabc9dea0"
+    },
+    {
+      "path": "outputs/analysis/benchmark/mobile_sam__onnx__s43.json",
+      "bytes": 1508,
+      "sha256": "4d977d448ce160172608761c743306d45f9192ea1ab3eee21b2355ae39b3a5c5"
+    },
+    {
+      "path": "outputs/analysis/benchmark/mobile_sam__onnx__s44.json",
+      "bytes": 1528,
+      "sha256": "32230ee8a980a43ad2939ee764b6ce336d8d826eae145103fc452e80521e7cbd"
+    },
+    {
+      "path": "outputs/analysis/benchmark/mobile_sam__pytorch__s42.json",
+      "bytes": 1275,
+      "sha256": "e1e875be0679cf84960add811c13f939d5523937c0953701913ba02f1772c60f"
+    },
+    {
+      "path": "outputs/analysis/benchmark/mobile_sam__pytorch__s43.json",
+      "bytes": 1275,
+      "sha256": "fc736ac16cc46e9302fd77a3eebb3fb382c3253ea673231738ad4d442479ab29"
+    },
+    {
+      "path": "outputs/analysis/benchmark/mobile_sam__pytorch__s44.json",
+      "bytes": 1276,
+      "sha256": "7abc0a0218e5d973d40238f8963ec14d86f3cd457d268a8c3fe9a8bf2df97956"
+    },
+    {
+      "path": "outputs/analysis/benchmark/mobilenet_unet__onnx__s42.json",
+      "bytes": 1511,
+      "sha256": "f71f6eae42ca0d2c36c84ce6532d1b8ae70283f4a106a1f027eeb91744c0a0e7"
+    },
+    {
+      "path": "outputs/analysis/benchmark/mobilenet_unet__onnx__s43.json",
+      "bytes": 1513,
+      "sha256": "5d0e58bff3d007913e3b346a793c8e9009a4c3797e39fdffd5e318780dd9371b"
+    },
+    {
+      "path": "outputs/analysis/benchmark/mobilenet_unet__onnx__s44.json",
+      "bytes": 1501,
+      "sha256": "1117c01b3acea61c1a863280958b494f9e3cabfa0e0ac02dbd84401c13f399b4"
+    },
+    {
+      "path": "outputs/analysis/benchmark/mobilenet_unet__pytorch__s42.json",
+      "bytes": 1277,
+      "sha256": "3bf220b3e359b0cfeb5dd64b4705745cc7846a1086aa258129e27f20f9d7fcd8"
+    },
+    {
+      "path": "outputs/analysis/benchmark/mobilenet_unet__pytorch__s43.json",
+      "bytes": 1278,
+      "sha256": "ee235799c0c750589071c66fa9ffaba30f0bf49fedd99514f9e85036f4ab7ef3"
+    },
+    {
+      "path": "outputs/analysis/benchmark/mobilenet_unet__pytorch__s44.json",
+      "bytes": 1278,
+      "sha256": "fec39341787c691574a5a726db1cef9f8aa80152d5b42d5d23a6f73b1450d25d"
+    },
+    {
+      "path": "outputs/analysis/benchmark/_protocol.json",
+      "bytes": 6851,
+      "sha256": "b4d97ad7421a3332f4bc2017ebdeedbf72420c984bea4094304bab45eb84f589"
+    },
+    {
+      "path": "outputs/full/benchmark/equivalence.json",
+      "bytes": 6846,
+      "sha256": "4063926397f206bc2a9241f15c8afd86455fc2c5bae948b0c1a21eff73eae25d"
+    }
+  ],
+  "n_inputs": 20,
+  "problems": [],
+  "complete": true,
+  "rows": [
+    {
+      "architecture": "edge_sam",
+      "backend": "onnx",
+      "precision": "fp32",
+      "input_size": 256,
+      "batch_size": 1,
+      "weights": "trained",
+      "checkpoint_sha256_16": "8fd6b79896b2964c",
+      "seeds_expected": [
+        42,
+        43,
+        44
+      ],
+      "seeds_found": [
+        42,
+        43,
+        44
+      ],
+      "seeds_missing": [],
+      "n_seeds": 3,
+      "latency_p50_ms": {
+        "mean": 4.10845,
+        "sd": 0.43135670853714553,
+        "min": 3.61045,
+        "max": 4.36555,
+        "n": 3,
+        "per_seed": {
+          "42": 3.61045,
+          "43": 4.36555,
+          "44": 4.34935
+        }
+      },
+      "latency_p99_ms": {
+        "mean": 5.576404666666666,
+        "sd": 0.3057973244394614,
+        "min": 5.223659,
+        "max": 5.766557,
+        "n": 3,
+        "per_seed": {
+          "42": 5.223659,
+          "43": 5.738997999999999,
+          "44": 5.766557
+        }
+      },
+      "fps": {
+        "mean": 245.31980308847355,
+        "sd": 27.416471133355852,
+        "min": 229.06621158845965,
+        "max": 276.97378443130356,
+        "n": 3,
+        "per_seed": {
+          "42": 276.97378443130356,
+          "43": 229.06621158845965,
+          "44": 229.91941324565738
+        }
+      },
+      "peak_vram_mb": {
+        "mean": 118.66666666666667,
+        "sd": 16.65332799572906,
+        "min": 100.0,
+        "max": 132.0,
+        "n": 3,
+        "per_seed": {
+          "42": 132.0,
+          "43": 100.0,
+          "44": 124.0
+        }
+      },
+      "peak_vram_mb_max": 132.0
+    },
+    {
+      "architecture": "edge_sam",
+      "backend": "pytorch",
+      "precision": "fp32",
+      "input_size": 256,
+      "batch_size": 1,
+      "weights": "trained",
+      "checkpoint_sha256_16": "8fd6b79896b2964c",
+      "seeds_expected": [
+        42,
+        43,
+        44
+      ],
+      "seeds_found": [
+        42,
+        43,
+        44
+      ],
+      "seeds_missing": [],
+      "n_seeds": 3,
+      "latency_p50_ms": {
+        "mean": 10.636822630961737,
+        "sd": 1.4482206591831888,
+        "min": 9.72411036491394,
+        "max": 12.306669726967812,
+        "n": 3,
+        "per_seed": {
+          "42": 9.879687801003456,
+          "43": 12.306669726967812,
+          "44": 9.72411036491394
+        }
+      },
+      "latency_p99_ms": {
+        "mean": 12.973000059525171,
+        "sd": 1.5255564211824753,
+        "min": 11.530627384781837,
+        "max": 14.569967873394488,
+        "n": 3,
+        "per_seed": {
+          "42": 12.818404920399189,
+          "43": 14.569967873394488,
+          "44": 11.530627384781837
+        }
+      },
+      "fps": {
+        "mean": 95.10389847884171,
+        "sd": 12.01928567763684,
+        "min": 81.25675119148467,
+        "max": 102.837170956857,
+        "n": 3,
+        "per_seed": {
+          "42": 101.2177732881835,
+          "43": 81.25675119148467,
+          "44": 102.837170956857
+        }
+      },
+      "peak_vram_mb": {
+        "mean": 42.0,
+        "sd": 0.0,
+        "min": 42.0,
+        "max": 42.0,
+        "n": 3,
+        "per_seed": {
+          "42": 42.0,
+          "43": 42.0,
+          "44": 42.0
+        }
+      },
+      "peak_vram_mb_max": 42.0
+    },
+    {
+      "architecture": "mobile_sam",
+      "backend": "onnx",
+      "precision": "fp32",
+      "input_size": 1024,
+      "batch_size": 1,
+      "weights": "trained",
+      "checkpoint_sha256_16": "793b2b2171afcc32",
+      "seeds_expected": [
+        42,
+        43,
+        44
+      ],
+      "seeds_found": [
+        42,
+        43,
+        44
+      ],
+      "seeds_missing": [],
+      "n_seeds": 3,
+      "latency_p50_ms": {
+        "mean": 25.4345,
+        "sd": 0.20868978772331162,
+        "min": 25.1942,
+        "max": 25.57025,
+        "n": 3,
+        "per_seed": {
+          "42": 25.1942,
+          "43": 25.539050000000003,
+          "44": 25.57025
+        }
+      },
+      "latency_p99_ms": {
+        "mean": 25.563611999999996,
+        "sd": 0.17831463410780204,
+        "min": 25.357783,
+        "max": 25.671208999999998,
+        "n": 3,
+        "per_seed": {
+          "42": 25.357783,
+          "43": 25.661844,
+          "44": 25.671208999999998
+        }
+      },
+      "fps": {
+        "mean": 39.31844901798865,
+        "sd": 0.32410478749874544,
+        "min": 39.107947712673905,
+        "max": 39.69167506807123,
+        "n": 3,
+        "per_seed": {
+          "42": 39.69167506807123,
+          "43": 39.155724273220805,
+          "44": 39.107947712673905
+        }
+      },
+      "peak_vram_mb": {
+        "mean": 1159.3333333333333,
+        "sd": 32.331615074619044,
+        "min": 1122.0,
+        "max": 1178.0,
+        "n": 3,
+        "per_seed": {
+          "42": 1178.0,
+          "43": 1122.0,
+          "44": 1178.0
+        }
+      },
+      "peak_vram_mb_max": 1178.0
+    },
+    {
+      "architecture": "mobile_sam",
+      "backend": "pytorch",
+      "precision": "fp32",
+      "input_size": 1024,
+      "batch_size": 1,
+      "weights": "trained",
+      "checkpoint_sha256_16": "793b2b2171afcc32",
+      "seeds_expected": [
+        42,
+        43,
+        44
+      ],
+      "seeds_found": [
+        42,
+        43,
+        44
+      ],
+      "seeds_missing": [],
+      "n_seeds": 3,
+      "latency_p50_ms": {
+        "mean": 20.350353171428043,
+        "sd": 0.1472057750043513,
+        "min": 20.186644047498703,
+        "max": 20.47181874513626,
+        "n": 3,
+        "per_seed": {
+          "42": 20.186644047498703,
+          "43": 20.47181874513626,
+          "44": 20.39259672164917
+        }
+      },
+      "latency_p99_ms": {
+        "mean": 20.505763875941437,
+        "sd": 0.12862343693552533,
+        "min": 20.387029387056828,
+        "max": 20.6424006447196,
+        "n": 3,
+        "per_seed": {
+          "42": 20.387029387056828,
+          "43": 20.6424006447196,
+          "44": 20.48786159604788
+        }
+      },
+      "fps": {
+        "mean": 49.1409154493874,
+        "sd": 0.3564879537726111,
+        "min": 48.847638426731486,
+        "max": 49.53770411996285,
+        "n": 3,
+        "per_seed": {
+          "42": 49.53770411996285,
+          "43": 48.847638426731486,
+          "44": 49.03740380146786
+        }
+      },
+      "peak_vram_mb": {
+        "mean": 358.0,
+        "sd": 0.0,
+        "min": 358.0,
+        "max": 358.0,
+        "n": 3,
+        "per_seed": {
+          "42": 358.0,
+          "43": 358.0,
+          "44": 358.0
+        }
+      },
+      "peak_vram_mb_max": 358.0
+    },
+    {
+      "architecture": "mobilenet_unet",
+      "backend": "onnx",
+      "precision": "fp32",
+      "input_size": 256,
+      "batch_size": 1,
+      "weights": "trained",
+      "checkpoint_sha256_16": "9ebcf24901c6e3d6",
+      "seeds_expected": [
+        42,
+        43,
+        44
+      ],
+      "seeds_found": [
+        42,
+        43,
+        44
+      ],
+      "seeds_missing": [],
+      "n_seeds": 3,
+      "latency_p50_ms": {
+        "mean": 2.5313,
+        "sd": 0.18700002005347496,
+        "min": 2.32015,
+        "max": 2.676,
+        "n": 3,
+        "per_seed": {
+          "42": 2.32015,
+          "43": 2.59775,
+          "44": 2.676
+        }
+      },
+      "latency_p99_ms": {
+        "mean": 3.3280786666666646,
+        "sd": 0.7920093909704184,
+        "min": 2.4972679999999996,
+        "max": 4.074534,
+        "n": 3,
+        "per_seed": {
+          "42": 2.4972679999999996,
+          "43": 3.4124339999999944,
+          "44": 4.074534
+        }
+      },
+      "fps": {
+        "mean": 396.549068938625,
+        "sd": 30.36723142035116,
+        "min": 373.69207772795215,
+        "max": 431.00661595155486,
+        "n": 3,
+        "per_seed": {
+          "42": 431.00661595155486,
+          "43": 384.94851313636804,
+          "44": 373.69207772795215
+        }
+      },
+      "peak_vram_mb": {
+        "mean": 147.33333333333334,
+        "sd": 4.163331998932266,
+        "min": 144.0,
+        "max": 152.0,
+        "n": 3,
+        "per_seed": {
+          "42": 144.0,
+          "43": 146.0,
+          "44": 152.0
+        }
+      },
+      "peak_vram_mb_max": 152.0
+    },
+    {
+      "architecture": "mobilenet_unet",
+      "backend": "pytorch",
+      "precision": "fp32",
+      "input_size": 256,
+      "batch_size": 1,
+      "weights": "trained",
+      "checkpoint_sha256_16": "9ebcf24901c6e3d6",
+      "seeds_expected": [
+        42,
+        43,
+        44
+      ],
+      "seeds_found": [
+        42,
+        43,
+        44
+      ],
+      "seeds_missing": [],
+      "n_seeds": 3,
+      "latency_p50_ms": {
+        "mean": 5.65761203567187,
+        "sd": 0.09868877185628991,
+        "min": 5.54409995675087,
+        "max": 5.723070353269577,
+        "n": 3,
+        "per_seed": {
+          "42": 5.705665796995163,
+          "43": 5.723070353269577,
+          "44": 5.54409995675087
+        }
+      },
+      "latency_p99_ms": {
+        "mean": 7.997389944891135,
+        "sd": 0.6252945540997443,
+        "min": 7.2955044358968735,
+        "max": 8.494998402893543,
+        "n": 3,
+        "per_seed": {
+          "42": 7.2955044358968735,
+          "43": 8.201666995882988,
+          "44": 8.494998402893543
+        }
+      },
+      "fps": {
+        "mean": 176.78923182837616,
+        "sd": 3.114130372010334,
+        "min": 174.73138337862687,
+        "max": 180.37192832036382,
+        "n": 3,
+        "per_seed": {
+          "42": 175.26438378613778,
+          "43": 174.73138337862687,
+          "44": 180.37192832036382
+        }
+      },
+      "peak_vram_mb": {
+        "mean": 52.0,
+        "sd": 0.0,
+        "min": 52.0,
+        "max": 52.0,
+        "n": 3,
+        "per_seed": {
+          "42": 52.0,
+          "43": 52.0,
+          "44": 52.0
+        }
+      },
+      "peak_vram_mb_max": 52.0
+    }
+  ],
+  "protocol": {
+    "version": 5,
+    "precision": "fp32",
+    "backends": [
+      "pytorch",
+      "onnx"
+    ],
+    "combinations_per_seed": 6,
+    "batch_size": 1,
+    "warmup_iterations": 50,
+    "timed_iterations": 500,
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "scope": "model forward pass only, deployment input size per architecture",
+    "weights": "trained reference checkpoint (best.pt of the selected rank), LoRA merged",
+    "ort_sessions_per_seed": 3,
+    "ort_session_pooling": "inside one seed the timed runs of the fresh sessions are pooled",
+    "onnx_io_binding": true,
+    "ort_arena_extend_strategy": "kSameAsRequested",
+    "accuracy_in_timed_loop": false,
+    "metrics": {
+      "latency_p50_ms": "50th percentile of the per-inference latencies of one seed",
+      "latency_p99_ms": "99th percentile of the per-inference latencies of one seed",
+      "fps": "1000 / latency_p50_ms of the same seed",
+      "peak_vram_mb": "device-level GPU memory used after the timed loop minus before the model was placed (weights, activations, workspace, device inputs; CUDA context excluded); ONNX Runtime: largest value over the fresh sessions of the seed"
+    },
+    "aggregation": "per-seed values; summary = mean and sample SD (n - 1) over seeds of the per-seed values; latency samples of different seeds are not pooled",
+    "arch_order_per_seed": {
+      "42": [
+        "edge_sam",
+        "mobile_sam",
+        "mobilenet_unet"
+      ],
+      "43": [
+        "mobile_sam",
+        "mobilenet_unet",
+        "edge_sam"
+      ],
+      "44": [
+        "mobilenet_unet",
+        "edge_sam",
+        "mobile_sam"
+      ]
+    },
+    "tf32": {
+      "torch_cudnn_allow_tf32": false,
+      "torch_matmul_allow_tf32": false,
+      "torch_float32_matmul_precision": "highest",
+      "NVIDIA_TF32_OVERRIDE": "0",
+      "BENCH_TF32": "0",
+      "mode": "strict FP32 (TF32 off)",
+      "strict_effective": true
+    }
+  },
+  "gpu_name": "NVIDIA RTX A5000",
+  "host_details": {
+    "cpu_logical_cores": 48,
+    "cpu_model": "Intel(R) Xeon(R) Silver 4214 CPU @ 2.20GHz",
+    "ram_gb": 125.5,
+    "gpu_name": "NVIDIA RTX A5000",
+    "gpu_driver": "530.30.02",
+    "gpu_memory_total_mb": 24564.0,
+    "gpu_max_sm_clock_mhz": 2100.0,
+    "gpu_power_limit_w": 230.0,
+    "ort_version": "1.16.3",
+    "ort_available_providers": [
+      "TensorrtExecutionProvider",
+      "CUDAExecutionProvider",
+      "AzureExecutionProvider",
+      "CPUExecutionProvider"
+    ]
+  },
+  "parameters_by_rank": [
+    {
+      "architecture": "edge_sam",
+      "lora_rank": 2,
+      "params_total": 5770087,
+      "params_trainable": 299959,
+      "encoder_trainable_pct": 2.235379526958991,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 5.198517803977652
+    },
+    {
+      "architecture": "edge_sam",
+      "lora_rank": 4,
+      "params_total": 5848169,
+      "params_trainable": 378041,
+      "encoder_trainable_pct": 3.5809242054513755,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 6.464262575175239
+    },
+    {
+      "architecture": "edge_sam",
+      "lora_rank": 8,
+      "params_total": 6004333,
+      "params_trainable": 534205,
+      "encoder_trainable_pct": 6.163876922823568,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 8.896991555931358
+    },
+    {
+      "architecture": "edge_sam",
+      "lora_rank": 16,
+      "params_total": 6316661,
+      "params_trainable": 846533,
+      "encoder_trainable_pct": 10.935729339526548,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 13.401589858946048
+    },
+    {
+      "architecture": "edge_sam",
+      "lora_rank": 32,
+      "params_total": 6941317,
+      "params_trainable": 1471189,
+      "encoder_trainable_pct": 19.15786636147382,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 21.1946666605199
+    },
+    {
+      "architecture": "mobile_sam",
+      "lora_rank": 2,
+      "params_total": 6675388,
+      "params_trainable": 628640,
+      "encoder_trainable_pct": 0.5437017377533881,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 9.417280313893365
+    },
+    {
+      "architecture": "mobile_sam",
+      "lora_rank": 4,
+      "params_total": 6690236,
+      "params_trainable": 643488,
+      "encoder_trainable_pct": 0.7860005788681618,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 9.618315407707591
+    },
+    {
+      "architecture": "mobile_sam",
+      "lora_rank": 8,
+      "params_total": 6719932,
+      "params_trainable": 673184,
+      "encoder_trainable_pct": 1.2670736542077623,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 10.017720417408986
+    },
+    {
+      "architecture": "mobile_sam",
+      "lora_rank": 16,
+      "params_total": 6779324,
+      "params_trainable": 732576,
+      "encoder_trainable_pct": 2.215358343009247,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 10.806033167908776
+    },
+    {
+      "architecture": "mobile_sam",
+      "lora_rank": 32,
+      "params_total": 6898108,
+      "params_trainable": 851360,
+      "encoder_trainable_pct": 4.058310606988565,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 12.341934918966187
+    },
+    {
+      "architecture": "mobilenet_unet",
+      "lora_rank": 2,
+      "params_total": 7660455,
+      "params_trainable": 5471271,
+      "encoder_trainable_pct": 3.1732959445891735,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 71.42227191465781
+    },
+    {
+      "architecture": "mobilenet_unet",
+      "lora_rank": 4,
+      "params_total": 7698089,
+      "params_trainable": 5508905,
+      "encoder_trainable_pct": 4.758623209969355,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 71.56198116181821
+    },
+    {
+      "architecture": "mobilenet_unet",
+      "lora_rank": 8,
+      "params_total": 7773357,
+      "params_trainable": 5584173,
+      "encoder_trainable_pct": 7.778478005183181,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 71.83734131855773
+    },
+    {
+      "architecture": "mobilenet_unet",
+      "lora_rank": 16,
+      "params_total": 7923893,
+      "params_trainable": 5734709,
+      "encoder_trainable_pct": 13.277937289650321,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 72.37236797619553
+    },
+    {
+      "architecture": "mobilenet_unet",
+      "lora_rank": 32,
+      "params_total": 8224965,
+      "params_trainable": 6035781,
+      "encoder_trainable_pct": 22.518828925760236,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 73.38366789402751
+    }
+  ],
+  "equivalence": {
+    "rank": 8,
+    "precision": "fp32",
+    "tf32": {
+      "torch_cudnn_allow_tf32": false,
+      "torch_matmul_allow_tf32": false,
+      "torch_float32_matmul_precision": "highest",
+      "NVIDIA_TF32_OVERRIDE": "0",
+      "BENCH_TF32": "0",
+      "mode": "strict FP32 (TF32 off)",
+      "strict_effective": true
+    },
+    "acceptance": {
+      "argmax_agreement_pct_min": 99.9,
+      "mean_dice_abs_change_max": 0.001,
+      "dry_mass_mean_abs_rel_error_max": 0.001,
+      "dry_mass_p99_rel_error_max": 0.005
+    },
+    "architectures": [
+      {
+        "architecture": "edge_sam",
+        "rank": 8,
+        "checkpoint": "/sda/usama/lightweight_qpi_segmentation_fixes/outputs/full/runs/edge_sam_lora_r8/checkpoints/best.pt",
+        "checkpoint_epoch": 50,
+        "input_size": 256,
+        "n_inputs": 16,
+        "logit_comparison": {
+          "max_abs_logit_diff": 0.00019741058349609375,
+          "mean_abs_logit_diff": 2.942613491541124e-06,
+          "nonfinite_reference": 0,
+          "nonfinite_other": 0,
+          "argmax_agreement_pct": 99.99990463256836,
+          "disagree_pct": 9.5367431640625e-05,
+          "n_pixels": 1048576,
+          "n_disagree": 1,
+          "max_margin_at_disagreeing_pixels": 3.6954879760742188e-06,
+          "all_disagreements_within_2x_max_logit_diff": true,
+          "explained_by_near_ties": true
+        },
+        "quality": {
+          "rotation": 0,
+          "n_images": 66,
+          "candidates": [
+            {
+              "candidate": "pytorch_fp32",
+              "n_images": 66,
+              "n_images_in_dry_mass_error": 66,
+              "n_images_zero_reference_mass": 0,
+              "reference_dry_mass_min_pg": 74.01436616289573,
+              "dry_mass_worst_image": "20110511_1",
+              "argmax_agreement_pct": 100.0,
+              "mean_dice": 0.7056954730686753,
+              "mean_dice_change": 0.0,
+              "dry_mass_mean_abs_rel_error": 0.0,
+              "dry_mass_p99_rel_error": 0.0,
+              "dry_mass_max_rel_error": 0.0,
+              "verdict": "reference"
+            },
+            {
+              "candidate": "onnx_fp32",
+              "n_images": 66,
+              "n_images_in_dry_mass_error": 66,
+              "n_images_zero_reference_mass": 0,
+              "reference_dry_mass_min_pg": 74.01436616289573,
+              "dry_mass_worst_image": "20110516_5",
+              "argmax_agreement_pct": 99.9999766865775,
+              "mean_dice": 0.7056960470930618,
+              "mean_dice_change": 5.740243864682526e-07,
+              "dry_mass_mean_abs_rel_error": 4.4676287969170577e-07,
+              "dry_mass_p99_rel_error": 7.476947964140544e-06,
+              "dry_mass_max_rel_error": 1.207711631902032e-05,
+              "verdict": "accepted"
+            }
+          ]
+        }
+      },
+      {
+        "architecture": "mobile_sam",
+        "rank": 8,
+        "checkpoint": "/sda/usama/lightweight_qpi_segmentation_fixes/outputs/full/runs/mobile_sam_lora_r8/checkpoints/best.pt",
+        "checkpoint_epoch": 38,
+        "input_size": 1024,
+        "n_inputs": 16,
+        "logit_comparison": {
+          "max_abs_logit_diff": 0.0003204345703125,
+          "mean_abs_logit_diff": 8.565381904190872e-06,
+          "nonfinite_reference": 0,
+          "nonfinite_other": 0,
+          "argmax_agreement_pct": 100.0,
+          "disagree_pct": 0.0,
+          "n_pixels": 16777216,
+          "n_disagree": 0,
+          "all_disagreements_within_2x_max_logit_diff": true,
+          "explained_by_near_ties": true
+        },
+        "quality": {
+          "rotation": 0,
+          "n_images": 66,
+          "candidates": [
+            {
+              "candidate": "pytorch_fp32",
+              "n_images": 66,
+              "n_images_in_dry_mass_error": 66,
+              "n_images_zero_reference_mass": 0,
+              "reference_dry_mass_min_pg": 29.32636446617426,
+              "dry_mass_worst_image": "20110511_1",
+              "argmax_agreement_pct": 100.0,
+              "mean_dice": 0.8114336785344983,
+              "mean_dice_change": 0.0,
+              "dry_mass_mean_abs_rel_error": 0.0,
+              "dry_mass_p99_rel_error": 0.0,
+              "dry_mass_max_rel_error": 0.0,
+              "verdict": "reference"
+            },
+            {
+              "candidate": "onnx_fp32",
+              "n_images": 66,
+              "n_images_in_dry_mass_error": 66,
+              "n_images_zero_reference_mass": 0,
+              "reference_dry_mass_min_pg": 29.32636446617426,
+              "dry_mass_worst_image": "20110627_3",
+              "argmax_agreement_pct": 99.99998834328875,
+              "mean_dice": 0.8114337886764529,
+              "mean_dice_change": 1.1014195455683051e-07,
+              "dry_mass_mean_abs_rel_error": 5.2167599945110875e-08,
+              "dry_mass_p99_rel_error": 1.5490549572329407e-06,
+              "dry_mass_max_rel_error": 2.296450268041031e-06,
+              "verdict": "accepted"
+            }
+          ]
+        }
+      },
+      {
+        "architecture": "mobilenet_unet",
+        "rank": 8,
+        "checkpoint": "/sda/usama/lightweight_qpi_segmentation_fixes/outputs/full/runs/mobilenet_unet_lora_r8/checkpoints/best.pt",
+        "checkpoint_epoch": 34,
+        "input_size": 256,
+        "n_inputs": 16,
+        "logit_comparison": {
+          "max_abs_logit_diff": 0.00020456314086914062,
+          "mean_abs_logit_diff": 5.550083187699784e-06,
+          "nonfinite_reference": 0,
+          "nonfinite_other": 0,
+          "argmax_agreement_pct": 100.0,
+          "disagree_pct": 0.0,
+          "n_pixels": 1048576,
+          "n_disagree": 0,
+          "all_disagreements_within_2x_max_logit_diff": true,
+          "explained_by_near_ties": true
+        },
+        "quality": {
+          "rotation": 0,
+          "n_images": 66,
+          "candidates": [
+            {
+              "candidate": "pytorch_fp32",
+              "n_images": 66,
+              "n_images_in_dry_mass_error": 66,
+              "n_images_zero_reference_mass": 0,
+              "reference_dry_mass_min_pg": 340.3097360346514,
+              "dry_mass_worst_image": "20110511_1",
+              "argmax_agreement_pct": 100.0,
+              "mean_dice": 0.41797140183549863,
+              "mean_dice_change": 0.0,
+              "dry_mass_mean_abs_rel_error": 0.0,
+              "dry_mass_p99_rel_error": 0.0,
+              "dry_mass_max_rel_error": 0.0,
+              "verdict": "reference"
+            },
+            {
+              "candidate": "onnx_fp32",
+              "n_images": 66,
+              "n_images_in_dry_mass_error": 66,
+              "n_images_zero_reference_mass": 0,
+              "reference_dry_mass_min_pg": 340.3097360346514,
+              "dry_mass_worst_image": "20110523_9",
+              "argmax_agreement_pct": 99.99999611442958,
+              "mean_dice": 0.41797142455358494,
+              "mean_dice_change": 2.271808630105454e-08,
+              "dry_mass_mean_abs_rel_error": 1.2579450921724801e-08,
+              "dry_mass_p99_rel_error": 2.9058531629183817e-07,
+              "dry_mass_max_rel_error": 8.302437608338368e-07,
+              "verdict": "accepted"
+            }
+          ]
+        }
+      }
+    ],
+    "all_accepted": true
+  }
+}

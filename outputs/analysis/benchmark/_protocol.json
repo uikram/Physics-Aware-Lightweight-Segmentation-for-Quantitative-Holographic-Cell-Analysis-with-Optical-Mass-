@@ -1,0 +1,214 @@
+{
+  "protocol": {
+    "version": 5,
+    "precision": "fp32",
+    "backends": [
+      "pytorch",
+      "onnx"
+    ],
+    "combinations_per_seed": 6,
+    "batch_size": 1,
+    "warmup_iterations": 50,
+    "timed_iterations": 500,
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "scope": "model forward pass only, deployment input size per architecture",
+    "weights": "trained reference checkpoint (best.pt of the selected rank), LoRA merged",
+    "ort_sessions_per_seed": 3,
+    "ort_session_pooling": "inside one seed the timed runs of the fresh sessions are pooled",
+    "onnx_io_binding": true,
+    "ort_arena_extend_strategy": "kSameAsRequested",
+    "accuracy_in_timed_loop": false,
+    "metrics": {
+      "latency_p50_ms": "50th percentile of the per-inference latencies of one seed",
+      "latency_p99_ms": "99th percentile of the per-inference latencies of one seed",
+      "fps": "1000 / latency_p50_ms of the same seed",
+      "peak_vram_mb": "device-level GPU memory used after the timed loop minus before the model was placed (weights, activations, workspace, device inputs; CUDA context excluded); ONNX Runtime: largest value over the fresh sessions of the seed"
+    },
+    "aggregation": "per-seed values; summary = mean and sample SD (n - 1) over seeds of the per-seed values; latency samples of different seeds are not pooled",
+    "arch_order_per_seed": {
+      "42": [
+        "edge_sam",
+        "mobile_sam",
+        "mobilenet_unet"
+      ],
+      "43": [
+        "mobile_sam",
+        "mobilenet_unet",
+        "edge_sam"
+      ],
+      "44": [
+        "mobilenet_unet",
+        "edge_sam",
+        "mobile_sam"
+      ]
+    },
+    "tf32": {
+      "torch_cudnn_allow_tf32": false,
+      "torch_matmul_allow_tf32": false,
+      "torch_float32_matmul_precision": "highest",
+      "NVIDIA_TF32_OVERRIDE": "0",
+      "BENCH_TF32": "0",
+      "mode": "strict FP32 (TF32 off)",
+      "strict_effective": true
+    }
+  },
+  "gpu_name": "NVIDIA RTX A5000",
+  "host_details": {
+    "cpu_logical_cores": 48,
+    "cpu_model": "Intel(R) Xeon(R) Silver 4214 CPU @ 2.20GHz",
+    "ram_gb": 125.5,
+    "gpu_name": "NVIDIA RTX A5000",
+    "gpu_driver": "530.30.02",
+    "gpu_memory_total_mb": 24564.0,
+    "gpu_max_sm_clock_mhz": 2100.0,
+    "gpu_power_limit_w": 230.0,
+    "ort_version": "1.16.3",
+    "ort_available_providers": [
+      "TensorrtExecutionProvider",
+      "CUDAExecutionProvider",
+      "AzureExecutionProvider",
+      "CPUExecutionProvider"
+    ]
+  },
+  "parameters_by_rank": [
+    {
+      "architecture": "edge_sam",
+      "lora_rank": 2,
+      "params_total": 5770087,
+      "params_trainable": 299959,
+      "encoder_trainable_pct": 2.235379526958991,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 5.198517803977652
+    },
+    {
+      "architecture": "edge_sam",
+      "lora_rank": 4,
+      "params_total": 5848169,
+      "params_trainable": 378041,
+      "encoder_trainable_pct": 3.5809242054513755,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 6.464262575175239
+    },
+    {
+      "architecture": "edge_sam",
+      "lora_rank": 8,
+      "params_total": 6004333,
+      "params_trainable": 534205,
+      "encoder_trainable_pct": 6.163876922823568,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 8.896991555931358
+    },
+    {
+      "architecture": "edge_sam",
+      "lora_rank": 16,
+      "params_total": 6316661,
+      "params_trainable": 846533,
+      "encoder_trainable_pct": 10.935729339526548,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 13.401589858946048
+    },
+    {
+      "architecture": "edge_sam",
+      "lora_rank": 32,
+      "params_total": 6941317,
+      "params_trainable": 1471189,
+      "encoder_trainable_pct": 19.15786636147382,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 21.1946666605199
+    },
+    {
+      "architecture": "mobile_sam",
+      "lora_rank": 2,
+      "params_total": 6675388,
+      "params_trainable": 628640,
+      "encoder_trainable_pct": 0.5437017377533881,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 9.417280313893365
+    },
+    {
+      "architecture": "mobile_sam",
+      "lora_rank": 4,
+      "params_total": 6690236,
+      "params_trainable": 643488,
+      "encoder_trainable_pct": 0.7860005788681618,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 9.618315407707591
+    },
+    {
+      "architecture": "mobile_sam",
+      "lora_rank": 8,
+      "params_total": 6719932,
+      "params_trainable": 673184,
+      "encoder_trainable_pct": 1.2670736542077623,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 10.017720417408986
+    },
+    {
+      "architecture": "mobile_sam",
+      "lora_rank": 16,
+      "params_total": 6779324,
+      "params_trainable": 732576,
+      "encoder_trainable_pct": 2.215358343009247,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 10.806033167908776
+    },
+    {
+      "architecture": "mobile_sam",
+      "lora_rank": 32,
+      "params_total": 6898108,
+      "params_trainable": 851360,
+      "encoder_trainable_pct": 4.058310606988565,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 12.341934918966187
+    },
+    {
+      "architecture": "mobilenet_unet",
+      "lora_rank": 2,
+      "params_total": 7660455,
+      "params_trainable": 5471271,
+      "encoder_trainable_pct": 3.1732959445891735,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 71.42227191465781
+    },
+    {
+      "architecture": "mobilenet_unet",
+      "lora_rank": 4,
+      "params_total": 7698089,
+      "params_trainable": 5508905,
+      "encoder_trainable_pct": 4.758623209969355,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 71.56198116181821
+    },
+    {
+      "architecture": "mobilenet_unet",
+      "lora_rank": 8,
+      "params_total": 7773357,
+      "params_trainable": 5584173,
+      "encoder_trainable_pct": 7.778478005183181,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 71.83734131855773
+    },
+    {
+      "architecture": "mobilenet_unet",
+      "lora_rank": 16,
+      "params_total": 7923893,
+      "params_trainable": 5734709,
+      "encoder_trainable_pct": 13.277937289650321,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 72.37236797619553
+    },
+    {
+      "architecture": "mobilenet_unet",
+      "lora_rank": 32,
+      "params_total": 8224965,
+      "params_trainable": 6035781,
+      "encoder_trainable_pct": 22.518828925760236,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 73.38366789402751
+    }
+  ]
+}

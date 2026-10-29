@@ -1,0 +1,2 @@
+Mirror of outputs/full/runs/mobile_sam_abl_pmc_bga (seed 42, main experiment; nothing was retrained).
+Hard-linked files: do not edit. outputs/full is the source of truth.

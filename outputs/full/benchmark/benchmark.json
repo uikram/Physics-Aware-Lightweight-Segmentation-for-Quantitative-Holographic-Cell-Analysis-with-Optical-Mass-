@@ -1,0 +1,883 @@
+{
+  "protocol": {
+    "version": 5,
+    "precision": "fp32",
+    "backends": [
+      "pytorch",
+      "onnx"
+    ],
+    "combinations_per_seed": 6,
+    "batch_size": 1,
+    "warmup_iterations": 50,
+    "timed_iterations": 500,
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "scope": "model forward pass only, deployment input size per architecture",
+    "weights": "trained reference checkpoint (best.pt of the selected rank), LoRA merged",
+    "ort_sessions_per_seed": 3,
+    "ort_session_pooling": "inside one seed the timed runs of the fresh sessions are pooled",
+    "onnx_io_binding": true,
+    "ort_arena_extend_strategy": "kSameAsRequested",
+    "accuracy_in_timed_loop": false,
+    "metrics": {
+      "latency_p50_ms": "50th percentile of the per-inference latencies of one seed",
+      "latency_p99_ms": "99th percentile of the per-inference latencies of one seed",
+      "fps": "1000 / latency_p50_ms of the same seed",
+      "peak_vram_mb": "device-level GPU memory used after the timed loop minus before the model was placed (weights, activations, workspace, device inputs; CUDA context excluded); ONNX Runtime: largest value over the fresh sessions of the seed"
+    },
+    "aggregation": "per-seed values; summary = mean and sample SD (n - 1) over seeds of the per-seed values; latency samples of different seeds are not pooled",
+    "arch_order_per_seed": {
+      "42": [
+        "edge_sam",
+        "mobile_sam",
+        "mobilenet_unet"
+      ],
+      "43": [
+        "mobile_sam",
+        "mobilenet_unet",
+        "edge_sam"
+      ],
+      "44": [
+        "mobilenet_unet",
+        "edge_sam",
+        "mobile_sam"
+      ]
+    },
+    "tf32": {
+      "torch_cudnn_allow_tf32": false,
+      "torch_matmul_allow_tf32": false,
+      "torch_float32_matmul_precision": "highest",
+      "NVIDIA_TF32_OVERRIDE": "0",
+      "BENCH_TF32": "0",
+      "mode": "strict FP32 (TF32 off)",
+      "strict_effective": true
+    }
+  },
+  "gpu_name": "NVIDIA RTX A5000",
+  "host_details": {
+    "cpu_logical_cores": 48,
+    "cpu_model": "Intel(R) Xeon(R) Silver 4214 CPU @ 2.20GHz",
+    "ram_gb": 125.5,
+    "gpu_name": "NVIDIA RTX A5000",
+    "gpu_driver": "530.30.02",
+    "gpu_memory_total_mb": 24564.0,
+    "gpu_max_sm_clock_mhz": 2100.0,
+    "gpu_power_limit_w": 230.0,
+    "ort_version": "1.16.3",
+    "ort_available_providers": [
+      "TensorrtExecutionProvider",
+      "CUDAExecutionProvider",
+      "AzureExecutionProvider",
+      "CPUExecutionProvider"
+    ]
+  },
+  "gpu_at_start_of_seeds": {
+    "42": {
+      "sm_clock_mhz": 0.0,
+      "sm_clock_max_mhz": 2100.0,
+      "temperature_c": 32.0,
+      "power_w": 21.09,
+      "utilization_pct": 0.0,
+      "memory_used_mb": 3.0,
+      "physical_gpu": 2
+    },
+    "43": {
+      "sm_clock_mhz": 615.0,
+      "sm_clock_max_mhz": 2100.0,
+      "temperature_c": 62.0,
+      "power_w": 50.94,
+      "utilization_pct": 0.0,
+      "memory_used_mb": 3.0,
+      "physical_gpu": 2
+    },
+    "44": {
+      "sm_clock_mhz": 1695.0,
+      "sm_clock_max_mhz": 2100.0,
+      "temperature_c": 62.0,
+      "power_w": 76.69,
+      "utilization_pct": 0.0,
+      "memory_used_mb": 3.0,
+      "physical_gpu": 2
+    }
+  },
+  "rows": [
+    {
+      "architecture": "edge_sam",
+      "precision": "fp32",
+      "backend": "pytorch",
+      "input_size": 256,
+      "batch_size": 1,
+      "weights": "trained",
+      "n_seeds": 3,
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "latency_p50_ms": 10.636822630961737,
+      "latency_p50_ms_sd": 1.4482206591831888,
+      "latency_p50_ms_per_seed": [
+        9.879687801003456,
+        12.306669726967812,
+        9.72411036491394
+      ],
+      "latency_p99_ms": 12.973000059525171,
+      "latency_p99_ms_sd": 1.5255564211824753,
+      "latency_p99_ms_per_seed": [
+        12.818404920399189,
+        14.569967873394488,
+        11.530627384781837
+      ],
+      "fps": 95.10389847884171,
+      "fps_sd": 12.01928567763684,
+      "fps_per_seed": [
+        101.2177732881835,
+        81.25675119148467,
+        102.837170956857
+      ],
+      "peak_vram_mb": 42.0,
+      "peak_vram_mb_sd": 0.0,
+      "peak_vram_mb_per_seed": [
+        42.0,
+        42.0,
+        42.0
+      ]
+    },
+    {
+      "architecture": "edge_sam",
+      "precision": "fp32",
+      "backend": "onnx",
+      "input_size": 256,
+      "batch_size": 1,
+      "weights": "trained",
+      "n_seeds": 3,
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "latency_p50_ms": 4.10845,
+      "latency_p50_ms_sd": 0.43135670853714553,
+      "latency_p50_ms_per_seed": [
+        3.61045,
+        4.36555,
+        4.34935
+      ],
+      "latency_p99_ms": 5.576404666666666,
+      "latency_p99_ms_sd": 0.3057973244394614,
+      "latency_p99_ms_per_seed": [
+        5.223659,
+        5.738997999999999,
+        5.766557
+      ],
+      "fps": 245.31980308847355,
+      "fps_sd": 27.416471133355852,
+      "fps_per_seed": [
+        276.97378443130356,
+        229.06621158845965,
+        229.91941324565738
+      ],
+      "peak_vram_mb": 118.66666666666667,
+      "peak_vram_mb_sd": 16.65332799572906,
+      "peak_vram_mb_per_seed": [
+        132.0,
+        100.0,
+        124.0
+      ],
+      "argmax_agreement_pct": 100.0,
+      "max_abs_logit_diff": 0.00018024444580078125
+    },
+    {
+      "architecture": "mobile_sam",
+      "precision": "fp32",
+      "backend": "pytorch",
+      "input_size": 1024,
+      "batch_size": 1,
+      "weights": "trained",
+      "n_seeds": 3,
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "latency_p50_ms": 20.350353171428043,
+      "latency_p50_ms_sd": 0.1472057750043513,
+      "latency_p50_ms_per_seed": [
+        20.186644047498703,
+        20.47181874513626,
+        20.39259672164917
+      ],
+      "latency_p99_ms": 20.505763875941437,
+      "latency_p99_ms_sd": 0.12862343693552533,
+      "latency_p99_ms_per_seed": [
+        20.387029387056828,
+        20.6424006447196,
+        20.48786159604788
+      ],
+      "fps": 49.1409154493874,
+      "fps_sd": 0.3564879537726111,
+      "fps_per_seed": [
+        49.53770411996285,
+        48.847638426731486,
+        49.03740380146786
+      ],
+      "peak_vram_mb": 358.0,
+      "peak_vram_mb_sd": 0.0,
+      "peak_vram_mb_per_seed": [
+        358.0,
+        358.0,
+        358.0
+      ]
+    },
+    {
+      "architecture": "mobile_sam",
+      "precision": "fp32",
+      "backend": "onnx",
+      "input_size": 1024,
+      "batch_size": 1,
+      "weights": "trained",
+      "n_seeds": 3,
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "latency_p50_ms": 25.4345,
+      "latency_p50_ms_sd": 0.20868978772331162,
+      "latency_p50_ms_per_seed": [
+        25.1942,
+        25.539050000000003,
+        25.57025
+      ],
+      "latency_p99_ms": 25.563611999999996,
+      "latency_p99_ms_sd": 0.17831463410780204,
+      "latency_p99_ms_per_seed": [
+        25.357783,
+        25.661844,
+        25.671208999999998
+      ],
+      "fps": 39.31844901798865,
+      "fps_sd": 0.32410478749874544,
+      "fps_per_seed": [
+        39.69167506807123,
+        39.155724273220805,
+        39.107947712673905
+      ],
+      "peak_vram_mb": 1159.3333333333333,
+      "peak_vram_mb_sd": 32.331615074619044,
+      "peak_vram_mb_per_seed": [
+        1178.0,
+        1122.0,
+        1178.0
+      ],
+      "argmax_agreement_pct": 99.99990463256836,
+      "max_abs_logit_diff": 0.000244140625
+    },
+    {
+      "architecture": "mobilenet_unet",
+      "precision": "fp32",
+      "backend": "pytorch",
+      "input_size": 256,
+      "batch_size": 1,
+      "weights": "trained",
+      "n_seeds": 3,
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "latency_p50_ms": 5.65761203567187,
+      "latency_p50_ms_sd": 0.09868877185628991,
+      "latency_p50_ms_per_seed": [
+        5.705665796995163,
+        5.723070353269577,
+        5.54409995675087
+      ],
+      "latency_p99_ms": 7.997389944891135,
+      "latency_p99_ms_sd": 0.6252945540997443,
+      "latency_p99_ms_per_seed": [
+        7.2955044358968735,
+        8.201666995882988,
+        8.494998402893543
+      ],
+      "fps": 176.78923182837616,
+      "fps_sd": 3.114130372010334,
+      "fps_per_seed": [
+        175.26438378613778,
+        174.73138337862687,
+        180.37192832036382
+      ],
+      "peak_vram_mb": 52.0,
+      "peak_vram_mb_sd": 0.0,
+      "peak_vram_mb_per_seed": [
+        52.0,
+        52.0,
+        52.0
+      ]
+    },
+    {
+      "architecture": "mobilenet_unet",
+      "precision": "fp32",
+      "backend": "onnx",
+      "input_size": 256,
+      "batch_size": 1,
+      "weights": "trained",
+      "n_seeds": 3,
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "latency_p50_ms": 2.5313,
+      "latency_p50_ms_sd": 0.18700002005347496,
+      "latency_p50_ms_per_seed": [
+        2.32015,
+        2.59775,
+        2.676
+      ],
+      "latency_p99_ms": 3.3280786666666646,
+      "latency_p99_ms_sd": 0.7920093909704184,
+      "latency_p99_ms_per_seed": [
+        2.4972679999999996,
+        3.4124339999999944,
+        4.074534
+      ],
+      "fps": 396.549068938625,
+      "fps_sd": 30.36723142035116,
+      "fps_per_seed": [
+        431.00661595155486,
+        384.94851313636804,
+        373.69207772795215
+      ],
+      "peak_vram_mb": 147.33333333333334,
+      "peak_vram_mb_sd": 4.163331998932266,
+      "peak_vram_mb_per_seed": [
+        144.0,
+        146.0,
+        152.0
+      ],
+      "argmax_agreement_pct": 100.0,
+      "max_abs_logit_diff": 0.00013780593872070312
+    }
+  ],
+  "per_seed": [
+    {
+      "architecture": "edge_sam",
+      "precision": "fp32",
+      "backend": "pytorch",
+      "seed": 42,
+      "input_size": 256,
+      "batch_size": 1,
+      "weights": "trained",
+      "checkpoint_sha256_16": "8fd6b79896b2964c",
+      "latency_p50_ms": 9.879687801003456,
+      "latency_p99_ms": 12.818404920399189,
+      "fps": 101.2177732881835,
+      "peak_vram_mb": 42.0,
+      "n_timed": 500
+    },
+    {
+      "architecture": "edge_sam",
+      "precision": "fp32",
+      "backend": "onnx",
+      "seed": 42,
+      "input_size": 256,
+      "batch_size": 1,
+      "weights": "trained",
+      "checkpoint_sha256_16": "8fd6b79896b2964c",
+      "latency_p50_ms": 3.61045,
+      "latency_p99_ms": 5.223659,
+      "fps": 276.97378443130356,
+      "peak_vram_mb": 132.0,
+      "n_timed": 1500,
+      "session_p50_ms": [
+        4.445433616638184,
+        3.56195867061615,
+        3.4871064126491547
+      ],
+      "peak_vram_mb_by_session": [
+        132.0,
+        124.0,
+        100.0
+      ],
+      "argmax_agreement_pct": 100.0,
+      "max_abs_logit_diff": 0.00011110305786132812
+    },
+    {
+      "architecture": "mobile_sam",
+      "precision": "fp32",
+      "backend": "pytorch",
+      "seed": 42,
+      "input_size": 1024,
+      "batch_size": 1,
+      "weights": "trained",
+      "checkpoint_sha256_16": "793b2b2171afcc32",
+      "latency_p50_ms": 20.186644047498703,
+      "latency_p99_ms": 20.387029387056828,
+      "fps": 49.53770411996285,
+      "peak_vram_mb": 358.0,
+      "n_timed": 500
+    },
+    {
+      "architecture": "mobile_sam",
+      "precision": "fp32",
+      "backend": "onnx",
+      "seed": 42,
+      "input_size": 1024,
+      "batch_size": 1,
+      "weights": "trained",
+      "checkpoint_sha256_16": "793b2b2171afcc32",
+      "latency_p50_ms": 25.1942,
+      "latency_p99_ms": 25.357783,
+      "fps": 39.69167506807123,
+      "peak_vram_mb": 1178.0,
+      "n_timed": 1500,
+      "session_p50_ms": [
+        25.073425844311714,
+        25.193091481924057,
+        25.304678827524185
+      ],
+      "peak_vram_mb_by_session": [
+        1178.0,
+        1058.0,
+        1058.0
+      ],
+      "argmax_agreement_pct": 100.0,
+      "max_abs_logit_diff": 0.00018310546875
+    },
+    {
+      "architecture": "mobilenet_unet",
+      "precision": "fp32",
+      "backend": "pytorch",
+      "seed": 42,
+      "input_size": 256,
+      "batch_size": 1,
+      "weights": "trained",
+      "checkpoint_sha256_16": "9ebcf24901c6e3d6",
+      "latency_p50_ms": 5.705665796995163,
+      "latency_p99_ms": 7.2955044358968735,
+      "fps": 175.26438378613778,
+      "peak_vram_mb": 52.0,
+      "n_timed": 500
+    },
+    {
+      "architecture": "mobilenet_unet",
+      "precision": "fp32",
+      "backend": "onnx",
+      "seed": 42,
+      "input_size": 256,
+      "batch_size": 1,
+      "weights": "trained",
+      "checkpoint_sha256_16": "9ebcf24901c6e3d6",
+      "latency_p50_ms": 2.32015,
+      "latency_p99_ms": 2.4972679999999996,
+      "fps": 431.00661595155486,
+      "peak_vram_mb": 144.0,
+      "n_timed": 1500,
+      "session_p50_ms": [
+        2.243533730506897,
+        2.3726895451545715,
+        2.3145973682403564
+      ],
+      "peak_vram_mb_by_session": [
+        144.0,
+        144.0,
+        144.0
+      ],
+      "argmax_agreement_pct": 100.0,
+      "max_abs_logit_diff": 0.0001201629638671875
+    },
+    {
+      "architecture": "mobile_sam",
+      "precision": "fp32",
+      "backend": "pytorch",
+      "seed": 43,
+      "input_size": 1024,
+      "batch_size": 1,
+      "weights": "trained",
+      "checkpoint_sha256_16": "793b2b2171afcc32",
+      "latency_p50_ms": 20.47181874513626,
+      "latency_p99_ms": 20.6424006447196,
+      "fps": 48.847638426731486,
+      "peak_vram_mb": 358.0,
+      "n_timed": 500
+    },
+    {
+      "architecture": "mobile_sam",
+      "precision": "fp32",
+      "backend": "onnx",
+      "seed": 43,
+      "input_size": 1024,
+      "batch_size": 1,
+      "weights": "trained",
+      "checkpoint_sha256_16": "793b2b2171afcc32",
+      "latency_p50_ms": 25.539050000000003,
+      "latency_p99_ms": 25.661844,
+      "fps": 39.155724273220805,
+      "peak_vram_mb": 1122.0,
+      "n_timed": 1500,
+      "session_p50_ms": [
+        25.361081585288048,
+        25.5520511418581,
+        25.591278448700905
+      ],
+      "peak_vram_mb_by_session": [
+        1122.0,
+        1058.0,
+        1058.0
+      ],
+      "argmax_agreement_pct": 100.0,
+      "max_abs_logit_diff": 0.000244140625
+    },
+    {
+      "architecture": "mobilenet_unet",
+      "precision": "fp32",
+      "backend": "pytorch",
+      "seed": 43,
+      "input_size": 256,
+      "batch_size": 1,
+      "weights": "trained",
+      "checkpoint_sha256_16": "9ebcf24901c6e3d6",
+      "latency_p50_ms": 5.723070353269577,
+      "latency_p99_ms": 8.201666995882988,
+      "fps": 174.73138337862687,
+      "peak_vram_mb": 52.0,
+      "n_timed": 500
+    },
+    {
+      "architecture": "mobilenet_unet",
+      "precision": "fp32",
+      "backend": "onnx",
+      "seed": 43,
+      "input_size": 256,
+      "batch_size": 1,
+      "weights": "trained",
+      "checkpoint_sha256_16": "9ebcf24901c6e3d6",
+      "latency_p50_ms": 2.59775,
+      "latency_p99_ms": 3.4124339999999944,
+      "fps": 384.94851313636804,
+      "peak_vram_mb": 146.0,
+      "n_timed": 1500,
+      "session_p50_ms": [
+        2.597752958536148,
+        2.674143761396408,
+        2.3362115025520325
+      ],
+      "peak_vram_mb_by_session": [
+        144.0,
+        146.0,
+        144.0
+      ],
+      "argmax_agreement_pct": 100.0,
+      "max_abs_logit_diff": 0.00013780593872070312
+    },
+    {
+      "architecture": "edge_sam",
+      "precision": "fp32",
+      "backend": "pytorch",
+      "seed": 43,
+      "input_size": 256,
+      "batch_size": 1,
+      "weights": "trained",
+      "checkpoint_sha256_16": "8fd6b79896b2964c",
+      "latency_p50_ms": 12.306669726967812,
+      "latency_p99_ms": 14.569967873394488,
+      "fps": 81.25675119148467,
+      "peak_vram_mb": 42.0,
+      "n_timed": 500
+    },
+    {
+      "architecture": "edge_sam",
+      "precision": "fp32",
+      "backend": "onnx",
+      "seed": 43,
+      "input_size": 256,
+      "batch_size": 1,
+      "weights": "trained",
+      "checkpoint_sha256_16": "8fd6b79896b2964c",
+      "latency_p50_ms": 4.36555,
+      "latency_p99_ms": 5.738997999999999,
+      "fps": 229.06621158845965,
+      "peak_vram_mb": 100.0,
+      "n_timed": 1500,
+      "session_p50_ms": [
+        3.433072939515114,
+        4.436960443854332,
+        4.443880170583725
+      ],
+      "peak_vram_mb_by_session": [
+        100.0,
+        100.0,
+        100.0
+      ],
+      "argmax_agreement_pct": 100.0,
+      "max_abs_logit_diff": 0.00018024444580078125
+    },
+    {
+      "architecture": "mobilenet_unet",
+      "precision": "fp32",
+      "backend": "pytorch",
+      "seed": 44,
+      "input_size": 256,
+      "batch_size": 1,
+      "weights": "trained",
+      "checkpoint_sha256_16": "9ebcf24901c6e3d6",
+      "latency_p50_ms": 5.54409995675087,
+      "latency_p99_ms": 8.494998402893543,
+      "fps": 180.37192832036382,
+      "peak_vram_mb": 52.0,
+      "n_timed": 500
+    },
+    {
+      "architecture": "mobilenet_unet",
+      "precision": "fp32",
+      "backend": "onnx",
+      "seed": 44,
+      "input_size": 256,
+      "batch_size": 1,
+      "weights": "trained",
+      "checkpoint_sha256_16": "9ebcf24901c6e3d6",
+      "latency_p50_ms": 2.676,
+      "latency_p99_ms": 4.074534,
+      "fps": 373.69207772795215,
+      "peak_vram_mb": 152.0,
+      "n_timed": 1500,
+      "session_p50_ms": [
+        2.682650461792946,
+        2.6659592986106873,
+        2.673456445336342
+      ],
+      "peak_vram_mb_by_session": [
+        152.0,
+        144.0,
+        144.0
+      ],
+      "argmax_agreement_pct": 100.0,
+      "max_abs_logit_diff": 0.0001277923583984375
+    },
+    {
+      "architecture": "edge_sam",
+      "precision": "fp32",
+      "backend": "pytorch",
+      "seed": 44,
+      "input_size": 256,
+      "batch_size": 1,
+      "weights": "trained",
+      "checkpoint_sha256_16": "8fd6b79896b2964c",
+      "latency_p50_ms": 9.72411036491394,
+      "latency_p99_ms": 11.530627384781837,
+      "fps": 102.837170956857,
+      "peak_vram_mb": 42.0,
+      "n_timed": 500
+    },
+    {
+      "architecture": "edge_sam",
+      "precision": "fp32",
+      "backend": "onnx",
+      "seed": 44,
+      "input_size": 256,
+      "batch_size": 1,
+      "weights": "trained",
+      "checkpoint_sha256_16": "8fd6b79896b2964c",
+      "latency_p50_ms": 4.34935,
+      "latency_p99_ms": 5.766557,
+      "fps": 229.91941324565738,
+      "peak_vram_mb": 124.0,
+      "n_timed": 1500,
+      "session_p50_ms": [
+        4.353856667876244,
+        4.35611791908741,
+        4.339447245001793
+      ],
+      "peak_vram_mb_by_session": [
+        124.0,
+        124.0,
+        100.0
+      ],
+      "argmax_agreement_pct": 100.0,
+      "max_abs_logit_diff": 0.00016641616821289062
+    },
+    {
+      "architecture": "mobile_sam",
+      "precision": "fp32",
+      "backend": "pytorch",
+      "seed": 44,
+      "input_size": 1024,
+      "batch_size": 1,
+      "weights": "trained",
+      "checkpoint_sha256_16": "793b2b2171afcc32",
+      "latency_p50_ms": 20.39259672164917,
+      "latency_p99_ms": 20.48786159604788,
+      "fps": 49.03740380146786,
+      "peak_vram_mb": 358.0,
+      "n_timed": 500
+    },
+    {
+      "architecture": "mobile_sam",
+      "precision": "fp32",
+      "backend": "onnx",
+      "seed": 44,
+      "input_size": 1024,
+      "batch_size": 1,
+      "weights": "trained",
+      "checkpoint_sha256_16": "793b2b2171afcc32",
+      "latency_p50_ms": 25.57025,
+      "latency_p99_ms": 25.671208999999998,
+      "fps": 39.107947712673905,
+      "peak_vram_mb": 1178.0,
+      "n_timed": 1500,
+      "session_p50_ms": [
+        25.290317833423615,
+        25.577237829566002,
+        25.61296708881855
+      ],
+      "peak_vram_mb_by_session": [
+        1178.0,
+        1058.0,
+        1058.0
+      ],
+      "argmax_agreement_pct": 99.99990463256836,
+      "max_abs_logit_diff": 0.0002027750015258789
+    }
+  ],
+  "parameters_by_rank": [
+    {
+      "architecture": "edge_sam",
+      "lora_rank": 2,
+      "params_total": 5770087,
+      "params_trainable": 299959,
+      "encoder_trainable_pct": 2.235379526958991,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 5.198517803977652
+    },
+    {
+      "architecture": "edge_sam",
+      "lora_rank": 4,
+      "params_total": 5848169,
+      "params_trainable": 378041,
+      "encoder_trainable_pct": 3.5809242054513755,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 6.464262575175239
+    },
+    {
+      "architecture": "edge_sam",
+      "lora_rank": 8,
+      "params_total": 6004333,
+      "params_trainable": 534205,
+      "encoder_trainable_pct": 6.163876922823568,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 8.896991555931358
+    },
+    {
+      "architecture": "edge_sam",
+      "lora_rank": 16,
+      "params_total": 6316661,
+      "params_trainable": 846533,
+      "encoder_trainable_pct": 10.935729339526548,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 13.401589858946048
+    },
+    {
+      "architecture": "edge_sam",
+      "lora_rank": 32,
+      "params_total": 6941317,
+      "params_trainable": 1471189,
+      "encoder_trainable_pct": 19.15786636147382,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 21.1946666605199
+    },
+    {
+      "architecture": "mobile_sam",
+      "lora_rank": 2,
+      "params_total": 6675388,
+      "params_trainable": 628640,
+      "encoder_trainable_pct": 0.5437017377533881,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 9.417280313893365
+    },
+    {
+      "architecture": "mobile_sam",
+      "lora_rank": 4,
+      "params_total": 6690236,
+      "params_trainable": 643488,
+      "encoder_trainable_pct": 0.7860005788681618,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 9.618315407707591
+    },
+    {
+      "architecture": "mobile_sam",
+      "lora_rank": 8,
+      "params_total": 6719932,
+      "params_trainable": 673184,
+      "encoder_trainable_pct": 1.2670736542077623,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 10.017720417408986
+    },
+    {
+      "architecture": "mobile_sam",
+      "lora_rank": 16,
+      "params_total": 6779324,
+      "params_trainable": 732576,
+      "encoder_trainable_pct": 2.215358343009247,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 10.806033167908776
+    },
+    {
+      "architecture": "mobile_sam",
+      "lora_rank": 32,
+      "params_total": 6898108,
+      "params_trainable": 851360,
+      "encoder_trainable_pct": 4.058310606988565,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 12.341934918966187
+    },
+    {
+      "architecture": "mobilenet_unet",
+      "lora_rank": 2,
+      "params_total": 7660455,
+      "params_trainable": 5471271,
+      "encoder_trainable_pct": 3.1732959445891735,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 71.42227191465781
+    },
+    {
+      "architecture": "mobilenet_unet",
+      "lora_rank": 4,
+      "params_total": 7698089,
+      "params_trainable": 5508905,
+      "encoder_trainable_pct": 4.758623209969355,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 71.56198116181821
+    },
+    {
+      "architecture": "mobilenet_unet",
+      "lora_rank": 8,
+      "params_total": 7773357,
+      "params_trainable": 5584173,
+      "encoder_trainable_pct": 7.778478005183181,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 71.83734131855773
+    },
+    {
+      "architecture": "mobilenet_unet",
+      "lora_rank": 16,
+      "params_total": 7923893,
+      "params_trainable": 5734709,
+      "encoder_trainable_pct": 13.277937289650321,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 72.37236797619553
+    },
+    {
+      "architecture": "mobilenet_unet",
+      "lora_rank": 32,
+      "params_total": 8224965,
+      "params_trainable": 6035781,
+      "encoder_trainable_pct": 22.518828925760236,
+      "decoder_trainable_pct": 100.0,
+      "overall_trainable_pct": 73.38366789402751
+    }
+  ]
+}

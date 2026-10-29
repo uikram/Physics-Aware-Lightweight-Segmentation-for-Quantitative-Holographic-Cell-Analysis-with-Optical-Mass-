@@ -1,0 +1,870 @@
+{
+  "run_id": "edge_sam_abl_dice_only_r16__s42",
+  "config": "edge_sam|abl_dice_only_r16",
+  "arch": "edge_sam",
+  "lora_rank": 16,
+  "loss": "dice_only",
+  "seed": 42,
+  "run_dir": "outputs/multiseed/runs/edge_sam_abl_dice_only_r16__s42",
+  "status": "complete",
+  "checkpoint": "last",
+  "metrics_json": {
+    "file": "metrics.json",
+    "bytes": 3656,
+    "mtime_ns": 1792859861325199732,
+    "mtime_utc": "2026-10-24T16:37:41+00:00"
+  },
+  "predictions": {
+    "file": "predictions_last.npz",
+    "bytes": 691824,
+    "mtime_ns": 1792859854761188770,
+    "mtime_utc": "2026-10-24T16:37:34+00:00",
+    "sha256": "0143755681ec371ffb7d1cf510e0da711702648301551478c32618117dc73909"
+  },
+  "segmentation": {
+    "mean_dice": 0.7396279210934674,
+    "aji": 0.30617910382661384,
+    "bf1": 0.6436948600326944,
+    "ipe_global_pct": 4.189482213606016,
+    "dice_by_class": {
+      "discocyte": 0.896895527187766,
+      "spherocyte": 0.7740262767707816,
+      "echinocyte": 0.6819480235637354,
+      "stomatocyte": 0.6056418568515868
+    },
+    "ipe_by_class_pct": {
+      "discocyte": 6.302958766307917,
+      "spherocyte": 20.18001067029118,
+      "echinocyte": 29.82163220813402,
+      "stomatocyte": 49.18114994654672
+    },
+    "collapsed_classes": [],
+    "n_collapsed": 0,
+    "trainable_params": 846533,
+    "total_params": 6316661,
+    "epochs_completed": 50
+  },
+  "cells": {
+    "predicted_all": 1479,
+    "predicted_nowrap": 1430,
+    "annotated_nowrap": 1988,
+    "cells_ratio_nowrap": 0.7193158953722334,
+    "wrapping": {
+      "n_cells": 1479,
+      "n_wrapped": 49,
+      "pct_wrapped": 3.313049357674104,
+      "n_images": 66,
+      "n_images_with_wrapped": 27,
+      "by_class": {
+        "discocyte": {
+          "n_cells": 983,
+          "n_wrapped": 3,
+          "pct_wrapped": 0.3051881993896236
+        },
+        "spherocyte": {
+          "n_cells": 248,
+          "n_wrapped": 11,
+          "pct_wrapped": 4.435483870967742
+        },
+        "echinocyte": {
+          "n_cells": 166,
+          "n_wrapped": 21,
+          "pct_wrapped": 12.650602409638553
+        },
+        "stomatocyte": {
+          "n_cells": 82,
+          "n_wrapped": 14,
+          "pct_wrapped": 17.073170731707318
+        }
+      },
+      "by_storage_day": [
+        {
+          "storage_day": 0,
+          "n_cells": 155,
+          "n_wrapped": 0,
+          "pct_wrapped": 0.0
+        },
+        {
+          "storage_day": 5,
+          "n_cells": 156,
+          "n_wrapped": 1,
+          "pct_wrapped": 0.641025641025641
+        },
+        {
+          "storage_day": 8,
+          "n_cells": 121,
+          "n_wrapped": 3,
+          "pct_wrapped": 2.479338842975207
+        },
+        {
+          "storage_day": 12,
+          "n_cells": 113,
+          "n_wrapped": 0,
+          "pct_wrapped": 0.0
+        },
+        {
+          "storage_day": 15,
+          "n_cells": 64,
+          "n_wrapped": 3,
+          "pct_wrapped": 4.6875
+        },
+        {
+          "storage_day": 19,
+          "n_cells": 146,
+          "n_wrapped": 6,
+          "pct_wrapped": 4.10958904109589
+        },
+        {
+          "storage_day": 23,
+          "n_cells": 106,
+          "n_wrapped": 10,
+          "pct_wrapped": 9.433962264150944
+        },
+        {
+          "storage_day": 27,
+          "n_cells": 99,
+          "n_wrapped": 9,
+          "pct_wrapped": 9.090909090909092
+        },
+        {
+          "storage_day": 30,
+          "n_cells": 181,
+          "n_wrapped": 3,
+          "pct_wrapped": 1.6574585635359116
+        },
+        {
+          "storage_day": 37,
+          "n_cells": 150,
+          "n_wrapped": 3,
+          "pct_wrapped": 2.0
+        },
+        {
+          "storage_day": 47,
+          "n_cells": 188,
+          "n_wrapped": 11,
+          "pct_wrapped": 5.851063829787234
+        }
+      ]
+    },
+    "class_counts_nowrap": {
+      "discocyte": {
+        "predicted": 980,
+        "annotated": 1442,
+        "ratio": 0.6796116504854369
+      },
+      "spherocyte": {
+        "predicted": 237,
+        "annotated": 245,
+        "ratio": 0.9673469387755103
+      },
+      "echinocyte": {
+        "predicted": 145,
+        "annotated": 202,
+        "ratio": 0.7178217821782178
+      },
+      "stomatocyte": {
+        "predicted": 68,
+        "annotated": 99,
+        "ratio": 0.6868686868686869
+      }
+    },
+    "class_counts_all": {
+      "discocyte": {
+        "predicted": 983,
+        "annotated": 1450,
+        "ratio": 0.6779310344827586
+      },
+      "spherocyte": {
+        "predicted": 248,
+        "annotated": 259,
+        "ratio": 0.9575289575289575
+      },
+      "echinocyte": {
+        "predicted": 166,
+        "annotated": 230,
+        "ratio": 0.7217391304347827
+      },
+      "stomatocyte": {
+        "predicted": 82,
+        "annotated": 110,
+        "ratio": 0.7454545454545455
+      }
+    },
+    "composition_error_nowrap": {
+      "mean_abs_pp": 2.1803959687728076,
+      "max_abs_pp": 9.359203092476957,
+      "per_day_mean_abs_pp": {
+        "0": 1.4385353095030537,
+        "5": 1.190949396116801,
+        "8": 2.161016949152541,
+        "12": 0.969603693728358,
+        "15": 3.978990927900687,
+        "19": 1.8738977072310403,
+        "23": 1.1574074074074088,
+        "27": 1.4157706093189981,
+        "30": 1.9035381305283272,
+        "37": 3.2150439793751913,
+        "47": 4.679601546238475
+      }
+    },
+    "composition_error_all": {
+      "mean_abs_pp": 2.1875529294994744,
+      "max_abs_pp": 10.271030805687204,
+      "per_day_mean_abs_pp": {
+        "0": 1.4385353095030537,
+        "5": 1.106676342525398,
+        "8": 2.6461105140273498,
+        "12": 0.9903076274757706,
+        "15": 5.20586492890995,
+        "19": 1.3331702544031296,
+        "23": 0.6918238993710705,
+        "27": 1.3043051878003307,
+        "30": 1.4538360767784941,
+        "37": 3.125,
+        "47": 4.767452083699667
+      }
+    }
+  },
+  "dry_mass": {
+    "agreement_nowrap": {
+      "n_images": 66,
+      "pearson_r": 0.47170851937962927,
+      "lin_ccc": 0.4349876478523773,
+      "bland_altman_mean_pg": -0.5533292952185364,
+      "bland_altman_loa_low_pg": -4.241799074811466,
+      "bland_altman_loa_high_pg": 3.135140484374393,
+      "median_paired_rel_diff_pct": -1.5981228045498852,
+      "mdare_pct": 3.8832172618228773,
+      "mean_abs_rel_pct": 4.918971031768368,
+      "max_abs_rel_pct": 22.648696986649973
+    },
+    "agreement_all": {
+      "n_images": 66,
+      "pearson_r": 0.4726848186038524,
+      "lin_ccc": 0.4369201290500303,
+      "bland_altman_mean_pg": -0.4755839445663268,
+      "bland_altman_loa_low_pg": -3.9865717235336637,
+      "bland_altman_loa_high_pg": 3.03540383440101,
+      "median_paired_rel_diff_pct": -1.3949574004484673,
+      "mdare_pct": 3.6350946919054854,
+      "mean_abs_rel_pct": 4.593073577971555,
+      "max_abs_rel_pct": 22.648696986649973
+    },
+    "day0_median_dry_mass_pg_nowrap": 27.971029874009986,
+    "consistency_nowrap": {
+      "mch_reference_pg": 30.0,
+      "n_cells": 1430,
+      "fraction_cells_max_phase_above_2pi": 0.0,
+      "day0_n_cells": 155,
+      "day0_median_dry_mass_pg": 27.971029874009986,
+      "day0_median_over_mch": 0.9323676624669995,
+      "day0_median_area_um2": 45.329580230000005
+    },
+    "consistency_all": {
+      "mch_reference_pg": 30.0,
+      "n_cells": 1479,
+      "fraction_cells_max_phase_above_2pi": 0.0,
+      "day0_n_cells": 155,
+      "day0_median_dry_mass_pg": 27.971029874009986,
+      "day0_median_over_mch": 0.9323676624669995,
+      "day0_median_area_um2": 45.329580230000005
+    }
+  },
+  "storage": {
+    "pred_nowrap": {
+      "n_images": 66,
+      "area_filter_um2": null,
+      "area": {
+        "spearman_rho": -0.7692787893605973,
+        "spearman_p": 4.517743446087668e-14,
+        "early_median": 46.5287480075,
+        "late_median": 25.3330682,
+        "late_vs_early_pct": -45.553943991966975,
+        "mannwhitney_p": 5.3176081164051485e-06,
+        "n_early": 18,
+        "n_late": 12
+      },
+      "dry_mass": {
+        "spearman_rho": -0.3905926471864997,
+        "spearman_p": 0.001185279870464749,
+        "early_median": 29.227814564954105,
+        "late_median": 27.368268899389022,
+        "late_vs_early_pct": -6.362246692897767,
+        "mannwhitney_p": 0.002471277026939461,
+        "n_early": 18,
+        "n_late": 12
+      },
+      "circularity": {
+        "spearman_rho": -0.30709183658384814,
+        "spearman_p": 0.012138843059173773,
+        "early_median": 0.9101967211033173,
+        "late_median": 0.8523879396492958,
+        "late_vs_early_pct": -6.351240354277166,
+        "mannwhitney_p": 0.0013926509773067208,
+        "n_early": 18,
+        "n_late": 12
+      },
+      "dry_mass_given_area_partial_spearman": {
+        "rho": 0.021528683543063948,
+        "p": 0.8637693466649061
+      }
+    },
+    "pred_all": {
+      "n_images": 66,
+      "area_filter_um2": null,
+      "area": {
+        "spearman_rho": -0.7946824701601463,
+        "spearman_p": 1.6536216933190687e-15,
+        "early_median": 46.18093744000001,
+        "late_median": 25.1825233275,
+        "late_vs_early_pct": -45.46987410071943,
+        "mannwhitney_p": 5.3176081164051485e-06,
+        "n_early": 18,
+        "n_late": 12
+      },
+      "dry_mass": {
+        "spearman_rho": -0.34607564876279695,
+        "spearman_p": 0.004422534981538724,
+        "early_median": 29.063750738710358,
+        "late_median": 27.502204426423003,
+        "late_vs_early_pct": -5.372831353826301,
+        "mannwhitney_p": 0.00814893182642933,
+        "n_early": 18,
+        "n_late": 12
+      },
+      "circularity": {
+        "spearman_rho": -0.31187049743159023,
+        "spearman_p": 0.01079821007125657,
+        "early_median": 0.9071812814416973,
+        "late_median": 0.8501273736220667,
+        "late_vs_early_pct": -6.2891407689718015,
+        "mannwhitney_p": 0.0016113934364989817,
+        "n_early": 18,
+        "n_late": 12
+      },
+      "dry_mass_given_area_partial_spearman": {
+        "rho": -0.03889215537769204,
+        "p": 0.7565292220797089
+      }
+    },
+    "per_day_pred_nowrap": [
+      {
+        "storage_day": 0,
+        "n_cells": 155,
+        "n_images": 6,
+        "area_um2_mean": 50.44482371535484,
+        "area_um2_sd": 22.273100378740725,
+        "circularity_mean": 0.8661194375712737,
+        "circularity_sd": 0.1475474407804237,
+        "dry_mass_pg_mean": 31.674853464206794,
+        "dry_mass_pg_sd": 14.255567766272975,
+        "composition_pct": {
+          "discocyte": 90.96774193548387,
+          "spherocyte": 0.0,
+          "echinocyte": 1.2903225806451613,
+          "stomatocyte": 7.741935483870968
+        }
+      },
+      {
+        "storage_day": 5,
+        "n_cells": 155,
+        "n_images": 6,
+        "area_um2_mean": 57.46399932793548,
+        "area_um2_sd": 29.723619347203716,
+        "circularity_mean": 0.8154093754055827,
+        "circularity_sd": 0.19281790989332992,
+        "dry_mass_pg_mean": 36.74567905965665,
+        "dry_mass_pg_sd": 18.22457431140658,
+        "composition_pct": {
+          "discocyte": 92.90322580645162,
+          "spherocyte": 0.0,
+          "echinocyte": 0.6451612903225806,
+          "stomatocyte": 6.451612903225806
+        }
+      },
+      {
+        "storage_day": 8,
+        "n_cells": 118,
+        "n_images": 6,
+        "area_um2_mean": 57.91041549550849,
+        "area_um2_sd": 32.68860523536298,
+        "circularity_mean": 0.7831121412263742,
+        "circularity_sd": 0.19827124186965828,
+        "dry_mass_pg_mean": 38.51849949753897,
+        "dry_mass_pg_sd": 23.234235380850212,
+        "composition_pct": {
+          "discocyte": 90.67796610169492,
+          "spherocyte": 0.0,
+          "echinocyte": 3.389830508474576,
+          "stomatocyte": 5.932203389830509
+        }
+      },
+      {
+        "storage_day": 12,
+        "n_cells": 113,
+        "n_images": 6,
+        "area_um2_mean": 59.82690903823009,
+        "area_um2_sd": 35.60836562278676,
+        "circularity_mean": 0.7633420380021375,
+        "circularity_sd": 0.21938776134196555,
+        "dry_mass_pg_mean": 38.81669178994176,
+        "dry_mass_pg_sd": 22.924740674937297,
+        "composition_pct": {
+          "discocyte": 88.49557522123894,
+          "spherocyte": 0.8849557522123894,
+          "echinocyte": 4.424778761061947,
+          "stomatocyte": 6.1946902654867255
+        }
+      },
+      {
+        "storage_day": 15,
+        "n_cells": 61,
+        "n_images": 6,
+        "area_um2_mean": 55.4478296142623,
+        "area_um2_sd": 34.97567504852383,
+        "circularity_mean": 0.7295115511469061,
+        "circularity_sd": 0.1948381736100887,
+        "dry_mass_pg_mean": 38.18308345165982,
+        "dry_mass_pg_sd": 23.161828693637418,
+        "composition_pct": {
+          "discocyte": 85.24590163934425,
+          "spherocyte": 1.639344262295082,
+          "echinocyte": 1.639344262295082,
+          "stomatocyte": 11.475409836065573
+        }
+      },
+      {
+        "storage_day": 19,
+        "n_cells": 140,
+        "n_images": 6,
+        "area_um2_mean": 49.40497083264287,
+        "area_um2_sd": 27.66839822595308,
+        "circularity_mean": 0.8215466119688449,
+        "circularity_sd": 0.1675327350012772,
+        "dry_mass_pg_mean": 32.9289190580089,
+        "dry_mass_pg_sd": 17.481886330537616,
+        "composition_pct": {
+          "discocyte": 79.28571428571428,
+          "spherocyte": 2.857142857142857,
+          "echinocyte": 6.428571428571428,
+          "stomatocyte": 11.428571428571429
+        }
+      },
+      {
+        "storage_day": 23,
+        "n_cells": 96,
+        "n_images": 6,
+        "area_um2_mean": 46.59882924125,
+        "area_um2_sd": 18.55906710283999,
+        "circularity_mean": 0.846138027309976,
+        "circularity_sd": 0.16976718840727836,
+        "dry_mass_pg_mean": 30.125706488620324,
+        "dry_mass_pg_sd": 11.66958976303264,
+        "composition_pct": {
+          "discocyte": 84.375,
+          "spherocyte": 4.166666666666666,
+          "echinocyte": 9.375,
+          "stomatocyte": 2.083333333333333
+        }
+      },
+      {
+        "storage_day": 27,
+        "n_cells": 90,
+        "n_images": 6,
+        "area_um2_mean": 47.460049736,
+        "area_um2_sd": 20.711955973478183,
+        "circularity_mean": 0.833673276965895,
+        "circularity_sd": 0.15510176901821518,
+        "dry_mass_pg_mean": 32.26243193542024,
+        "dry_mass_pg_sd": 12.426965165806644,
+        "composition_pct": {
+          "discocyte": 75.55555555555556,
+          "spherocyte": 10.0,
+          "echinocyte": 12.222222222222221,
+          "stomatocyte": 2.2222222222222223
+        }
+      },
+      {
+        "storage_day": 30,
+        "n_cells": 178,
+        "n_images": 6,
+        "area_um2_mean": 40.94167257078652,
+        "area_um2_sd": 22.1678726410847,
+        "circularity_mean": 0.7985721318126116,
+        "circularity_sd": 0.17606265425412904,
+        "dry_mass_pg_mean": 30.643864359964315,
+        "dry_mass_pg_sd": 12.870350416145593,
+        "composition_pct": {
+          "discocyte": 56.17977528089888,
+          "spherocyte": 20.224719101123593,
+          "echinocyte": 21.34831460674157,
+          "stomatocyte": 2.247191011235955
+        }
+      },
+      {
+        "storage_day": 37,
+        "n_cells": 147,
+        "n_images": 6,
+        "area_um2_mean": 35.1322221762585,
+        "area_um2_sd": 16.36651854500358,
+        "circularity_mean": 0.8327162578093693,
+        "circularity_sd": 0.14110852550357805,
+        "dry_mass_pg_mean": 29.808620423403443,
+        "dry_mass_pg_sd": 11.260459607916458,
+        "composition_pct": {
+          "discocyte": 37.41496598639456,
+          "spherocyte": 43.53741496598639,
+          "echinocyte": 19.047619047619047,
+          "stomatocyte": 0.0
+        }
+      },
+      {
+        "storage_day": 47,
+        "n_cells": 177,
+        "n_images": 6,
+        "area_um2_mean": 29.73333087502825,
+        "area_um2_sd": 14.560148072031705,
+        "circularity_mean": 0.7871727652743097,
+        "circularity_sd": 0.15831436462062726,
+        "dry_mass_pg_mean": 30.3164977876578,
+        "dry_mass_pg_sd": 11.412578211763375,
+        "composition_pct": {
+          "discocyte": 11.864406779661017,
+          "spherocyte": 66.66666666666666,
+          "echinocyte": 20.903954802259886,
+          "stomatocyte": 0.5649717514124294
+        }
+      }
+    ],
+    "per_day_pred_all": [
+      {
+        "storage_day": 0,
+        "n_cells": 155,
+        "n_images": 6,
+        "area_um2_mean": 50.44482371535484,
+        "area_um2_sd": 22.273100378740725,
+        "circularity_mean": 0.8661194375712737,
+        "circularity_sd": 0.1475474407804237,
+        "dry_mass_pg_mean": 31.674853464206794,
+        "dry_mass_pg_sd": 14.255567766272975,
+        "composition_pct": {
+          "discocyte": 90.96774193548387,
+          "spherocyte": 0.0,
+          "echinocyte": 1.2903225806451613,
+          "stomatocyte": 7.741935483870968
+        }
+      },
+      {
+        "storage_day": 5,
+        "n_cells": 156,
+        "n_images": 6,
+        "area_um2_mean": 57.235669717628205,
+        "area_um2_sd": 29.764518421036357,
+        "circularity_mean": 0.8138641695745024,
+        "circularity_sd": 0.19316148327555518,
+        "dry_mass_pg_mean": 36.67516004519275,
+        "dry_mass_pg_sd": 18.187030515638774,
+        "composition_pct": {
+          "discocyte": 92.3076923076923,
+          "spherocyte": 0.0,
+          "echinocyte": 0.641025641025641,
+          "stomatocyte": 7.051282051282051
+        }
+      },
+      {
+        "storage_day": 8,
+        "n_cells": 121,
+        "n_images": 6,
+        "area_um2_mean": 57.051744500000005,
+        "area_um2_sd": 32.728940616736836,
+        "circularity_mean": 0.7825012738945911,
+        "circularity_sd": 0.19680234117597503,
+        "dry_mass_pg_mean": 38.20764170183286,
+        "dry_mass_pg_sd": 23.026949812535772,
+        "composition_pct": {
+          "discocyte": 88.42975206611571,
+          "spherocyte": 0.0,
+          "echinocyte": 4.958677685950414,
+          "stomatocyte": 6.6115702479338845
+        }
+      },
+      {
+        "storage_day": 12,
+        "n_cells": 113,
+        "n_images": 6,
+        "area_um2_mean": 59.82690903823009,
+        "area_um2_sd": 35.60836562278676,
+        "circularity_mean": 0.7633420380021375,
+        "circularity_sd": 0.21938776134196555,
+        "dry_mass_pg_mean": 38.81669178994176,
+        "dry_mass_pg_sd": 22.924740674937297,
+        "composition_pct": {
+          "discocyte": 88.49557522123894,
+          "spherocyte": 0.8849557522123894,
+          "echinocyte": 4.424778761061947,
+          "stomatocyte": 6.1946902654867255
+        }
+      },
+      {
+        "storage_day": 15,
+        "n_cells": 64,
+        "n_images": 6,
+        "area_um2_mean": 56.57859159734376,
+        "area_um2_sd": 38.82066865837916,
+        "circularity_mean": 0.7223568577399337,
+        "circularity_sd": 0.20495172725443653,
+        "dry_mass_pg_mean": 39.826079208635626,
+        "dry_mass_pg_sd": 27.531482639366665,
+        "composition_pct": {
+          "discocyte": 82.8125,
+          "spherocyte": 1.5625,
+          "echinocyte": 1.5625,
+          "stomatocyte": 14.0625
+        }
+      },
+      {
+        "storage_day": 19,
+        "n_cells": 146,
+        "n_images": 6,
+        "area_um2_mean": 48.99584921753425,
+        "area_um2_sd": 27.428338815417288,
+        "circularity_mean": 0.8184369224601491,
+        "circularity_sd": 0.17177899547457082,
+        "dry_mass_pg_mean": 33.24707121931883,
+        "dry_mass_pg_sd": 17.50425871230865,
+        "composition_pct": {
+          "discocyte": 76.71232876712328,
+          "spherocyte": 2.73972602739726,
+          "echinocyte": 8.21917808219178,
+          "stomatocyte": 12.32876712328767
+        }
+      },
+      {
+        "storage_day": 23,
+        "n_cells": 106,
+        "n_images": 6,
+        "area_um2_mean": 44.80458314698114,
+        "area_um2_sd": 18.53969577781595,
+        "circularity_mean": 0.8504372968842157,
+        "circularity_sd": 0.16230453174451606,
+        "dry_mass_pg_mean": 29.748811039697397,
+        "dry_mass_pg_sd": 11.222527700147085,
+        "composition_pct": {
+          "discocyte": 76.41509433962264,
+          "spherocyte": 4.716981132075472,
+          "echinocyte": 14.150943396226415,
+          "stomatocyte": 4.716981132075472
+        }
+      },
+      {
+        "storage_day": 27,
+        "n_cells": 99,
+        "n_images": 6,
+        "area_um2_mean": 45.578967695555555,
+        "area_um2_sd": 21.141247566020322,
+        "circularity_mean": 0.8263353962573716,
+        "circularity_sd": 0.1539059488495113,
+        "dry_mass_pg_mean": 32.030305902152755,
+        "dry_mass_pg_sd": 12.46101598103792,
+        "composition_pct": {
+          "discocyte": 69.6969696969697,
+          "spherocyte": 12.121212121212121,
+          "echinocyte": 13.131313131313133,
+          "stomatocyte": 5.05050505050505
+        }
+      },
+      {
+        "storage_day": 30,
+        "n_cells": 181,
+        "n_images": 6,
+        "area_um2_mean": 40.616197805414366,
+        "area_um2_sd": 22.12791693178911,
+        "circularity_mean": 0.7990937593149496,
+        "circularity_sd": 0.1747271196611881,
+        "dry_mass_pg_mean": 30.644662259399762,
+        "dry_mass_pg_sd": 12.762896883823862,
+        "composition_pct": {
+          "discocyte": 55.24861878453039,
+          "spherocyte": 20.994475138121548,
+          "echinocyte": 20.994475138121548,
+          "stomatocyte": 2.7624309392265194
+        }
+      },
+      {
+        "storage_day": 37,
+        "n_cells": 150,
+        "n_images": 6,
+        "area_um2_mean": 34.940115194600004,
+        "area_um2_sd": 16.308308509348432,
+        "circularity_mean": 0.8311173428599165,
+        "circularity_sd": 0.1407645668219944,
+        "dry_mass_pg_mean": 29.854404503964155,
+        "dry_mass_pg_sd": 11.166456075437802,
+        "composition_pct": {
+          "discocyte": 36.666666666666664,
+          "spherocyte": 43.333333333333336,
+          "echinocyte": 19.333333333333332,
+          "stomatocyte": 0.6666666666666667
+        }
+      },
+      {
+        "storage_day": 47,
+        "n_cells": 188,
+        "n_images": 6,
+        "area_um2_mean": 29.86034903558511,
+        "area_um2_sd": 14.656414589350439,
+        "circularity_mean": 0.7860493042476803,
+        "circularity_sd": 0.1606738605468156,
+        "dry_mass_pg_mean": 30.727373916552445,
+        "dry_mass_pg_sd": 11.653508061824974,
+        "composition_pct": {
+          "discocyte": 11.170212765957446,
+          "spherocyte": 64.8936170212766,
+          "echinocyte": 23.404255319148938,
+          "stomatocyte": 0.5319148936170213
+        }
+      }
+    ]
+  },
+  "background": {
+    "n_images": 66,
+    "median_abs_rad": 0.0012597441673278809,
+    "p90_abs_rad": 0.003438502550125122,
+    "max_abs_rad": 0.00675511360168457
+  },
+  "reference_sensitivity": {
+    "n_images": 66,
+    "ipe_global_pct": {
+      "annotation_background": 4.189480428981081,
+      "prediction_background": 4.19034552398176,
+      "as_provided": 5.070178028139767
+    },
+    "background_difference_prediction_minus_annotation_rad": {
+      "median_signed": -0.00011169910430908203,
+      "median_abs": 0.0012597143650054932,
+      "max_abs": 0.00675511360168457
+    }
+  },
+  "phase_integral": {
+    "summary": {
+      "run_id": "edge_sam_abl_dice_only_r16__s42",
+      "checkpoint": "last",
+      "n_images": 66,
+      "ipe_global_raw_mean_pct": 4.189480438047193,
+      "ipe_global_asprovided_mean_pct": 5.070178028139767,
+      "ipe_global_bgcorr_mean_pct": 4.258199233527141,
+      "ipe_global_bgcorr_median_pct": 3.544984209556558,
+      "ipe_global_bgcorr_signed_mean_pct": -3.7127511070292143,
+      "ipe_pooled_bgcorr_pct": 3.6713002166744406,
+      "gt_cells": 2049,
+      "matched_cells": 1381,
+      "matched_cells_pct": 67.39873108833578,
+      "unmatched_predicted_components": 870,
+      "n_images_without_wrapped_components": 31,
+      "ipe_global_raw_mean_pct_images_without_wrapped": 2.9487680111572887,
+      "gt_cells_wrapped": 61,
+      "percell_abs_median_pct": 2.3842190849826452,
+      "percell_abs_p90_pct": 14.161502072220255,
+      "percell_signed_median_pct": -1.6713641630164797,
+      "percell_frac_over_10pct": 13.758146270818248,
+      "percell_abs_median_pct_nowrap": 2.3482024179343055,
+      "percell_abs_p90_pct_nowrap": 14.351987878302342,
+      "percell_signed_median_pct_nowrap": -1.619587905411953,
+      "percell_frac_over_10pct_nowrap": 13.612565445026178,
+      "matched_cells_nowrap": 1337
+    },
+    "by_class": {
+      "discocyte": {
+        "images": 66,
+        "absent_in_prediction": 0,
+        "ipe_abs_mean_pct": 6.164242813886663,
+        "ipe_abs_median_pct": 3.43102668016593,
+        "percell_abs_median_pct": 2.240878650022236
+      },
+      "echinocyte": {
+        "images": 53,
+        "absent_in_prediction": 2,
+        "ipe_abs_mean_pct": 29.703923270979566,
+        "ipe_abs_median_pct": 29.468886252634864,
+        "percell_abs_median_pct": 3.1345460189186825
+      },
+      "spherocyte": {
+        "images": 38,
+        "absent_in_prediction": 1,
+        "ipe_abs_mean_pct": 21.0621213167176,
+        "ipe_abs_median_pct": 11.059374995678576,
+        "percell_abs_median_pct": 2.6352168120736668
+      },
+      "stomatocyte": {
+        "images": 58,
+        "absent_in_prediction": 2,
+        "ipe_abs_mean_pct": 47.588103021349085,
+        "ipe_abs_median_pct": 29.453748050477756,
+        "percell_abs_median_pct": 2.6428164846154703
+      }
+    },
+    "strata": [
+      {
+        "run_id": "edge_sam_abl_dice_only_r16__s42",
+        "stratum": "boundary band 0-2 px",
+        "error_rate_pct": 35.136520073265665
+      },
+      {
+        "run_id": "edge_sam_abl_dice_only_r16__s42",
+        "stratum": "boundary band 2-4 px",
+        "error_rate_pct": 13.688618209058713
+      },
+      {
+        "run_id": "edge_sam_abl_dice_only_r16__s42",
+        "stratum": "boundary band 4-8 px",
+        "error_rate_pct": 3.6017740284712962
+      },
+      {
+        "run_id": "edge_sam_abl_dice_only_r16__s42",
+        "stratum": "false negatives in phase quartile Q1",
+        "error_rate_pct": 30.472003831208994
+      },
+      {
+        "run_id": "edge_sam_abl_dice_only_r16__s42",
+        "stratum": "false negatives in phase quartile Q2",
+        "error_rate_pct": 5.801436868071607
+      },
+      {
+        "run_id": "edge_sam_abl_dice_only_r16__s42",
+        "stratum": "false negatives in phase quartile Q3",
+        "error_rate_pct": 3.7432736959975874
+      },
+      {
+        "run_id": "edge_sam_abl_dice_only_r16__s42",
+        "stratum": "false negatives in phase quartile Q4",
+        "error_rate_pct": 3.393013341263675
+      }
+    ]
+  },
+  "outputs": {
+    "cells_pred_csv": "runs/edge_sam_abl_dice_only_r16__s42/cells_pred.csv"
+  },
+  "schema_version": 1,
+  "unit_schema": 1,
+  "provenance": {
+    "generated_utc": "2026-10-27T04:41:26+00:00",
+    "sources": [
+      {
+        "path": "outputs/multiseed/runs/edge_sam_abl_dice_only_r16__s42/metrics.json",
+        "bytes": 3656,
+        "sha256": "577ea6316574df6227521df3eb90de1d5aa021a1ee4e6d08e4b9df2ce7267ae7"
+      },
+      {
+        "path": "outputs/multiseed/runs/edge_sam_abl_dice_only_r16__s42/predictions_last.npz",
+        "bytes": 691824,
+        "sha256": "0143755681ec371ffb7d1cf510e0da711702648301551478c32618117dc73909"
+      }
+    ],
+    "config_sha256": {
+      "configs/base.yaml": "8664a8a49182610bebb8d7698b503c36ff82512e0b15f93f7481cdaa4512689f",
+      "configs/experiments.yaml": "96642e8d74fac13213dd031f57db003ed74db956d956cf96fcef7c8dd28b37f8",
+      "configs/multiseed.yaml": "aec9145d8bd7d827c4f3b295115788480692a6730a9afb832c63aef2ebb90697"
+    },
+    "manifest_sha256": "ab31b31b677ac6733728925347265ce309a71cede056d4dc2842812c3d9a70e1"
+  }
+}
