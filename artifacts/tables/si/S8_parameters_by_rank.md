@@ -1,0 +1,26 @@
+# S8_parameters_by_rank: Trainable parameters by LoRA rank
+
+| Architecture | LoRA rank | Total params (training form) | Trainable params | Trainable (%) | Encoder trainable (%) |
+|---|---|---|---|---|---|
+| EdgeSAM | 2 | 5,770,087 | 299,959 | 5.20 | 2.24 |
+| EdgeSAM | 4 | 5,848,169 | 378,041 | 6.46 | 3.58 |
+| EdgeSAM | 8 | 6,004,333 | 534,205 | 8.90 | 6.16 |
+| EdgeSAM | 16 | 6,316,661 | 846,533 | 13.40 | 10.94 |
+| EdgeSAM | 32 | 6,941,317 | 1,471,189 | 21.19 | 19.16 |
+| MobileSAM | 2 | 6,675,388 | 628,640 | 9.42 | 0.54 |
+| MobileSAM | 4 | 6,690,236 | 643,488 | 9.62 | 0.79 |
+| MobileSAM | 8 | 6,719,932 | 673,184 | 10.02 | 1.27 |
+| MobileSAM | 16 | 6,779,324 | 732,576 | 10.81 | 2.22 |
+| MobileSAM | 32 | 6,898,108 | 851,360 | 12.34 | 4.06 |
+| MobileNet-UNet | 2 | 7,660,455 | 5,471,271 | 71.42 | 3.17 |
+| MobileNet-UNet | 4 | 7,698,089 | 5,508,905 | 71.56 | 4.76 |
+| MobileNet-UNet | 8 | 7,773,357 | 5,584,173 | 71.84 | 7.78 |
+| MobileNet-UNet | 16 | 7,923,893 | 5,734,709 | 72.37 | 13.28 |
+| MobileNet-UNet | 32 | 8,224,965 | 6,035,781 | 73.38 | 22.52 |
+| MobileSAM | full FT | 6,660,540 | 6,660,540 | 100.00 | 100.00 |
+| EdgeSAM | full FT | 5,692,005 | 5,692,005 | 100.00 | 100.00 |
+| MobileNet-UNet | full FT | 7,622,821 | 7,622,821 | 100.00 | 100.00 |
+
+Notes:
+
+* Decoder, output heads, normalisation layers and the single-channel input stem are trainable in every LoRA configuration, so the trainable share differs between architectures. After merging, all ranks have the parameter count of the full fine-tuning model.

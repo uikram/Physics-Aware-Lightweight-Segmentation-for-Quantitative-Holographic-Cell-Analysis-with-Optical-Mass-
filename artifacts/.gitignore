@@ -1,0 +1,5 @@
+# The root .gitignore excludes *.md, *.png and *.pdf; the revision guides and figures in this folder must be tracked.
+!*.md
+!*.png
+!*.pdf
+__pycache__/

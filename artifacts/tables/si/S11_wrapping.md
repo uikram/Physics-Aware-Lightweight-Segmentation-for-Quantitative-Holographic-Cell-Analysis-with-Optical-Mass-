@@ -1,0 +1,26 @@
+# S11_wrapping: Phase-wrapped cells by class and storage day
+
+| Group | Annotated cells | Wrapped | Wrapped (%) |
+|---|---|---|---|
+| class discocyte (1) | 1450.0 | 8.0 | 0.6 |
+| class spherocyte (2) | 259.0 | 14.0 | 5.4 |
+| class echinocyte (3) | 230.0 | 28.0 | 12.2 |
+| class stomatocyte (4) | 110.0 | 11.0 | 10.0 |
+| day 0 | 185.0 | 0.0 | 0.0 |
+| day 5 | 212.0 | 1.0 | 0.5 |
+| day 8 | 223.0 | 3.0 | 1.3 |
+| day 12 | 231.0 | 1.0 | 0.4 |
+| day 15 | 211.0 | 5.0 | 2.4 |
+| day 19 | 168.0 | 6.0 | 3.6 |
+| day 23 | 120.0 | 12.0 | 10.0 |
+| day 27 | 103.0 | 10.0 | 9.7 |
+| day 30 | 194.0 | 6.0 | 3.1 |
+| day 37 | 160.0 | 3.0 | 1.9 |
+| day 47 | 242.0 | 14.0 | 5.8 |
+| all | 2049.0 | 61.0 | 3.0 |
+| predicted, MobileSAM r = 8 |  |  | 3.4 ± 0.3 |
+| predicted, EdgeSAM r = 32 |  |  | 3.8 ± 0.2 |
+
+Notes:
+
+* Rule fixed on 24 Oct 2026 before the corrected results existed (D-21). Wrapped cells are kept for segmentation training and scoring and excluded from dry mass and per-cell phase results.
