@@ -6,7 +6,7 @@
 |---|---|---|
 | 1 | Fig. 1 | framework, corrected labels; image panels are placeholders |
 | 2 | Fig. 1 objects | the same four placeholders, for staging |
-| 3 | Fig. S-4 | phase, phase-gradient magnitude, EdgeSAM (r=32) contours (full 768 × 768 px field) |
+| 3 | Fig. S-4 | as in the SI: phase (rad), phase-gradient magnitude, predicted contours of EdgeSAM (r=32) (blue) and MobileSAM (r=8) (orange), 256 × 256 px window, legend, 20 µm bars (54.2% of the panel) |
 | 4 | Fig. 6 | 4 classes × 6 columns, headers, row labels, 20 µm bars, legend |
 | 5 | Fig. S-5 | five storage days, phase and EdgeSAM (r=32) contours (decorative title removed) |
 
@@ -20,9 +20,11 @@ This writes every panel to `artifacts/figures/objects/<Fig1|FigS4|Fig6|FigS5>/` 
 placeholder. In PowerPoint: right-click the placeholder > Change Picture > From a File. Size, position and the 20 µm bars
 stay as they are.
 
+The Fig. 1 phase, z-score and volume objects contain their colour bar with the values printed next to it (phase: upper
+and lower limit of the window, and 0 when it lies inside the range; z-score: 3 / 0 / −3; volume: high / low), so nothing
+has to be aligned by hand. The placeholders on slides 1 and 2 have the same aspect ratio as these images.
 `artifacts/figures/objects/objects.json` gives, per figure, the chosen image and window, the storage day of each Fig. 6
-row, and the colour-bar limits of Fig. 1. Update the numbers next to the Fig. 1 colour bars (slide 1: 6.3 / 0 / -2.5 and
-3 / 0 / -3) to the values in `objects.json` (`p1_phase_colorbar_rad`; the z-score bar is fixed at -3 to 3).
+row, and the colour-bar limits of Fig. 1.
 
 ## Fig. 1 corrections (slide 1)
 

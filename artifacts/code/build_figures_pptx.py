@@ -82,7 +82,7 @@ def swap_picture(slide, pic, label: str, w_in=None, h_in=None):
     if src is not None:
         src.getparent().remove(src)
     pic.width, pic.height = Inches(w_in), Inches(h_in)
-    pic.name = label.split("\n")[0].split("/")[-1]
+    pic.name = label.split("\n")[-1].split("/")[-1]
     return pic
 
 
@@ -252,46 +252,92 @@ def slide1(prs, s):
     replace_equation_box(s, "TextBox 236", [("𝑺 = 𝚺(𝝓", None), ("i", "sub"), (" − 𝝓", None), ("bg", "sub"),
                                             (") · 𝚫𝒙", None), ("2", "sup")])
     plain_equation_box(s, "TextBox 239", "𝒎 = (𝝀 / 𝟐𝝅𝜶) · 𝑺")
-    # data pictures -> placeholders (square image + separate colour bar where the old picture had one built in)
-    for nm, obj, cbar in (("Picture 18", "Fig1/p1_phase.png", "Fig1/p1_phase_colorbar.png"),
-                          ("Picture 23", "Fig1/p2_norm.png", "Fig1/p2_norm_colorbar.png"),
-                          ("Picture 83", "Fig1/p4_volume.png", "Fig1/p4_volume_colorbar.png"),
-                          ("Picture 51", "Fig1/p3_mask.png", None)):
+    # the separate colour-bar numbers are printed inside the new objects (panel + colour bar as one image)
+    for nm in ("TextBox 160", "TextBox 161", "TextBox 162", "TextBox 166", "TextBox 167", "TextBox 175", "TextBox 176",
+               "TextBox 177"):
+        for shp in by.get(nm, []):
+            shp._element.getparent().remove(shp._element)
+    fig1_placeholders(s, by, {"Picture 18": "p1_phase", "Picture 23": "p2_norm", "Picture 83": "p4_volume",
+                              "Picture 51": "p3_mask"})
+
+
+# panel height (in) of the Fig. 1 objects that carry a colour bar; must match PANEL_H_IN in make_figure_objects.py
+PANEL_H_IN = {"p1_phase": 1.344, "p2_norm": 1.329, "p4_volume": 1.622}
+CBAR_IN = 0.03 + 0.28                                      # gap + colour bar with labels (CBAR_GAP_IN + CBAR_W_IN)
+
+
+def fig1_placeholders(s, by, names):
+    """Placeholders with the size and aspect ratio of the objects: square panel + colour bar (one image), vertically centred
+    on the old picture; the mask panel stays square."""
+    for nm, key in names.items():
         pic = by[nm][0]
-        h = pic.height / 914400
-        x, y = pic.left / 914400, pic.top / 914400
-        swap_picture(s, pic, "PLACEHOLDER\n" + obj, h, h)
-        if cbar:
-            cb = add_placeholder(s, cbar, x + h + 0.04, y, 0.06, h)
-            pic._element.addnext(cb._element)
+        x, y, h0 = pic.left / 914400, pic.top / 914400, pic.height / 914400
+        h = PANEL_H_IN.get(key, h0)
+        w = h + CBAR_IN if key in PANEL_H_IN else h
+        swap_picture(s, pic, f"PLACEHOLDER\nFig1/{key}.png", w, h)
+        pic.top = Emu(int((y + (h0 - h) / 2) * 914400))
 
 
 def slide2(prs, s):
     by = shapes_by_name(s.shapes)
-    for nm, obj, cbar in (("Picture 50", "Fig1/p1_phase.png", "Fig1/p1_phase_colorbar.png"),
-                          ("Picture 70", "Fig1/p2_norm.png", "Fig1/p2_norm_colorbar.png"),
-                          ("Picture 68", "Fig1/p4_volume.png", "Fig1/p4_volume_colorbar.png"),
-                          ("Picture 45", "Fig1/p3_mask.png", None)):
-        pic = by[nm][0]
-        h = pic.height / 914400
-        x, y = pic.left / 914400, pic.top / 914400
-        swap_picture(s, pic, "PLACEHOLDER\n" + obj, h, h)
-        if cbar:
-            add_placeholder(s, cbar, x + h + 0.04, y, 0.06, h)
-    text_box(s, "Objects written by artifacts/code/make_figure_objects.py to artifacts/figures/objects/Fig1/. "
-                "Colour-bar limits are listed in objects.json (Fig1); update the numbers next to the colour bars on slide 1.",
+    fig1_placeholders(s, by, {"Picture 50": "p1_phase", "Picture 70": "p2_norm", "Picture 68": "p4_volume",
+                              "Picture 45": "p3_mask"})
+    text_box(s, "Objects written by artifacts/code/make_figure_objects.py to artifacts/figures/objects/Fig1/. The phase, "
+                "z-score and volume objects include their colour bar and its values (limits also in objects.json).",
              0.3, 6.9, 12.7, 0.35, size=10, color="595959", align=PP_ALIGN.LEFT)
 
 
 def slide3(prs, s):
+    """Fig. S-4 as in the SI: 256 x 256 px window, grey phase, grey gradient, contours of EdgeSAM (r=32) and MobileSAM (r=8)."""
     by = shapes_by_name(s.shapes)
     set_paragraphs(by["TextBox 1"][0], ["Figure S-4"])
     set_paragraphs(by["TextBox 5"][0], ["Phase (rad)"])
     set_paragraphs(by["TextBox 9"][0], ["Phase-gradient magnitude"])
-    set_paragraphs(by["TextBox 13"][0], ["EdgeSAM (r=32) contours"])
+    set_paragraphs(by["TextBox 13"][0], ["Predicted contours"])
     for nm, obj in (("Picture 2", "FigS4/p1_phase.png"), ("Picture 6", "FigS4/p2_gradient.png"),
                     ("Picture 10", "FigS4/p3_contours.png")):
         swap_picture(s, by[nm][0], "PLACEHOLDER\n" + obj)
+    # 20 um bars for a 256 px window (36.89 um): bar = 54.2% of the panel width; label centred over the bar
+    panel = by["Picture 2"][0].width / 914400
+    bar_w = panel * 20.0 / (256 * PX_UM)
+    for bar, lab in (("Rectangle 3", "TextBox 4"), ("Rectangle 7", "TextBox 8"), ("Rectangle 11", "TextBox 12")):
+        b, t = by[bar][0], by[lab][0]
+        b.width = Inches(bar_w)
+        t.left, t.width = b.left - Inches(0.05), Inches(bar_w + 0.1)
+    # legend at the upper right of the contour panel (the 20 um bar takes the lower edge); editable, inside the group
+    grp = by["Figure"][0]
+    p3 = by["Picture 10"][0]
+    lw, lh = 1.55, 0.46
+    lx = (p3.left + p3.width) / 914400 - lw - 0.07
+    ly = p3.top / 914400 + 0.07
+    box = grp.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(lx), Inches(ly), Inches(lw), Inches(lh))
+    box.fill.solid()
+    box.fill.fore_color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
+    box.line.color.rgb = RGBColor(0xBF, 0xBF, 0xBF)
+    box.line.width = Pt(0.5)
+    box.shadow.inherit = False
+    box.name = "Legend box"
+    for i, (hexc, lab) in enumerate((("2A78D6", "EdgeSAM (r=32)"), ("EB6834", "MobileSAM (r=8)"))):
+        yy = ly + 0.06 + i * 0.18
+        sw = grp.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(lx + 0.08), Inches(yy + 0.03), Inches(0.22), Inches(0.11))
+        sw.fill.solid()
+        sw.fill.fore_color.rgb = RGBColor.from_string(hexc)
+        sw.line.fill.background()
+        sw.shadow.inherit = False
+        sw.name = f"Legend {lab}"
+        tb = grp.shapes.add_textbox(Inches(lx + 0.36), Inches(yy), Inches(lw - 0.4), Inches(0.17))
+        tf = tb.text_frame
+        tf.margin_left = tf.margin_right = tf.margin_top = tf.margin_bottom = 0
+        tf.vertical_anchor = MSO_ANCHOR.MIDDLE
+        r = tf.paragraphs[0].add_run()
+        r.text = lab
+        r.font.size, r.font.name = Pt(10), "Arial"
+        r.font.color.rgb = RGBColor(0, 0, 0)
+    set_paragraphs(by["TextBox 14"][0], [
+        "Panel image 1024 × 1024 px, upsampled 4× from the 256 × 256 px window (objects.json, FigS4).",
+        "Pixel pitch 0.1441 μm/px, so one panel spans 256 × 0.1441 = 36.89 μm.",
+        f"Panel placed on this slide at {panel * 2.54:.4f} × {panel * 2.54:.4f} cm.",
+        f"Scale bar 20 μm = 20 / 36.89 = 54.2 % of panel width = {bar_w * 2.54:.4f} cm."])
 
 
 def slide4(prs, s):

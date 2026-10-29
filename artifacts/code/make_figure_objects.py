@@ -5,20 +5,22 @@ Run on the machine that has data/processed, from the repository root:
 
     python artifacts/code/make_figure_objects.py [--processed-root data/processed] [--seed 42]
 
-Every object is a bare image (no axes, titles, scale bars or text): labels, legends, colour-bar numbers and 20 µm scale bars
-are editable shapes on the slides. In PowerPoint, right-click the placeholder with the same file name > Change Picture.
+Every panel is a bare image (no axes, titles, scale bars or text): labels, legends and 20 µm scale bars are editable shapes
+on the slides. The Fig. 1 phase, z-score and volume panels include their colour bar with printed tick values, as one image
+(panel PANEL_H_IN high + 0.03 in gap + CBAR_W_IN bar and labels), so the values always line up with the bar; each image has
+the aspect ratio of its placeholder on slide 1.
+In PowerPoint, right-click the placeholder with the same file name > Change Picture.
 
     artifacts/figures/objects/
-      Fig1/   p1_phase.png  p1_phase_colorbar.png  p2_norm.png  p2_norm_colorbar.png  p3_mask.png
-              p4_volume.png  p4_volume_colorbar.png
-      FigS4/  p1_phase.png  p2_gradient.png  p3_contours.png
+      Fig1/   p1_phase.png  p2_norm.png  p4_volume.png   (each with its colour bar)   p3_mask.png
+      FigS4/  p1_phase.png  p2_gradient.png  p3_contours.png   (EdgeSAM (r=32) blue, MobileSAM (r=8) orange)
       Fig6/   r1_discocyte_c1_phase.png ... r4_stomatocyte_c6_edgesam_r32.png   (4 rows x 6 columns)
       FigS5/  day00_phase.png  day00_contours.png ... day47_contours.png
       objects.json   colour-bar limits, chosen images/windows, storage days, scale-bar lengths
 
 Selection rules (deterministic, annotation only):
-  Fig. 1 and Fig. S-4: the validation image with the most annotated foreground pixels. Fig. 1 shows the 256 x 256 px window
-                       with the most foreground in it (32 px grid); Fig. S-4 shows the full 768 x 768 px field.
+  Fig. 1 and Fig. S-4: the validation image with the most annotated foreground pixels and, in it, the 256 x 256 px window
+                       with the most foreground (32 px grid); the same window as the S-4 panel in the SI.
   Fig. 6: per class, the image with the most pixels of that class and, in it, the 256 x 256 px window with the most pixels
           of that class (32 px grid); all predictions from training seed --seed.
   Fig. S-5: the first validation image (alphabetical) of storage days 0, 8, 19, 27 and 47; contours of EdgeSAM (r=32).
@@ -33,8 +35,8 @@ import sys
 from pathlib import Path
 
 import numpy as np
-from matplotlib import colormaps
-from PIL import Image
+from matplotlib import colormaps, font_manager
+from PIL import Image, ImageDraw, ImageFont
 from scipy import ndimage as ndi
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -46,7 +48,9 @@ OUT = C.ART / "figures" / "objects"
 PX_UM = 0.1441
 CLASS_RGB = {1: (0, 114, 178), 2: (0, 158, 115), 3: (213, 94, 0), 4: (204, 121, 167)}   # same colours as Figs. 6, 7
 OUTSIDE_RGB = (189, 189, 189)
-EDGE_RGB = (230, 40, 40)
+ARCH_RGB = {"edge_sam": (42, 120, 214), "mobile_sam": (235, 104, 52)}   # #2a78d6, #eb6834 as in the manuscript figures
+CBAR_W_IN, CBAR_GAP_IN = 0.28, 0.03                       # Fig. 1 colour bar with labels, right of the panel (inches)
+PANEL_H_IN = {"p1_phase": 1.344, "p2_norm": 1.329, "p4_volume": 1.622}   # panel height on slide 1 (inches)
 SHOW = [("mobilenet_unet", 8, "mobilenet_unet_r8"), ("mobile_sam", 8, "mobilesam_r8"), ("edge_sam", 8, "edgesam_r8"),
         ("edge_sam", 32, "edgesam_r32")]
 
@@ -94,18 +98,69 @@ def overlay(gray_rgb, labels, valid, alpha=0.5):
 def contours(rgb, fg, k, colour, width=3):
     """Draw the outline of the foreground on an image already upscaled by k (outline computed at the upscaled size)."""
     big = np.kron(fg.astype(np.uint8), np.ones((k, k), np.uint8)).astype(bool)
-    edge = big & ~ndi.binary_erosion(big, iterations=width)
+    edge = big & ~ndi.binary_erosion(big, iterations=width, border_value=1)   # no outline along the panel edge
     out = rgb.copy()
     out[edge] = colour
     return out
 
 
-def colorbar(path: Path, cmap: str, h=600, w=40):
-    g = np.linspace(1, 0, h)[:, None].repeat(w, axis=1)
-    rgb = 255 * colormaps[cmap](g)[..., :3]
-    rgb[[0, -1], :] = 0
-    rgb[:, [0, -1]] = 0
-    save(rgb, path)
+def _font(px):
+    path = font_manager.findfont(font_manager.FontProperties(family=["Arial", "Liberation Sans", "DejaVu Sans"]))
+    return ImageFont.truetype(path, px)
+
+
+def colorbar(cmap: str, lo, hi, ticks, w_in, h_in, dpi, pt=7.0):
+    """Vertical colour bar image (top = hi) with tick marks and printed values, w_in x h_in inches at dpi.
+    ticks: list of (value, text); a value outside [lo, hi] is clamped to the end. The top and bottom labels are aligned to
+    the ends of the bar so that nothing is cut off; the font shrinks (down to 5 pt) if the widest label does not fit."""
+    W, H = round(w_in * dpi), round(h_in * dpi)
+    bar_w, tick, gap = round(0.06 * dpi), round(0.025 * dpi), round(0.015 * dpi)
+    im = Image.new("RGB", (W, H), (255, 255, 255))
+    g = np.linspace(1, 0, H)[:, None].repeat(bar_w, axis=1)
+    im.paste(Image.fromarray((255 * colormaps[cmap](g)[..., :3]).astype(np.uint8)), (0, 0))
+    d = ImageDraw.Draw(im)
+    lw = max(2, round(dpi / 200))
+    d.rectangle((0, 0, bar_w - 1, H - 1), outline=(0, 0, 0), width=lw)
+    room = W - bar_w - tick - gap
+    while True:
+        font = _font(round(pt * dpi / 72))
+        if max(d.textlength(t, font=font) for _, t in ticks) <= room or pt <= 5:
+            break
+        pt -= 0.25
+    for val, text in ticks:
+        f = float(np.clip((val - lo) / (hi - lo), 0, 1)) if hi > lo else 0.5
+        yc = round((1 - f) * (H - 1))
+        d.line((bar_w, yc, bar_w + tick, yc), fill=(0, 0, 0), width=lw)
+        top, bottom = d.textbbox((0, 0), text, font=font)[1::2]
+        th = bottom - top
+        ty = min(max(yc - th / 2, 0), H - th) - top
+        d.text((bar_w + tick + gap, ty), text, font=font, fill=(0, 0, 0))
+    return im
+
+
+def save_with_colorbar(rgb, path: Path, key, cmap, lo, hi, ticks):
+    """Panel and its labelled colour bar as one image; printed size PANEL_H_IN[key] high (dpi set accordingly)."""
+    h_in = PANEL_H_IN[key]
+    dpi = rgb.shape[0] / h_in
+    bar = colorbar(cmap, lo, hi, ticks, CBAR_W_IN, h_in, dpi)
+    gap = round(CBAR_GAP_IN * dpi)
+    im = Image.new("RGB", (rgb.shape[1] + gap + bar.width, rgb.shape[0]), (255, 255, 255))
+    im.paste(Image.fromarray(np.clip(rgb, 0, 255).astype(np.uint8)), (0, 0))
+    im.paste(bar, (rgb.shape[1] + gap, 0))
+    path.parent.mkdir(parents=True, exist_ok=True)
+    im.save(path, dpi=(dpi, dpi))
+
+
+def num(v):
+    return f"{v:.1f}".replace("-", "\u2212")
+
+
+def ticks3(lo, hi):
+    """hi, 0 (when it lies well inside the range) and lo, one decimal, minus sign."""
+    out = [(hi, num(hi)), (lo, num(lo))]
+    if lo < 0 < hi and min(-lo, hi) > 0.12 * (hi - lo):
+        out.insert(1, (0.0, "0"))
+    return out
 
 
 def background(phase, gt_fg, valid, excl=5):
@@ -123,11 +178,11 @@ def fig1(val, pred_e32, meta):
     ph = v["phase"]
     lo, hi = np.percentile(ph[sl], [1, 99.5])
     k = 4
-    save(upscale(to_gray(ph[sl], lo, hi), k), OUT / "Fig1" / "p1_phase.png")
-    colorbar(OUT / "Fig1" / "p1_phase_colorbar.png", "gray")
+    save_with_colorbar(upscale(to_gray(ph[sl], lo, hi), k), OUT / "Fig1" / "p1_phase.png", "p1_phase", "gray", lo, hi,
+                       ticks3(lo, hi))
     z = (ph - ph.mean()) / ph.std()                       # the network input is the per-image z-score of the map
-    save(upscale(to_gray(z[sl], -3, 3), k), OUT / "Fig1" / "p2_norm.png")
-    colorbar(OUT / "Fig1" / "p2_norm_colorbar.png", "gray")
+    save_with_colorbar(upscale(to_gray(z[sl], -3, 3), k), OUT / "Fig1" / "p2_norm.png", "p2_norm", "gray", -3, 3,
+                       [(3, "3"), (0, "0"), (-3, "\u22123")])
     lab = pred_e32[stem][sl]
     base = upscale(overlay(to_gray(ph[sl], lo, hi), lab, v["valid"][sl], alpha=0.55), k)
     save(contours(base, lab > 0, k, (40, 40, 40)), OUT / "Fig1" / "p3_mask.png")
@@ -137,32 +192,40 @@ def fig1(val, pred_e32, meta):
     vlo, vhi = 0.0, float(np.percentile(rel[fg], 99)) if fg.any() else 1.0
     vol = to_cmap(rel, vlo, vhi, "viridis")
     vol[~fg] = 255
-    save(upscale(vol, k), OUT / "Fig1" / "p4_volume.png")
-    colorbar(OUT / "Fig1" / "p4_volume_colorbar.png", "viridis")
+    save_with_colorbar(upscale(vol, k), OUT / "Fig1" / "p4_volume.png", "p4_volume", "viridis", vlo, vhi,
+                       [(vhi, "high"), (vlo, "low")])
     meta["Fig1"] = {"image": stem, "storage_day": v["day"], "window_yx": [y, x], "window_px": 256,
                     "p1_phase_colorbar_rad": [round(float(lo), 2), round(float(hi), 2)],
                     "p2_norm_colorbar": [-3, 3], "p4_volume_colorbar_rad": [vlo, round(vhi, 2)],
+                    "p4_volume_colorbar_labels": ["low", "high"], "object_size_in": {k: [round(h + CBAR_GAP_IN + CBAR_W_IN, 3), h] for k, h in PANEL_H_IN.items()},
                     "prediction": "EdgeSAM (r=32)", "scale_bar_20um_fraction_of_width": round(20 / (256 * PX_UM), 4)}
 
 
-def figS4(val, pred_e32, meta):
+def figS4(val, preds, meta):
+    """Same window and content as the S-4 panel of the SI (make_data_figures.py): grey phase (1-99th percentile of the
+    window), grey gradient magnitude (min-max of the window), and the contours of EdgeSAM (r=32) and MobileSAM (r=8)."""
     stems = sorted(val)
     stem = max(stems, key=lambda s: (int(((val[s]["gt"] > 0) & val[s]["valid"]).sum()), -stems.index(s)))
     v = val[stem]
+    y, x = best_window(v["gt"] > 0, v["valid"])
+    sl = (slice(y, y + 256), slice(x, x + 256))
     ph = v["phase"]
-    k = 2
-    lo, hi = np.percentile(ph[v["valid"]], [1, 99.5])
-    save(upscale(to_cmap(ph, lo, hi, "inferno"), k), OUT / "FigS4" / "p1_phase.png")
+    k = 4
+    lo, hi = np.percentile(ph[sl], [1, 99])
+    save(upscale(to_gray(ph[sl], lo, hi), k), OUT / "FigS4" / "p1_phase.png")
     gy, gx = np.gradient(ph)
-    g = np.hypot(gx, gy)
-    ghi = float(np.percentile(g, 99.5))
-    grad = to_cmap(g, 0, ghi, "viridis")
-    save(upscale(grad, k), OUT / "FigS4" / "p2_gradient.png")
-    gray = upscale(to_gray(g, 0, ghi), k)
-    save(contours(gray, pred_e32[stem] > 0, k, EDGE_RGB), OUT / "FigS4" / "p3_contours.png")
-    meta["FigS4"] = {"image": stem, "storage_day": v["day"], "field_px": 768, "upsampling": k,
-                     "phase_range_rad": [round(float(lo), 2), round(float(hi), 2)], "contours": "EdgeSAM (r=32)",
-                     "scale_bar_20um_fraction_of_width": round(20 / (768 * PX_UM), 4)}
+    g = np.hypot(gx, gy)[sl]
+    gray = upscale(to_gray(g, float(g.min()), float(g.max())), k)
+    save(gray, OUT / "FigS4" / "p2_gradient.png")
+    out = gray
+    for a, rk in (("edge_sam", 32), ("mobile_sam", 8)):
+        out = contours(out, preds[(a, rk)][stem][sl] > 0, k, ARCH_RGB[a])
+    save(out, OUT / "FigS4" / "p3_contours.png")
+    meta["FigS4"] = {"image": stem, "storage_day": v["day"], "window_yx": [y, x], "window_px": 256, "upsampling": k,
+                     "phase_range_rad": [round(float(lo), 2), round(float(hi), 2)],
+                     "gradient_range_rad_per_px": [round(float(g.min()), 3), round(float(g.max()), 3)],
+                     "contours": {"EdgeSAM (r=32)": "#2a78d6", "MobileSAM (r=8)": "#eb6834"},
+                     "scale_bar_20um_fraction_of_width": round(20 / (256 * PX_UM), 4)}
 
 
 def fig6(val, preds, seed, meta):
@@ -218,7 +281,7 @@ def main() -> int:
     preds = {(ar, rk): load_predictions(C.run_dir(ar, rk, "full", a.seed), "last") for ar, rk, _ in SHOW}
     meta = {"pixel_um": PX_UM, "training_seed": a.seed}
     fig1(val, preds[("edge_sam", 32)], meta)
-    figS4(val, preds[("edge_sam", 32)], meta)
+    figS4(val, preds, meta)
     fig6(val, preds, a.seed, meta)
     figS5(val, preds[("edge_sam", 32)], meta)
     (OUT / "objects.json").write_text(json.dumps(meta, indent=1))

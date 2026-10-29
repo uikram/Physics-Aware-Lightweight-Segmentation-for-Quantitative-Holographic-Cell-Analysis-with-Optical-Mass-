@@ -135,9 +135,9 @@ revision are green and the earlier yellow is kept.
 | SI | figure | – | artifacts/figures/manuscript/FigS3_accuracy_vs_throughput.png | make_manuscript_figures.py |
 | SI | fcap | – | Fig. S-3 Mean Dice (mean ± SD over three seeds) against FP32 forward-pass throughput (mean of three timing passes) of the rank-8 models. Circles: PyTorch; squares: ONNX Runtime; class losses are noted next to each model. |  |
 | SI | h | – | S-V. Phase-Gradient Alignment of Predicted Contours |  |
-| SI | p | – | Fig. S-4 shows the predicted cell contours of EdgeSAM (r=32) on the phase-gradient magnitude for one validation image, as a qualitative illustration of the boundary cue used by the BGA term. Its quantitative effect is assessed by the loss ablation (Table 3 of the main text and Table S-2). |  |
+| SI | p | – | Fig. S-4 shows predicted cell contours on the phase-gradient magnitude for one validation window, as a qualitative illustration of the boundary cue used by the BGA term. Its quantitative effect is assessed by the loss ablation (Table 3 of the main text and Table S-2). |  |
 | SI | figure | – | artifacts/figures/manuscript/placeholders/FigS4_gradient_alignment.png | make_data_figures.py (placeholder) |
-| SI | fcap | – | Fig. S-4 Phase map (rad), phase-gradient magnitude, and contours of EdgeSAM (r=32) (training seed 42) on the phase-gradient magnitude, for the full 768 × 768 px field (110.7 µm) of the validation image with the most annotated foreground. Scale bars: 20 µm. |  |
+| SI | fcap | – | Fig. S-4 Phase map, phase-gradient magnitude, and contours of EdgeSAM (r=32) and MobileSAM (r=8) (seed 42) on the gradient magnitude. The window is the 256 × 256 px window with the most annotated foreground on a 32 px grid within the validation image with the most annotated foreground; it coincides with the discocyte window of Fig. 6 because discocytes dominate that image. |  |
 | SI | h | – | S-VI. Representative Phase Images over the Storage Period |  |
 | SI | p | – | Fig. S-5 shows one validation phase map from each of five storage days, with the EdgeSAM (r=32) contours. |  |
 | SI | figure | – | artifacts/figures/manuscript/placeholders/FigS5_storage_images.png | make_data_figures.py (placeholder) |
@@ -372,5 +372,5 @@ contradict the values above.
 
 | Element | Action | Before | After |
 |---|---|---|---|
-| supplementary_information_final.docx element 29 | refreshed | Fig. S-4 shows predicted cell contours on the phase-gradient magnitude for one validation window, as a qualitative illus… | Fig. S-4 shows the predicted cell contours of EdgeSAM (r=32) on the phase-gradient magnitude for one validation image, a… |
-| supplementary_information_final.docx element 31 | refreshed | Fig. S-4 Phase map, phase-gradient magnitude, and contours of EdgeSAM (r=32) and MobileSAM (r=8) (seed 42) on the gradie… | Fig. S-4 Phase map (rad), phase-gradient magnitude, and contours of EdgeSAM (r=32) (training seed 42) on the phase-gradi… |
+| supplementary_information_final.docx element 29 | refreshed | Fig. S-4 shows the predicted cell contours of EdgeSAM (r=32) on the phase-gradient magnitude for one validation image, a… | Fig. S-4 shows predicted cell contours on the phase-gradient magnitude for one validation window, as a qualitative illus… |
+| supplementary_information_final.docx element 31 | refreshed | Fig. S-4 Phase map (rad), phase-gradient magnitude, and contours of EdgeSAM (r=32) (training seed 42) on the phase-gradi… | Fig. S-4 Phase map, phase-gradient magnitude, and contours of EdgeSAM (r=32) and MobileSAM (r=8) (seed 42) on the gradie… |
