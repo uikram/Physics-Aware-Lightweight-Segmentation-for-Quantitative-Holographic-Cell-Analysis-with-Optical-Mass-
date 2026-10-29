@@ -1,4 +1,12 @@
 {
+ "annotated_peak_phase_rad": {
+  "value": {
+   "median": 2.15,
+   "p95": 4.16,
+   "max": 5.05
+  },
+  "source": "outputs/cell_analysis/annotation/cells_gt.csv, non-wrapped"
+ },
  "n_train_views": {
   "value": 728,
   "source": "metrics.json n_train_views"

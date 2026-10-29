@@ -1,0 +1,2764 @@
+{
+ "design": {
+  "lora_runs": 180,
+  "full_ft_runs": 3,
+  "archs": 3,
+  "ranks": 5,
+  "losses": 4,
+  "seeds": 3
+ },
+ "ablation": {
+  "mobile_sam": {
+   "full_lt_dice_seedpairs": 14,
+   "full_lt_pmcbga_seedpairs": 13,
+   "n_pairs": 15,
+   "full_lt_dice_configmeans": 5,
+   "full_lt_pmcbga_configmeans": 4,
+   "ci_excl0_full_vs_dice": 0,
+   "ci_excl0_full_vs_pmcbga": 0,
+   "aji_full_gt_pmcbga_seedpairs": 12,
+   "dice_full_gt_dice_seedpairs": 7,
+   "lost_runs": {
+    "dice_only": 3,
+    "pmc": 0,
+    "pmc_bga": 2,
+    "full": 1
+   },
+   "per_rank": {
+    "2": {
+     "full_minus_dice": {
+      "n": 3,
+      "mean": -4.055837776731438,
+      "lo": -20.356504299752807,
+      "hi": 12.244828746289933,
+      "n_b_greater": 0,
+      "excludes_zero": false
+     },
+     "full_minus_pmcbga": {
+      "n": 3,
+      "mean": -4.017216515134913,
+      "lo": -20.226827928905507,
+      "hi": 12.192394898635683,
+      "n_b_greater": 0,
+      "excludes_zero": false
+     }
+    },
+    "4": {
+     "full_minus_dice": {
+      "n": 3,
+      "mean": -0.09588982763764602,
+      "lo": -0.2970109962020253,
+      "hi": 0.1052313409267333,
+      "n_b_greater": 0,
+      "excludes_zero": false
+     },
+     "full_minus_pmcbga": {
+      "n": 3,
+      "mean": -3.8898469192041603,
+      "lo": -20.060138034209828,
+      "hi": 12.280444195801508,
+      "n_b_greater": 1,
+      "excludes_zero": false
+     }
+    },
+    "8": {
+     "full_minus_dice": {
+      "n": 3,
+      "mean": -0.21249377439182374,
+      "lo": -0.7507893639838835,
+      "hi": 0.3258018152002361,
+      "n_b_greater": 1,
+      "excludes_zero": false
+     },
+     "full_minus_pmcbga": {
+      "n": 3,
+      "mean": -0.16183571295603913,
+      "lo": -0.41154255721299027,
+      "hi": 0.08787113130091198,
+      "n_b_greater": 0,
+      "excludes_zero": false
+     }
+    },
+    "16": {
+     "full_minus_dice": {
+      "n": 3,
+      "mean": -0.2558671627048404,
+      "lo": -0.546746137139708,
+      "hi": 0.035011811730027265,
+      "n_b_greater": 0,
+      "excludes_zero": false
+     },
+     "full_minus_pmcbga": {
+      "n": 3,
+      "mean": -0.26145962491287356,
+      "lo": -0.6652113176980478,
+      "hi": 0.14229206787230064,
+      "n_b_greater": 0,
+      "excludes_zero": false
+     }
+    },
+    "32": {
+     "full_minus_dice": {
+      "n": 3,
+      "mean": -7.4779174516913836,
+      "lo": -23.197964627562435,
+      "hi": 8.24212972417967,
+      "n_b_greater": 0,
+      "excludes_zero": false
+     },
+     "full_minus_pmcbga": {
+      "n": 3,
+      "mean": 0.2924822011884398,
+      "lo": -1.323742345164213,
+      "hi": 1.9087067475410926,
+      "n_b_greater": 1,
+      "excludes_zero": false
+     }
+    }
+   }
+  },
+  "edge_sam": {
+   "full_lt_dice_seedpairs": 15,
+   "full_lt_pmcbga_seedpairs": 10,
+   "n_pairs": 15,
+   "full_lt_dice_configmeans": 5,
+   "full_lt_pmcbga_configmeans": 4,
+   "ci_excl0_full_vs_dice": 1,
+   "ci_excl0_full_vs_pmcbga": 1,
+   "aji_full_gt_pmcbga_seedpairs": 0,
+   "dice_full_gt_dice_seedpairs": 9,
+   "lost_runs": {
+    "dice_only": 6,
+    "pmc": 2,
+    "pmc_bga": 0,
+    "full": 3
+   },
+   "per_rank": {
+    "2": {
+     "full_minus_dice": {
+      "n": 3,
+      "mean": -9.966242185294366,
+      "lo": -18.58144696085524,
+      "hi": -1.3510374097334932,
+      "n_b_greater": 0,
+      "excludes_zero": true
+     },
+     "full_minus_pmcbga": {
+      "n": 3,
+      "mean": -0.42805097975533446,
+      "lo": -4.286031075497993,
+      "hi": 3.4299291159873238,
+      "n_b_greater": 1,
+      "excludes_zero": false
+     }
+    },
+    "4": {
+     "full_minus_dice": {
+      "n": 3,
+      "mean": -7.482677483828193,
+      "lo": -19.637609959026392,
+      "hi": 4.672254991370004,
+      "n_b_greater": 0,
+      "excludes_zero": false
+     },
+     "full_minus_pmcbga": {
+      "n": 3,
+      "mean": -1.5024099291674098,
+      "lo": -4.038106754547728,
+      "hi": 1.0332868962129091,
+      "n_b_greater": 0,
+      "excludes_zero": false
+     }
+    },
+    "8": {
+     "full_minus_dice": {
+      "n": 3,
+      "mean": -7.0078690693943715,
+      "lo": -19.67515241496153,
+      "hi": 5.659414276172787,
+      "n_b_greater": 0,
+      "excludes_zero": false
+     },
+     "full_minus_pmcbga": {
+      "n": 3,
+      "mean": -0.4374027171576951,
+      "lo": -4.771721566262476,
+      "hi": 3.8969161319470866,
+      "n_b_greater": 2,
+      "excludes_zero": false
+     }
+    },
+    "16": {
+     "full_minus_dice": {
+      "n": 3,
+      "mean": -6.3892948102028475,
+      "lo": -19.067619658331193,
+      "hi": 6.289030037925499,
+      "n_b_greater": 0,
+      "excludes_zero": false
+     },
+     "full_minus_pmcbga": {
+      "n": 3,
+      "mean": 1.23213073891729,
+      "lo": -5.74235140568291,
+      "hi": 8.20661288351749,
+      "n_b_greater": 2,
+      "excludes_zero": false
+     }
+    },
+    "32": {
+     "full_minus_dice": {
+      "n": 3,
+      "mean": -8.183896994340301,
+      "lo": -23.519854393574658,
+      "hi": 7.152060404894055,
+      "n_b_greater": 0,
+      "excludes_zero": false
+     },
+     "full_minus_pmcbga": {
+      "n": 3,
+      "mean": -0.6274164557497048,
+      "lo": -0.7462163918119011,
+      "hi": -0.5086165196875085,
+      "n_b_greater": 0,
+      "excludes_zero": true
+     }
+    }
+   }
+  },
+  "mobilenet_unet": {
+   "full_lt_dice_seedpairs": 13,
+   "full_lt_pmcbga_seedpairs": 13,
+   "n_pairs": 15,
+   "full_lt_dice_configmeans": 5,
+   "full_lt_pmcbga_configmeans": 5,
+   "ci_excl0_full_vs_dice": 2,
+   "ci_excl0_full_vs_pmcbga": 0,
+   "aji_full_gt_pmcbga_seedpairs": 4,
+   "dice_full_gt_dice_seedpairs": 5,
+   "lost_runs": {
+    "dice_only": 13,
+    "pmc": 15,
+    "pmc_bga": 13,
+    "full": 15
+   },
+   "per_rank": {
+    "2": {
+     "full_minus_dice": {
+      "n": 3,
+      "mean": -15.374952197610407,
+      "lo": -16.627882191109723,
+      "hi": -14.12202220411109,
+      "n_b_greater": 0,
+      "excludes_zero": true
+     },
+     "full_minus_pmcbga": {
+      "n": 3,
+      "mean": -9.796629547648763,
+      "lo": -25.712744665330064,
+      "hi": 6.119485570032536,
+      "n_b_greater": 0,
+      "excludes_zero": false
+     }
+    },
+    "4": {
+     "full_minus_dice": {
+      "n": 3,
+      "mean": -14.02443544938712,
+      "lo": -20.735617689656195,
+      "hi": -7.313253209118043,
+      "n_b_greater": 0,
+      "excludes_zero": true
+     },
+     "full_minus_pmcbga": {
+      "n": 3,
+      "mean": -12.198844805349353,
+      "lo": -38.390446549376435,
+      "hi": 13.992756938677726,
+      "n_b_greater": 0,
+      "excludes_zero": false
+     }
+    },
+    "8": {
+     "full_minus_dice": {
+      "n": 3,
+      "mean": -12.876119545771909,
+      "lo": -44.65683698250594,
+      "hi": 18.90459789096213,
+      "n_b_greater": 1,
+      "excludes_zero": false
+     },
+     "full_minus_pmcbga": {
+      "n": 3,
+      "mean": -11.357099418372817,
+      "lo": -42.48781462883918,
+      "hi": 19.77361579209355,
+      "n_b_greater": 1,
+      "excludes_zero": false
+     }
+    },
+    "16": {
+     "full_minus_dice": {
+      "n": 3,
+      "mean": -11.087886234729794,
+      "lo": -44.343192644581414,
+      "hi": 22.167420175121826,
+      "n_b_greater": 1,
+      "excludes_zero": false
+     },
+     "full_minus_pmcbga": {
+      "n": 3,
+      "mean": -8.40499419643953,
+      "lo": -30.789834811855343,
+      "hi": 13.979846418976285,
+      "n_b_greater": 1,
+      "excludes_zero": false
+     }
+    },
+    "32": {
+     "full_minus_dice": {
+      "n": 3,
+      "mean": -14.995478647142809,
+      "lo": -40.272498750306575,
+      "hi": 10.281541456020959,
+      "n_b_greater": 0,
+      "excludes_zero": false
+     },
+     "full_minus_pmcbga": {
+      "n": 3,
+      "mean": -13.710167049646193,
+      "lo": -42.50029789750727,
+      "hi": 15.079963798214878,
+      "n_b_greater": 0,
+      "excludes_zero": false
+     }
+    }
+   }
+  }
+ },
+ "storage": {
+  "annotation": {
+   "area_um2": {
+    "rho": -0.5321974681053946,
+    "p_naive": 4.244455439713009e-06,
+    "p_perm_dates": 0.0174982501749825,
+    "boot95": [
+     -0.8507930073501409,
+     -0.00447199197308267
+    ],
+    "lodo_range": [
+     -0.6409770480609818,
+     -0.37728183801184806
+    ],
+    "early_late_pct": -43.94700776610324
+   },
+   "dry_mass_pg": {
+    "rho": -0.11493936881148126,
+    "p_naive": 0.35810540564579174,
+    "p_perm_dates": 0.2633736626337366,
+    "boot95": [
+     -0.3163633783887456,
+     0.1156371984378982
+    ],
+    "lodo_range": [
+     -0.20170560487509226,
+     -0.03853180159574022
+    ],
+    "early_late_pct": -0.7884687066774451
+   },
+   "per_image_median_dry_mass": {
+    "mean": 28.65660150557006,
+    "sd": 1.554018518120047,
+    "min": 24.95537014089502,
+    "max": 33.001786831434245
+   }
+  },
+  "edge_sam_r32_s42": {
+   "area_um2": {
+    "rho": -0.7457459518551035,
+    "p_naive": 6.782997310081193e-13,
+    "p_perm_dates": 0.0008999100089991,
+    "boot95": [
+     -0.9284335143456934,
+     -0.2747228748308025
+    ],
+    "lodo_range": [
+     -0.8413452000424073,
+     -0.6617693919747569
+    ],
+    "early_late_pct": -45.544339520243135
+   },
+   "dry_mass_pg": {
+    "rho": -0.32469742918079275,
+    "p_naive": 0.007815399740253302,
+    "p_perm_dates": 0.10228977102289771,
+    "boot95": [
+     -0.5551585282686741,
+     0.07180442378948486
+    ],
+    "lodo_range": [
+     -0.49320706042547485,
+     -0.26704213801569526
+    ],
+    "early_late_pct": -5.834821363380171
+   },
+   "bias_diff_pg": {
+    "rho": -0.28646814239885593,
+    "p_naive": 0.01970517176876411,
+    "p_perm_dates": 0.07839216078392161,
+    "boot95": [
+     -0.45224590915160096,
+     0.06234064215168531
+    ],
+    "lodo_range": [
+     -0.3853180159574022,
+     -0.2234844492552933
+    ],
+    "early_late_pct": -1.0794298163587026
+   },
+   "bias_rel_pct": {
+    "rho": -0.285713617001844,
+    "p_naive": 0.02004508086718522,
+    "p_perm_dates": 0.07599240075992401,
+    "boot95": [
+     -0.4514925656221747,
+     0.047972642773214336
+    ],
+    "lodo_range": [
+     -0.38062718793705125,
+     -0.21912868037925307
+    ],
+    "early_late_pct": -3.6903682755158966
+   },
+   "bias_by_period_pg": {
+    "early": 0.6298831239338298,
+    "late": -0.4495466924248728,
+    "all_mean": 1.2411683574435581
+   }
+  },
+  "edge_sam_r32_s43": {
+   "area_um2": {
+    "rho": -0.600256279486371,
+    "p_naive": 9.974469541020673e-08,
+    "p_perm_dates": 0.008399160083991601,
+    "boot95": [
+     -0.8600980658458084,
+     -0.07907350935503282
+    ],
+    "lodo_range": [
+     -0.676363867186998,
+     -0.4810108156289004
+    ],
+    "early_late_pct": -43.26360773729195
+   },
+   "dry_mass_pg": {
+    "rho": -0.24044209318112927,
+    "p_naive": 0.05181458415684875,
+    "p_perm_dates": 0.17318268173182683,
+    "boot95": [
+     -0.4602986765981251,
+     0.05103450855753419
+    ],
+    "lodo_range": [
+     -0.3504718649490806,
+     -0.177246287340405
+    ],
+    "early_late_pct": -6.417007984976706
+   },
+   "bias_diff_pg": {
+    "rho": -0.21353068735437106,
+    "p_naive": 0.08515964954611133,
+    "p_perm_dates": 0.193980601939806,
+    "boot95": [
+     -0.4334730161442571,
+     0.0673873094252329
+    ],
+    "lodo_range": [
+     -0.3142854773635159,
+     -0.15278696980571774
+    ],
+    "early_late_pct": -0.6949347695070607
+   },
+   "bias_rel_pct": {
+    "rho": -0.21453672121705358,
+    "p_naive": 0.08366471162721524,
+    "p_perm_dates": 0.1927807219278072,
+    "boot95": [
+     -0.4399872836069765,
+     0.07305484905287886
+    ],
+    "lodo_range": [
+     -0.31864124623955603,
+     -0.15278696980571774
+    ],
+    "early_late_pct": -2.3855317601897217
+   },
+   "bias_by_period_pg": {
+    "early": 0.3744236368586531,
+    "late": -0.3205111326484076,
+    "all_mean": 0.13352553007861193
+   }
+  },
+  "edge_sam_r32_s44": {
+   "area_um2": {
+    "rho": -0.604506906706671,
+    "p_naive": 7.662156565817555e-08,
+    "p_perm_dates": 0.005099490050994901,
+    "boot95": [
+     -0.8661234702359387,
+     -0.10624756097497426
+    ],
+    "lodo_range": [
+     -0.6786717254822366,
+     -0.4736126803106104
+    ],
+    "early_late_pct": -44.072253344003656
+   },
+   "dry_mass_pg": {
+    "rho": -0.25804768577807385,
+    "p_naive": 0.03644693549386716,
+    "p_perm_dates": 0.08599140085991401,
+    "boot95": [
+     -0.4845983198952648,
+     0.02580083894305975
+    ],
+    "lodo_range": [
+     -0.40609168290467085,
+     -0.20170560487509226
+    ],
+    "early_late_pct": -5.963921076464808
+   },
+   "bias_diff_pg": {
+    "rho": -0.23390287307369273,
+    "p_naive": 0.058725653032558695,
+    "p_perm_dates": 0.08819118088191182,
+    "boot95": [
+     -0.41543964179920156,
+     0.048243032429617104
+    ],
+    "lodo_range": [
+     -0.3353942034550953,
+     -0.1755709916188511
+    ],
+    "early_late_pct": -0.8483581946332173
+   },
+   "bias_rel_pct": {
+    "rho": -0.2391845508527761,
+    "p_naive": 0.05308936175205351,
+    "p_perm_dates": 0.07929207079292071,
+    "boot95": [
+     -0.4153142453911658,
+     0.029008705825830962
+    ],
+    "lodo_range": [
+     -0.34109020890837866,
+     -0.1775813464847158
+    ],
+    "early_late_pct": -3.017389802596116
+   },
+   "bias_by_period_pg": {
+    "early": 0.034365510368079555,
+    "late": -0.8139926842651377,
+    "all_mean": -0.004142955322492927
+   }
+  },
+  "mobile_sam_r8_s42": {
+   "area_um2": {
+    "rho": -0.5934528072182519,
+    "p_naive": 1.5093628614513296e-07,
+    "p_perm_dates": 0.004199580041995801,
+    "boot95": [
+     -0.8630604094342659,
+     -0.08393763176139325
+    ],
+    "lodo_range": [
+     -0.6607549922411114,
+     -0.45888262395414164
+    ],
+    "early_late_pct": -41.838388515860146
+   },
+   "dry_mass_pg": {
+    "rho": -0.13732362225616798,
+    "p_naive": 0.27153894044588345,
+    "p_perm_dates": 0.35996400359964004,
+    "boot95": [
+     -0.37909811108676567,
+     0.15440835372884934
+    ],
+    "lodo_range": [
+     -0.267377197160006,
+     -0.07672854404716965
+    ],
+    "early_late_pct": -3.0531742926251333
+   },
+   "bias_diff_pg": {
+    "rho": -0.03143855820882966,
+    "p_naive": 0.8021311249562476,
+    "p_perm_dates": 0.777922207779222,
+    "boot95": [
+     -0.18689764981541948,
+     0.14785618795064495
+    ],
+    "lodo_range": [
+     -0.1058786896022079,
+     0.012732247483809812
+    ],
+    "early_late_pct": -0.22166500932005384
+   },
+   "bias_rel_pct": {
+    "rho": -0.03093554127748839,
+    "p_naive": 0.8052343619747035,
+    "p_perm_dates": 0.7918208179182081,
+    "boot95": [
+     -0.1893012473802911,
+     0.14497507362588294
+    ],
+    "lodo_range": [
+     -0.1082241036123834,
+     0.01038683347363432
+    ],
+    "early_late_pct": -0.7767931672432482
+   },
+   "bias_by_period_pg": {
+    "early": 0.06099905209872958,
+    "late": -0.16066595722132426,
+    "all_mean": 0.4705126531794427
+   }
+  },
+  "mobile_sam_r8_s43": {
+   "area_um2": {
+    "rho": -0.5930755327063522,
+    "p_naive": 1.5440050857597478e-07,
+    "p_perm_dates": 0.007499250074992501,
+    "boot95": [
+     -0.8654158152207138,
+     -0.09933379359854555
+    ],
+    "lodo_range": [
+     -0.6729849908297527,
+     -0.45871508739921124
+    ],
+    "early_late_pct": -39.23209169054441
+   },
+   "dry_mass_pg": {
+    "rho": -0.19994923020815666,
+    "p_naive": 0.10747224472753497,
+    "p_perm_dates": 0.2343765623437656,
+    "boot95": [
+     -0.45045956689669325,
+     0.13299482920807687
+    ],
+    "lodo_range": [
+     -0.3638742307215119,
+     -0.14876626007398833
+    ],
+    "early_late_pct": -2.2023793682772754
+   },
+   "bias_diff_pg": {
+    "rho": -0.049547167737115545,
+    "p_naive": 0.6927875106193705,
+    "p_perm_dates": 0.6284371562843716,
+    "boot95": [
+     -0.22246253356733645,
+     0.14069967640051492
+    ],
+    "lodo_range": [
+     -0.1424001363320834,
+     -0.008376478607769612
+    ],
+    "early_late_pct": -0.018438769372775
+   },
+   "bias_rel_pct": {
+    "rho": -0.054325828584857655,
+    "p_naive": 0.6648457456833822,
+    "p_perm_dates": 0.5955404459554045,
+    "boot95": [
+     -0.22673108301751513,
+     0.1310115415441093
+    ],
+    "lodo_range": [
+     -0.14675590520812362,
+     -0.01340236577243138
+    ],
+    "early_late_pct": -0.07150601713702409
+   },
+   "bias_by_period_pg": {
+    "early": 0.30140243843490033,
+    "late": 0.28296366906212533,
+    "all_mean": 1.01811048934045
+   }
+  },
+  "mobile_sam_r8_s44": {
+   "area_um2": {
+    "rho": -0.4932081011801197,
+    "p_naive": 2.582183001595463e-05,
+    "p_perm_dates": 0.0235976402359764,
+    "boot95": [
+     -0.8193794812896065,
+     0.02036066834910328
+    ],
+    "lodo_range": [
+     -0.5950650402959533,
+     -0.3273527839916365
+    ],
+    "early_late_pct": -40.844424047728324
+   },
+   "dry_mass_pg": {
+    "rho": -0.15870184183817215,
+    "p_naive": 0.20310698495484097,
+    "p_perm_dates": 0.3377662233776622,
+    "boot95": [
+     -0.4298741143368077,
+     0.1666196755164721
+    ],
+    "lodo_range": [
+     -0.3196464236724884,
+     -0.09113608725253339
+    ],
+    "early_late_pct": -2.554044292587431
+   },
+   "bias_diff_pg": {
+    "rho": -0.003018101588047648,
+    "p_naive": 0.9808121359964997,
+    "p_perm_dates": 0.9817018298170183,
+    "boot95": [
+     -0.218961230734024,
+     0.22390271884003998
+    ],
+    "lodo_range": [
+     -0.10688386703514026,
+     0.03618638758556472
+    ],
+    "early_late_pct": -0.17541344753209032
+   },
+   "bias_rel_pct": {
+    "rho": -0.0020120677253650985,
+    "p_naive": 0.9872074217654601,
+    "p_perm_dates": 0.9878012198780122,
+    "boot95": [
+     -0.21837539654819957,
+     0.21428972263083562
+    ],
+    "lodo_range": [
+     -0.10554363045789714,
+     0.03652144672987551
+    ],
+    "early_late_pct": -0.6190508094443603
+   },
+   "bias_by_period_pg": {
+    "early": 0.23771020452433866,
+    "late": 0.06229675699224835,
+    "all_mean": 0.4816254838131846
+   }
+  },
+  "edge_sam_r8_s42": {
+   "area_um2": {
+    "rho": -0.746744222761425,
+    "p_naive": 6.083350071192801e-13,
+    "p_perm_dates": 0.0021997800219978004,
+    "boot95": [
+     -0.9262661776796313,
+     -0.2553555144525009
+    ],
+    "lodo_range": [
+     -0.8467179844793552,
+     -0.6637706083314614
+    ],
+    "early_late_pct": -47.37853710624667
+   },
+   "dry_mass_pg": {
+    "rho": -0.3770111900402853,
+    "p_naive": 0.001806393260699957,
+    "p_perm_dates": 0.0690930906909309,
+    "boot95": [
+     -0.5990225666444463,
+     0.02696143088681858
+    ],
+    "lodo_range": [
+     -0.5414555772062277,
+     -0.30858947191023256
+    ],
+    "early_late_pct": -7.679549314940285
+   },
+   "bias_diff_pg": {
+    "rho": -0.3634297328940709,
+    "p_naive": 0.002705209331999651,
+    "p_perm_dates": 0.0765923407659234,
+    "boot95": [
+     -0.5631787434045811,
+     0.050370714748505546
+    ],
+    "lodo_range": [
+     -0.48650587753925917,
+     -0.27876920806657274
+    ],
+    "early_late_pct": -1.360691941858315
+   },
+   "bias_rel_pct": {
+    "rho": -0.3611661567030352,
+    "p_naive": 0.0028887657608640785,
+    "p_perm_dates": 0.07549245075492451,
+    "boot95": [
+     -0.5595755561858139,
+     0.05475506321796771
+    ],
+    "lodo_range": [
+     -0.48617081839494825,
+     -0.27977438549950506
+    ],
+    "early_late_pct": -4.620010818902079
+   },
+   "bias_by_period_pg": {
+    "early": 0.6879144546243818,
+    "late": -0.6727774872339332,
+    "all_mean": 1.1054917781088331
+   }
+  },
+  "edge_sam_r8_s43": {
+   "area_um2": {
+    "rho": -0.6888816874718756,
+    "p_naive": 1.6173016598902675e-10,
+    "p_perm_dates": 0.0005999400059994001,
+    "boot95": [
+     -0.8886460048214215,
+     -0.23164069582267685
+    ],
+    "lodo_range": [
+     -0.7428261229370093,
+     -0.5866885616881837
+    ],
+    "early_late_pct": -47.99455440360248
+   },
+   "dry_mass_pg": {
+    "rho": -0.38581398633875763,
+    "p_naive": 0.0013774991136933396,
+    "p_perm_dates": 0.0400959904009599,
+    "boot95": [
+     -0.5857237144904863,
+     -0.025372621139513045
+    ],
+    "lodo_range": [
+     -0.5009134207446228,
+     -0.325007369981461
+    ],
+    "early_late_pct": -6.076469876575394
+   },
+   "bias_diff_pg": {
+    "rho": -0.3634297328940709,
+    "p_naive": 0.002705209331999651,
+    "p_perm_dates": 0.027797220277972202,
+    "boot95": [
+     -0.5275841216757247,
+     -0.02297695560455131
+    ],
+    "lodo_range": [
+     -0.41580839808968356,
+     -0.2884859232515855
+    ],
+    "early_late_pct": -1.440541910129948
+   },
+   "bias_rel_pct": {
+    "rho": -0.3624236990313883,
+    "p_naive": 0.002785464993532713,
+    "p_perm_dates": 0.027497250274972504,
+    "boot95": [
+     -0.520552411429685,
+     -0.03341885776809937
+    ],
+    "lodo_range": [
+     -0.4164785163783052,
+     -0.2874807458186531
+    ],
+    "early_late_pct": -5.031311396362873
+   },
+   "bias_by_period_pg": {
+    "early": 0.9672673841196175,
+    "late": -0.4732745260103304,
+    "all_mean": 0.9168785079775551
+   }
+  },
+  "edge_sam_r8_s44": {
+   "area_um2": {
+    "rho": -0.6660013684041043,
+    "p_naive": 1.0452345569078117e-09,
+    "p_perm_dates": 0.0058994100589941,
+    "boot95": [
+     -0.894613469674062,
+     -0.14262952629951814
+    ],
+    "lodo_range": [
+     -0.7649506538019976,
+     -0.5555357792394708
+    ],
+    "early_late_pct": -42.33016382174361
+   },
+   "dry_mass_pg": {
+    "rho": -0.3498482757478565,
+    "p_naive": 0.0039834211288406,
+    "p_perm_dates": 0.0938906109389061,
+    "boot95": [
+     -0.6444104241692847,
+     0.09982266899375093
+    ],
+    "lodo_range": [
+     -0.5273830931451748,
+     -0.20405101888526778
+    ],
+    "early_late_pct": -7.178428637263296
+   },
+   "bias_diff_pg": {
+    "rho": -0.34230302177773736,
+    "p_naive": 0.004903941510839691,
+    "p_perm_dates": 0.1014898510148985,
+    "boot95": [
+     -0.6150320514509761,
+     0.16066884450818977
+    ],
+    "lodo_range": [
+     -0.4704230386123414,
+     -0.1973498359990521
+    ],
+    "early_late_pct": -1.0363467437067158
+   },
+   "bias_rel_pct": {
+    "rho": -0.34255453024340804,
+    "p_naive": 0.004870464824799579,
+    "p_perm_dates": 0.10238976102389762,
+    "boot95": [
+     -0.6276308057009797,
+     0.131101259372719
+    ],
+    "lodo_range": [
+     -0.4707580977566522,
+     -0.19768489514336288
+    ],
+    "early_late_pct": -3.7643089972695245
+   },
+   "bias_by_period_pg": {
+    "early": -0.2744865089635038,
+    "late": -1.3108332526702196,
+    "all_mean": 0.6346805025466674
+   }
+  }
+ },
+ "composition": {
+  "annotation_share": {
+   "0": {
+    "discocyte": 93.0,
+    "spherocyte": 0.0,
+    "echinocyte": 2.2,
+    "stomatocyte": 4.9
+   },
+   "5": {
+    "discocyte": 90.5,
+    "spherocyte": 0.0,
+    "echinocyte": 1.4,
+    "stomatocyte": 8.1
+   },
+   "8": {
+    "discocyte": 95.0,
+    "spherocyte": 0.0,
+    "echinocyte": 1.8,
+    "stomatocyte": 3.2
+   },
+   "12": {
+    "discocyte": 90.4,
+    "spherocyte": 0.4,
+    "echinocyte": 3.0,
+    "stomatocyte": 6.1
+   },
+   "15": {
+    "discocyte": 93.2,
+    "spherocyte": 1.5,
+    "echinocyte": 1.5,
+    "stomatocyte": 3.9
+   },
+   "19": {
+    "discocyte": 76.5,
+    "spherocyte": 1.9,
+    "echinocyte": 6.8,
+    "stomatocyte": 14.8
+   },
+   "23": {
+    "discocyte": 85.2,
+    "spherocyte": 1.9,
+    "echinocyte": 10.2,
+    "stomatocyte": 2.8
+   },
+   "27": {
+    "discocyte": 74.2,
+    "spherocyte": 8.6,
+    "echinocyte": 15.1,
+    "stomatocyte": 2.2
+   },
+   "30": {
+    "discocyte": 56.9,
+    "spherocyte": 16.5,
+    "echinocyte": 21.3,
+    "stomatocyte": 5.3
+   },
+   "37": {
+    "discocyte": 34.4,
+    "spherocyte": 40.1,
+    "echinocyte": 22.9,
+    "stomatocyte": 2.5
+   },
+   "47": {
+    "discocyte": 10.5,
+    "spherocyte": 58.8,
+    "echinocyte": 30.3,
+    "stomatocyte": 0.4
+   }
+  },
+  "annotation_cells_per_day": {
+   "0": 185,
+   "5": 211,
+   "8": 220,
+   "12": 230,
+   "15": 206,
+   "19": 162,
+   "23": 108,
+   "27": 93,
+   "30": 188,
+   "37": 157,
+   "47": 228
+  },
+  "annotation_stomatocyte_cells_per_day": {
+   "0": 9,
+   "5": 17,
+   "8": 7,
+   "12": 14,
+   "15": 8,
+   "19": 24,
+   "23": 3,
+   "27": 2,
+   "30": 10,
+   "37": 4,
+   "47": 1
+  },
+  "edge_sam_r32": {
+   "seedmean_vs_ann_mean_abs_pp": 2.600954813567449,
+   "seedmean_vs_ann_max_abs_pp": 11.811003378625102,
+   "max_at": [
+    15,
+    "discocyte"
+   ],
+   "per_seed_max_abs_pp": [
+    9.152046783625732,
+    17.73218538193808,
+    11.173425366695426
+   ],
+   "per_seed_mean_abs_pp": [
+    2.588401767988169,
+    2.8289063166989417,
+    2.841228641340258
+   ],
+   "pred_share_seedmean": {
+    "0": {
+     "discocyte": 91.7,
+     "spherocyte": 0.0,
+     "echinocyte": 2.0,
+     "stomatocyte": 6.3
+    },
+    "5": {
+     "discocyte": 92.4,
+     "spherocyte": 0.0,
+     "echinocyte": 1.3,
+     "stomatocyte": 6.2
+    },
+    "8": {
+     "discocyte": 90.1,
+     "spherocyte": 0.0,
+     "echinocyte": 3.2,
+     "stomatocyte": 6.7
+    },
+    "12": {
+     "discocyte": 83.6,
+     "spherocyte": 0.9,
+     "echinocyte": 6.0,
+     "stomatocyte": 9.5
+    },
+    "15": {
+     "discocyte": 81.4,
+     "spherocyte": 3.2,
+     "echinocyte": 6.6,
+     "stomatocyte": 8.8
+    },
+    "19": {
+     "discocyte": 78.3,
+     "spherocyte": 2.7,
+     "echinocyte": 7.2,
+     "stomatocyte": 11.9
+    },
+    "23": {
+     "discocyte": 81.9,
+     "spherocyte": 3.9,
+     "echinocyte": 9.9,
+     "stomatocyte": 4.3
+    },
+    "27": {
+     "discocyte": 70.6,
+     "spherocyte": 10.8,
+     "echinocyte": 14.7,
+     "stomatocyte": 3.9
+    },
+    "30": {
+     "discocyte": 54.0,
+     "spherocyte": 21.2,
+     "echinocyte": 21.4,
+     "stomatocyte": 3.3
+    },
+    "37": {
+     "discocyte": 34.7,
+     "spherocyte": 45.5,
+     "echinocyte": 18.1,
+     "stomatocyte": 1.8
+    },
+    "47": {
+     "discocyte": 11.0,
+     "spherocyte": 67.4,
+     "echinocyte": 20.9,
+     "stomatocyte": 0.7
+    }
+   },
+   "pred_share_seedrange": {
+    "0": {
+     "discocyte": [
+      90.3,
+      93.0
+     ],
+     "spherocyte": [
+      0.0,
+      0.0
+     ],
+     "echinocyte": [
+      1.9,
+      2.1
+     ],
+     "stomatocyte": [
+      4.9,
+      7.8
+     ]
+    },
+    "5": {
+     "discocyte": [
+      89.9,
+      95.0
+     ],
+     "spherocyte": [
+      0.0,
+      0.0
+     ],
+     "echinocyte": [
+      0.7,
+      1.9
+     ],
+     "stomatocyte": [
+      4.3,
+      8.2
+     ]
+    },
+    "8": {
+     "discocyte": [
+      87.7,
+      93.3
+     ],
+     "spherocyte": [
+      0.0,
+      0.0
+     ],
+     "echinocyte": [
+      1.7,
+      4.4
+     ],
+     "stomatocyte": [
+      5.0,
+      7.9
+     ]
+    },
+    "12": {
+     "discocyte": [
+      83.1,
+      84.5
+     ],
+     "spherocyte": [
+      0.8,
+      1.0
+     ],
+     "echinocyte": [
+      4.8,
+      7.4
+     ],
+     "stomatocyte": [
+      8.3,
+      11.3
+     ]
+    },
+    "15": {
+     "discocyte": [
+      75.5,
+      86.3
+     ],
+     "spherocyte": [
+      0.0,
+      5.7
+     ],
+     "echinocyte": [
+      5.7,
+      8.1
+     ],
+     "stomatocyte": [
+      5.4,
+      13.2
+     ]
+    },
+    "19": {
+     "discocyte": [
+      75.0,
+      83.1
+     ],
+     "spherocyte": [
+      2.3,
+      3.2
+     ],
+     "echinocyte": [
+      6.2,
+      8.1
+     ],
+     "stomatocyte": [
+      7.3,
+      14.6
+     ]
+    },
+    "23": {
+     "discocyte": [
+      78.9,
+      84.2
+     ],
+     "spherocyte": [
+      3.3,
+      4.2
+     ],
+     "echinocyte": [
+      8.7,
+      11.6
+     ],
+     "stomatocyte": [
+      2.1,
+      5.4
+     ]
+    },
+    "27": {
+     "discocyte": [
+      69.7,
+      71.8
+     ],
+     "spherocyte": [
+      10.6,
+      11.2
+     ],
+     "echinocyte": [
+      14.1,
+      15.7
+     ],
+     "stomatocyte": [
+      3.4,
+      4.8
+     ]
+    },
+    "30": {
+     "discocyte": [
+      53.4,
+      54.4
+     ],
+     "spherocyte": [
+      20.5,
+      21.9
+     ],
+     "echinocyte": [
+      19.4,
+      23.0
+     ],
+     "stomatocyte": [
+      2.4,
+      4.4
+     ]
+    },
+    "37": {
+     "discocyte": [
+      34.6,
+      34.7
+     ],
+     "spherocyte": [
+      45.1,
+      46.2
+     ],
+     "echinocyte": [
+      17.9,
+      18.3
+     ],
+     "stomatocyte": [
+      1.3,
+      2.1
+     ]
+    },
+    "47": {
+     "discocyte": [
+      10.9,
+      11.1
+     ],
+     "spherocyte": [
+      65.6,
+      69.9
+     ],
+     "echinocyte": [
+      19.1,
+      22.4
+     ],
+     "stomatocyte": [
+      0.0,
+      1.1
+     ]
+    }
+   },
+   "kept_ratio_seedmean": {
+    "0": 0.796,
+    "5": 0.698,
+    "8": 0.523,
+    "12": 0.486,
+    "15": 0.288,
+    "19": 0.778,
+    "23": 0.87,
+    "27": 0.925,
+    "30": 0.86,
+    "37": 0.962,
+    "47": 0.811
+   },
+   "kept_counts": {
+    "0": [
+     142,
+     146,
+     154
+    ],
+    "5": [
+     139,
+     144,
+     159
+    ],
+    "8": [
+     119,
+     114,
+     112
+    ],
+    "12": [
+     103,
+     108,
+     124
+    ],
+    "15": [
+     51,
+     53,
+     74
+    ],
+    "19": [
+     124,
+     124,
+     130
+    ],
+    "23": [
+     92,
+     95,
+     95
+    ],
+    "27": [
+     84,
+     85,
+     89
+    ],
+    "30": [
+     160,
+     164,
+     161
+    ],
+    "37": [
+     144,
+     153,
+     156
+    ],
+    "47": [
+     180,
+     192,
+     183
+    ]
+   },
+   "n_kept_total_nowrap": [
+    1338,
+    1378,
+    1437
+   ],
+   "n_kept_total_all": [
+    1393,
+    1435,
+    1491
+   ]
+  },
+  "mobile_sam_r8": {
+   "seedmean_vs_ann_mean_abs_pp": 1.4576628937900116,
+   "seedmean_vs_ann_max_abs_pp": 12.983295259851516,
+   "max_at": [
+    15,
+    "discocyte"
+   ],
+   "per_seed_max_abs_pp": [
+    13.792118789263284,
+    11.953883495145632,
+    13.203883495145632
+   ],
+   "per_seed_mean_abs_pp": [
+    1.6681197435572974,
+    1.4943515915402605,
+    1.9647701007888132
+   ],
+   "pred_share_seedmean": {
+    "0": {
+     "discocyte": 92.1,
+     "spherocyte": 0.0,
+     "echinocyte": 2.4,
+     "stomatocyte": 5.5
+    },
+    "5": {
+     "discocyte": 93.4,
+     "spherocyte": 0.0,
+     "echinocyte": 1.4,
+     "stomatocyte": 5.3
+    },
+    "8": {
+     "discocyte": 92.7,
+     "spherocyte": 0.0,
+     "echinocyte": 3.8,
+     "stomatocyte": 3.5
+    },
+    "12": {
+     "discocyte": 86.0,
+     "spherocyte": 1.0,
+     "echinocyte": 3.8,
+     "stomatocyte": 9.2
+    },
+    "15": {
+     "discocyte": 80.2,
+     "spherocyte": 3.7,
+     "echinocyte": 7.5,
+     "stomatocyte": 8.6
+    },
+    "19": {
+     "discocyte": 76.6,
+     "spherocyte": 2.1,
+     "echinocyte": 6.5,
+     "stomatocyte": 14.8
+    },
+    "23": {
+     "discocyte": 85.0,
+     "spherocyte": 1.8,
+     "echinocyte": 11.3,
+     "stomatocyte": 1.8
+    },
+    "27": {
+     "discocyte": 73.9,
+     "spherocyte": 9.4,
+     "echinocyte": 14.3,
+     "stomatocyte": 2.4
+    },
+    "30": {
+     "discocyte": 56.9,
+     "spherocyte": 18.6,
+     "echinocyte": 20.5,
+     "stomatocyte": 4.0
+    },
+    "37": {
+     "discocyte": 34.4,
+     "spherocyte": 39.9,
+     "echinocyte": 23.7,
+     "stomatocyte": 2.1
+    },
+    "47": {
+     "discocyte": 9.4,
+     "spherocyte": 62.0,
+     "echinocyte": 28.1,
+     "stomatocyte": 0.5
+    }
+   },
+   "pred_share_seedrange": {
+    "0": {
+     "discocyte": [
+      90.6,
+      93.5
+     ],
+     "spherocyte": [
+      0.0,
+      0.0
+     ],
+     "echinocyte": [
+      2.1,
+      2.9
+     ],
+     "stomatocyte": [
+      4.3,
+      6.5
+     ]
+    },
+    "5": {
+     "discocyte": [
+      92.3,
+      94.5
+     ],
+     "spherocyte": [
+      0.0,
+      0.0
+     ],
+     "echinocyte": [
+      1.3,
+      1.4
+     ],
+     "stomatocyte": [
+      4.1,
+      6.3
+     ]
+    },
+    "8": {
+     "discocyte": [
+      92.4,
+      93.3
+     ],
+     "spherocyte": [
+      0.0,
+      0.0
+     ],
+     "echinocyte": [
+      3.7,
+      3.8
+     ],
+     "stomatocyte": [
+      2.9,
+      3.8
+     ]
+    },
+    "12": {
+     "discocyte": [
+      84.9,
+      87.5
+     ],
+     "spherocyte": [
+      0.9,
+      1.0
+     ],
+     "echinocyte": [
+      3.8,
+      3.8
+     ],
+     "stomatocyte": [
+      7.7,
+      10.4
+     ]
+    },
+    "15": {
+     "discocyte": [
+      79.4,
+      81.2
+     ],
+     "spherocyte": [
+      2.9,
+      5.0
+     ],
+     "echinocyte": [
+      3.1,
+      11.8
+     ],
+     "stomatocyte": [
+      5.9,
+      12.5
+     ]
+    },
+    "19": {
+     "discocyte": [
+      74.6,
+      78.0
+     ],
+     "spherocyte": [
+      1.5,
+      2.4
+     ],
+     "echinocyte": [
+      6.3,
+      6.9
+     ],
+     "stomatocyte": [
+      13.4,
+      16.9
+     ]
+    },
+    "23": {
+     "discocyte": [
+      83.9,
+      86.5
+     ],
+     "spherocyte": [
+      1.1,
+      2.2
+     ],
+     "echinocyte": [
+      10.1,
+      12.1
+     ],
+     "stomatocyte": [
+      1.1,
+      2.2
+     ]
+    },
+    "27": {
+     "discocyte": [
+      71.1,
+      75.3
+     ],
+     "spherocyte": [
+      8.6,
+      9.9
+     ],
+     "echinocyte": [
+      13.6,
+      15.7
+     ],
+     "stomatocyte": [
+      1.2,
+      3.6
+     ]
+    },
+    "30": {
+     "discocyte": [
+      54.5,
+      58.2
+     ],
+     "spherocyte": [
+      17.8,
+      19.3
+     ],
+     "echinocyte": [
+      19.3,
+      22.4
+     ],
+     "stomatocyte": [
+      3.3,
+      4.5
+     ]
+    },
+    "37": {
+     "discocyte": [
+      34.2,
+      34.7
+     ],
+     "spherocyte": [
+      39.0,
+      41.1
+     ],
+     "echinocyte": [
+      23.3,
+      24.0
+     ],
+     "stomatocyte": [
+      1.4,
+      2.7
+     ]
+    },
+    "47": {
+     "discocyte": [
+      8.8,
+      9.8
+     ],
+     "spherocyte": [
+      61.1,
+      63.5
+     ],
+     "echinocyte": [
+      26.4,
+      29.3
+     ],
+     "stomatocyte": [
+      0.5,
+      0.5
+     ]
+    }
+   },
+   "kept_ratio_seedmean": {
+    "0": 0.75,
+    "5": 0.69,
+    "8": 0.479,
+    "12": 0.457,
+    "15": 0.172,
+    "19": 0.79,
+    "23": 0.843,
+    "27": 0.878,
+    "30": 0.801,
+    "37": 0.932,
+    "47": 0.87
+   },
+   "kept_counts": {
+    "0": [
+     138,
+     138,
+     140
+    ],
+    "5": [
+     142,
+     150,
+     145
+    ],
+    "8": [
+     104,
+     105,
+     107
+    ],
+    "12": [
+     105,
+     104,
+     106
+    ],
+    "15": [
+     34,
+     32,
+     40
+    ],
+    "19": [
+     127,
+     127,
+     130
+    ],
+    "23": [
+     89,
+     91,
+     93
+    ],
+    "27": [
+     81,
+     81,
+     83
+    ],
+    "30": [
+     156,
+     146,
+     150
+    ],
+    "37": [
+     147,
+     146,
+     146
+    ],
+    "47": [
+     205,
+     193,
+     197
+    ]
+   },
+   "n_kept_total_nowrap": [
+    1328,
+    1313,
+    1337
+   ],
+   "n_kept_total_all": [
+    1372,
+    1359,
+    1389
+   ]
+  },
+  "edge_sam_r8": {
+   "seedmean_vs_ann_mean_abs_pp": 3.6700448715554064,
+   "seedmean_vs_ann_max_abs_pp": 19.255582477079315,
+   "max_at": [
+    47,
+    "discocyte"
+   ],
+   "per_seed_max_abs_pp": [
+    17.44630773756988,
+    22.151251916198262,
+    58.77192982456141
+   ],
+   "per_seed_mean_abs_pp": [
+    2.871463931194123,
+    3.169619231069039,
+    7.514070990777925
+   ],
+   "pred_share_seedmean": {
+    "0": {
+     "discocyte": 92.0,
+     "spherocyte": 0.0,
+     "echinocyte": 1.7,
+     "stomatocyte": 6.3
+    },
+    "5": {
+     "discocyte": 94.8,
+     "spherocyte": 0.0,
+     "echinocyte": 0.2,
+     "stomatocyte": 5.0
+    },
+    "8": {
+     "discocyte": 90.6,
+     "spherocyte": 0.0,
+     "echinocyte": 3.7,
+     "stomatocyte": 5.6
+    },
+    "12": {
+     "discocyte": 86.0,
+     "spherocyte": 0.8,
+     "echinocyte": 6.9,
+     "stomatocyte": 6.3
+    },
+    "15": {
+     "discocyte": 77.1,
+     "spherocyte": 1.9,
+     "echinocyte": 10.9,
+     "stomatocyte": 10.1
+    },
+    "19": {
+     "discocyte": 81.3,
+     "spherocyte": 1.4,
+     "echinocyte": 7.9,
+     "stomatocyte": 9.4
+    },
+    "23": {
+     "discocyte": 83.3,
+     "spherocyte": 3.3,
+     "echinocyte": 8.2,
+     "stomatocyte": 5.3
+    },
+    "27": {
+     "discocyte": 73.6,
+     "spherocyte": 7.5,
+     "echinocyte": 16.1,
+     "stomatocyte": 2.7
+    },
+    "30": {
+     "discocyte": 61.2,
+     "spherocyte": 14.5,
+     "echinocyte": 20.4,
+     "stomatocyte": 3.9
+    },
+    "37": {
+     "discocyte": 49.0,
+     "spherocyte": 27.8,
+     "echinocyte": 21.3,
+     "stomatocyte": 1.9
+    },
+    "47": {
+     "discocyte": 29.8,
+     "spherocyte": 43.2,
+     "echinocyte": 26.0,
+     "stomatocyte": 1.0
+    }
+   },
+   "pred_share_seedrange": {
+    "0": {
+     "discocyte": [
+      91.5,
+      92.5
+     ],
+     "spherocyte": [
+      0.0,
+      0.0
+     ],
+     "echinocyte": [
+      0.7,
+      2.3
+     ],
+     "stomatocyte": [
+      5.8,
+      6.8
+     ]
+    },
+    "5": {
+     "discocyte": [
+      93.8,
+      95.4
+     ],
+     "spherocyte": [
+      0.0,
+      0.0
+     ],
+     "echinocyte": [
+      0.0,
+      0.7
+     ],
+     "stomatocyte": [
+      4.6,
+      5.6
+     ]
+    },
+    "8": {
+     "discocyte": [
+      89.5,
+      92.7
+     ],
+     "spherocyte": [
+      0.0,
+      0.0
+     ],
+     "echinocyte": [
+      2.1,
+      5.7
+     ],
+     "stomatocyte": [
+      4.7,
+      7.0
+     ]
+    },
+    "12": {
+     "discocyte": [
+      83.5,
+      89.5
+     ],
+     "spherocyte": [
+      0.0,
+      1.2
+     ],
+     "echinocyte": [
+      5.7,
+      8.2
+     ],
+     "stomatocyte": [
+      3.8,
+      8.0
+     ]
+    },
+    "15": {
+     "discocyte": [
+      71.1,
+      84.5
+     ],
+     "spherocyte": [
+      0.0,
+      3.0
+     ],
+     "echinocyte": [
+      5.2,
+      18.4
+     ],
+     "stomatocyte": [
+      7.9,
+      12.1
+     ]
+    },
+    "19": {
+     "discocyte": [
+      79.1,
+      82.9
+     ],
+     "spherocyte": [
+      0.0,
+      2.4
+     ],
+     "echinocyte": [
+      5.7,
+      11.2
+     ],
+     "stomatocyte": [
+      8.9,
+      9.7
+     ]
+    },
+    "23": {
+     "discocyte": [
+      82.5,
+      84.0
+     ],
+     "spherocyte": [
+      0.0,
+      5.6
+     ],
+     "echinocyte": [
+      7.4,
+      9.3
+     ],
+     "stomatocyte": [
+      3.3,
+      8.2
+     ]
+    },
+    "27": {
+     "discocyte": [
+      69.1,
+      81.0
+     ],
+     "spherocyte": [
+      0.0,
+      13.6
+     ],
+     "echinocyte": [
+      14.8,
+      16.9
+     ],
+     "stomatocyte": [
+      2.4,
+      3.4
+     ]
+    },
+    "30": {
+     "discocyte": [
+      53.4,
+      75.0
+     ],
+     "spherocyte": [
+      0.0,
+      24.0
+     ],
+     "echinocyte": [
+      19.9,
+      21.1
+     ],
+     "stomatocyte": [
+      2.7,
+      4.9
+     ]
+    },
+    "37": {
+     "discocyte": [
+      34.2,
+      77.4
+     ],
+     "spherocyte": [
+      0.0,
+      43.2
+     ],
+     "echinocyte": [
+      18.5,
+      23.6
+     ],
+     "stomatocyte": [
+      0.7,
+      4.1
+     ]
+    },
+    "47": {
+     "discocyte": [
+      10.3,
+      66.7
+     ],
+     "spherocyte": [
+      0.0,
+      65.9
+     ],
+     "echinocyte": [
+      20.0,
+      32.5
+     ],
+     "stomatocyte": [
+      0.5,
+      1.8
+     ]
+    }
+   },
+   "kept_ratio_seedmean": {
+    "0": 0.746,
+    "5": 0.627,
+    "8": 0.436,
+    "12": 0.401,
+    "15": 0.209,
+    "19": 0.765,
+    "23": 0.867,
+    "27": 0.91,
+    "30": 0.817,
+    "37": 0.879,
+    "47": 0.697
+   },
+   "kept_counts": {
+    "0": [
+     138,
+     130,
+     146
+    ],
+    "5": [
+     130,
+     123,
+     144
+    ],
+    "8": [
+     96,
+     86,
+     106
+    ],
+    "12": [
+     87,
+     85,
+     105
+    ],
+    "15": [
+     33,
+     38,
+     58
+    ],
+    "19": [
+     123,
+     115,
+     134
+    ],
+    "23": [
+     94,
+     90,
+     97
+    ],
+    "27": [
+     89,
+     81,
+     84
+    ],
+    "30": [
+     163,
+     146,
+     152
+    ],
+    "37": [
+     146,
+     144,
+     124
+    ],
+    "47": [
+     170,
+     184,
+     123
+    ]
+   },
+   "n_kept_total_nowrap": [
+    1269,
+    1222,
+    1273
+   ],
+   "n_kept_total_all": [
+    1319,
+    1276,
+    1319
+   ]
+  }
+ },
+ "agreement": {
+  "edge_sam_r32": {
+   "mdare_pct": {
+    "per_seed": [
+     4.504608234055945,
+     3.7775749648661607,
+     3.501293958125001
+    ],
+    "mean": 3.927825719015702,
+    "sd": 0.5182579964781902
+   },
+   "pearson_r": {
+    "per_seed": [
+     0.2924614801875537,
+     0.3139771702569746,
+     0.5483810372358889
+    ],
+    "mean": 0.38493989589347244,
+    "sd": 0.1419524083708152
+   },
+   "lin_ccc": {
+    "per_seed": [
+     0.17177173574055346,
+     0.29043240306432366,
+     0.5026756441757843
+    ],
+    "mean": 0.3216265943268871,
+    "sd": 0.1676429459620116
+   },
+   "bland_altman_mean_pg": {
+    "per_seed": [
+     1.2411683574435581,
+     0.1335255300786122,
+     -0.004142955322493034
+    ],
+    "mean": 0.4568503107332258,
+    "sd": 0.6827182814051429
+   },
+   "bland_altman_loa_low_pg": {
+    "per_seed": [
+     -6.993358726950432,
+     -4.452567207172861,
+     -3.924758365640588
+    ],
+    "mean": -5.123561433254627,
+    "sd": 1.6406559611734652
+   },
+   "bland_altman_loa_high_pg": {
+    "per_seed": [
+     9.475695441837548,
+     4.719618267330085,
+     3.9164724549956023
+    ],
+    "mean": 6.0372620547210785,
+    "sd": 3.004726096867322
+   },
+   "early_late_pct": {
+    "area": {
+     "per_seed": [
+      -45.544339520243135,
+      -43.26360773729194,
+      -44.072253344003656
+     ],
+     "mean": -44.293400200512906,
+     "sd": 1.1563363764704784
+    },
+    "dry_mass": {
+     "per_seed": [
+      -5.834821363380172,
+      -6.417007984976708,
+      -5.963921076464795
+     ],
+     "mean": -6.071916808273891,
+     "sd": 0.30574928316879796
+    }
+   }
+  },
+  "mobile_sam_r8": {
+   "mdare_pct": {
+    "per_seed": [
+     3.110637061531764,
+     2.7840855051767854,
+     2.723287003032203
+    ],
+    "mean": 2.872669856580251,
+    "sd": 0.2083156437718559
+   },
+   "pearson_r": {
+    "per_seed": [
+     0.21176796957813435,
+     0.15217202867842536,
+     0.3546168405286522
+    ],
+    "mean": 0.2395189462617373,
+    "sd": 0.10403635418178997
+   },
+   "lin_ccc": {
+    "per_seed": [
+     0.1881695566401951,
+     0.10727465368419359,
+     0.3267445067692275
+    ],
+    "mean": 0.2073962390312054,
+    "sd": 0.11099100454593237
+   },
+   "bland_altman_mean_pg": {
+    "per_seed": [
+     0.470512653179443,
+     1.0181104893404502,
+     0.48162548381318493
+    ],
+    "mean": 0.656749542111026,
+    "sd": 0.31299708367344825
+   },
+   "bland_altman_loa_low_pg": {
+    "per_seed": [
+     -4.556953296520943,
+     -5.846781231928251,
+     -3.719865234831787
+    ],
+    "mean": -4.707866587760327,
+    "sd": 1.0714588329846084
+   },
+   "bland_altman_loa_high_pg": {
+    "per_seed": [
+     5.497978602879829,
+     7.883002210609151,
+     4.683116202458157
+    ],
+    "mean": 6.021365671982379,
+    "sd": 1.6629095388408666
+   },
+   "early_late_pct": {
+    "area": {
+     "per_seed": [
+      -41.838388515860146,
+      -39.232091690544415,
+      -40.844424047728324
+     ],
+     "mean": -40.6383014180443,
+     "sd": 1.3153177141906092
+    },
+    "dry_mass": {
+     "per_seed": [
+      -3.053174292625116,
+      -2.202379368277274,
+      -2.554044292587454
+     ],
+     "mean": -2.6031993178299477,
+     "sd": 0.4275221201340992
+    }
+   }
+  },
+  "edge_sam_r8": {
+   "mdare_pct": {
+    "per_seed": [
+     3.621207063777064,
+     3.6154512350034222,
+     3.652144630130251
+    ],
+    "mean": 3.6296009763035797,
+    "sd": 0.019734351702310422
+   },
+   "pearson_r": {
+    "per_seed": [
+     0.3433889139401537,
+     0.17975632098851058,
+     0.4051257016350333
+    ],
+    "mean": 0.3094236455212325,
+    "sd": 0.11646059001793842
+   },
+   "lin_ccc": {
+    "per_seed": [
+     0.21568910192402535,
+     0.13172995421821834,
+     0.277745822256172
+    ],
+    "mean": 0.20838829279947188,
+    "sd": 0.07328120352535258
+   },
+   "bland_altman_mean_pg": {
+    "per_seed": [
+     1.1054917781088334,
+     0.9168785079775557,
+     0.6346805025466676
+    ],
+    "mean": 0.8856835962110189,
+    "sd": 0.23695074633604743
+   },
+   "bland_altman_loa_low_pg": {
+    "per_seed": [
+     -6.346153776740397,
+     -5.594536250510242,
+     -6.153197081284214
+    ],
+    "mean": -6.03129570284495,
+    "sd": 0.3903552048879696
+   },
+   "bland_altman_loa_high_pg": {
+    "per_seed": [
+     8.557137332958064,
+     7.428293266465353,
+     7.422558086377549
+    ],
+    "mean": 7.802662895266988,
+    "sd": 0.6534003220994063
+   },
+   "early_late_pct": {
+    "area": {
+     "per_seed": [
+      -47.37853710624667,
+      -47.994554403602464,
+      -42.330163821743604
+     ],
+     "mean": -45.901085110530914,
+     "sd": 3.1078092711259155
+    },
+    "dry_mass": {
+     "per_seed": [
+      -7.679549314940271,
+      -6.076469876575397,
+      -7.178428637263313
+     ],
+     "mean": -6.97814927625966,
+     "sd": 0.8200913292189376
+    }
+   }
+  }
+ },
+ "per_cell_and_strata": {
+  "edge_sam_r8_full": {
+   "matched_pct": [
+    60.89149178461037,
+    2.355955403419585
+   ],
+   "percell_med": [
+    2.082152710946886,
+    0.6468773588502652
+   ],
+   "percell_p90": [
+    17.320442198375915,
+    5.646833144041667
+   ],
+   "percell_med_nowrap": [
+    2.039790442184516,
+    0.6530159855579236
+   ],
+   "percell_p90_nowrap": [
+    17.511176889085863,
+    5.6156378321442055
+   ],
+   "fnr_q1": [
+    25.987623035469866,
+    5.13528563404497,
+    [
+     23.2849964326753,
+     22.76804849886139,
+     31.90982417487291
+    ]
+   ],
+   "fnr_q2q4_max": 7.102381213344401
+  },
+  "edge_sam_r8_pmc_bga": {
+   "matched_pct": [
+    68.99300471774849,
+    2.200166317496893
+   ],
+   "percell_med": [
+    2.479824381647512,
+    0.4671280566420446
+   ],
+   "percell_p90": [
+    15.62255781902378,
+    1.5435005363756422
+   ],
+   "percell_med_nowrap": [
+    2.4193935390802754,
+    0.4580948180316645
+   ],
+   "percell_p90_nowrap": [
+    16.041785962649985,
+    1.5410049159333994
+   ],
+   "fnr_q1": [
+    32.996380550005604,
+    3.247139594182707,
+    [
+     29.4240760210158,
+     35.76888762298893,
+     33.79617800601209
+    ]
+   ],
+   "fnr_q2q4_max": 8.109836423788817
+  },
+  "edge_sam_r32_full": {
+   "matched_pct": [
+    66.5853261753701,
+    1.760566033312989
+   ],
+   "percell_med": [
+    1.924556424036019,
+    0.2208629900133117
+   ],
+   "percell_p90": [
+    15.961988237797078,
+    1.636583630138539
+   ],
+   "percell_med_nowrap": [
+    1.8844846931192503,
+    0.23953865218536233
+   ],
+   "percell_p90_nowrap": [
+    16.221095132112083,
+    1.6752101585227956
+   ],
+   "fnr_q1": [
+    28.04503625267549,
+    2.526103131161726,
+    [
+     25.596148127049815,
+     27.897107465133065,
+     30.6418531658436
+    ]
+   ],
+   "fnr_q2q4_max": 6.447057115191693
+  },
+  "edge_sam_r32_pmc_bga": {
+   "matched_pct": [
+    71.1891979827558,
+    1.9302905802760575
+   ],
+   "percell_med": [
+    2.239714005064064,
+    0.285406099635852
+   ],
+   "percell_p90": [
+    15.772786267804072,
+    2.3408958058619467
+   ],
+   "percell_med_nowrap": [
+    2.1984547098191336,
+    0.27517977401969235
+   ],
+   "percell_p90_nowrap": [
+    15.46801645738836,
+    2.2800007743537156
+   ],
+   "fnr_q1": [
+    32.092216158002934,
+    2.262283618024344,
+    [
+     30.173214208423914,
+     31.516790161723375,
+     34.58664410386151
+    ]
+   ],
+   "fnr_q2q4_max": 7.237955880289384
+  },
+  "mobile_sam_r8_full": {
+   "matched_pct": [
+    66.74800715796323,
+    0.7326064909189974
+   ],
+   "percell_med": [
+    1.116751137520077,
+    0.08957445435148131
+   ],
+   "percell_p90": [
+    8.13578900179514,
+    1.575843198114242
+   ],
+   "percell_med_nowrap": [
+    1.1137026301050896,
+    0.08758247171869554
+   ],
+   "percell_p90_nowrap": [
+    8.26501487135617,
+    1.2889928591397704
+   ],
+   "fnr_q1": [
+    23.176138344249395,
+    0.8423022832968787,
+    [
+     23.836081778999,
+     23.46489850228211,
+     22.227434751467072
+    ]
+   ],
+   "fnr_q2q4_max": 0.7315586688550363
+  },
+  "mobile_sam_r8_pmc_bga": {
+   "matched_pct": [
+    66.40637709451765,
+    0.8734923545572667
+   ],
+   "percell_med": [
+    0.9834986621539189,
+    0.030159235448472092
+   ],
+   "percell_p90": [
+    10.433869371091292,
+    5.1398881722547705
+   ],
+   "percell_med_nowrap": [
+    0.9719768865617473,
+    0.025418847752078286
+   ],
+   "percell_p90_nowrap": [
+    10.46827419816322,
+    5.764583902388155
+   ],
+   "fnr_q1": [
+    20.807485936642635,
+    1.1721384177150167,
+    [
+     19.83641966259112,
+     22.10952454752221,
+     20.476513599814584
+    ]
+   ],
+   "fnr_q2q4_max": 0.6777337109690517
+  },
+  "mobilenet_unet_r8_full": {
+   "matched_pct": [
+    84.46396616235562,
+    1.1573239897076557
+   ],
+   "percell_med": [
+    1.3917964044201832,
+    0.028899791106908393
+   ],
+   "percell_p90": [
+    11.502476178390422,
+    0.24146044231456484
+   ],
+   "percell_med_nowrap": [
+    1.3628065903680617,
+    0.02795809097894359
+   ],
+   "percell_p90_nowrap": [
+    11.114464200828914,
+    0.22650263744884522
+   ],
+   "fnr_q1": [
+    25.705122566574932,
+    1.074999766403314,
+    [
+     24.69426421659176,
+     26.834449605779206,
+     25.58665387735384
+    ]
+   ],
+   "fnr_q2q4_max": 2.22609135163475
+  },
+  "mobilenet_unet_r8_pmc_bga": {
+   "matched_pct": [
+    73.53180413209695,
+    16.642288372777116
+   ],
+   "percell_med": [
+    0.9266280293117374,
+    0.02481035499004869
+   ],
+   "percell_p90": [
+    10.430289637683758,
+    8.51306141926411
+   ],
+   "percell_med_nowrap": [
+    0.9188149255537805,
+    0.01536881046840226
+   ],
+   "percell_p90_nowrap": [
+    8.67362880008211,
+    5.7629403644258055
+   ],
+   "fnr_q1": [
+    26.820906337830536,
+    5.300675978215527,
+    [
+     32.81910801524106,
+     22.766652285670805,
+     24.876958712579743
+    ]
+   ],
+   "fnr_q2q4_max": 31.96311553516192
+  }
+ },
+ "robustness": {
+  "edge_sam|lora_r8": {
+   "max_abs_delta_dice": 0.00256,
+   "ipe_uncorr_none": 3.81143,
+   "ipe_uncorr_by_dist": {
+    "none": 3.81,
+    "offset+0.10": 3.84,
+    "offset+0.30": 3.98,
+    "offset+0.60": 4.24,
+    "tilt0.10": 3.79,
+    "bowl0.10": 3.84,
+    "astig0.10": 3.77,
+    "tilt0.25": 3.75,
+    "bowl0.25": 3.87,
+    "astig0.25": 3.74,
+    "tilt0.50": 3.73,
+    "bowl0.50": 3.93,
+    "astig0.50": 3.73
+   },
+   "dice_by_dist": {
+    "none": 0.6466,
+    "offset+0.10": 0.6466,
+    "offset+0.30": 0.6466,
+    "offset+0.60": 0.6466,
+    "tilt0.10": 0.6465,
+    "bowl0.10": 0.647,
+    "astig0.10": 0.6469,
+    "tilt0.25": 0.6467,
+    "bowl0.25": 0.6474,
+    "astig0.25": 0.6476,
+    "tilt0.50": 0.6465,
+    "bowl0.50": 0.6481,
+    "astig0.50": 0.6479
+   }
+  },
+  "edge_sam|lora_r32": {
+   "max_abs_delta_dice": 0.0031,
+   "ipe_uncorr_none": 3.0155766666666666,
+   "ipe_uncorr_by_dist": {
+    "none": 3.02,
+    "offset+0.10": 3.02,
+    "offset+0.30": 3.08,
+    "offset+0.60": 3.2,
+    "tilt0.10": 3.02,
+    "bowl0.10": 3.05,
+    "astig0.10": 3.01,
+    "tilt0.25": 3.01,
+    "bowl0.25": 3.1,
+    "astig0.25": 2.98,
+    "tilt0.50": 2.97,
+    "bowl0.50": 3.18,
+    "astig0.50": 2.92
+   },
+   "dice_by_dist": {
+    "none": 0.738,
+    "offset+0.10": 0.738,
+    "offset+0.30": 0.7381,
+    "offset+0.60": 0.738,
+    "tilt0.10": 0.7381,
+    "bowl0.10": 0.7385,
+    "astig0.10": 0.7385,
+    "tilt0.25": 0.7381,
+    "bowl0.25": 0.7389,
+    "astig0.25": 0.7384,
+    "tilt0.50": 0.7381,
+    "bowl0.50": 0.7391,
+    "astig0.50": 0.7379
+   }
+  },
+  "mobile_sam|lora_r8": {
+   "max_abs_delta_dice": 0.00588,
+   "ipe_uncorr_none": 1.3194400000000002,
+   "ipe_uncorr_by_dist": {
+    "none": 1.32,
+    "offset+0.10": 1.35,
+    "offset+0.30": 1.45,
+    "offset+0.60": 1.63,
+    "tilt0.10": 1.33,
+    "bowl0.10": 1.32,
+    "astig0.10": 1.32,
+    "tilt0.25": 1.35,
+    "bowl0.25": 1.33,
+    "astig0.25": 1.32,
+    "tilt0.50": 1.38,
+    "bowl0.50": 1.38,
+    "astig0.50": 1.33
+   },
+   "dice_by_dist": {
+    "none": 0.8104,
+    "offset+0.10": 0.8105,
+    "offset+0.30": 0.8104,
+    "offset+0.60": 0.8105,
+    "tilt0.10": 0.8102,
+    "bowl0.10": 0.8107,
+    "astig0.10": 0.8102,
+    "tilt0.25": 0.8098,
+    "bowl0.25": 0.8109,
+    "astig0.25": 0.8088,
+    "tilt0.50": 0.8101,
+    "bowl0.50": 0.8106,
+    "astig0.50": 0.807
+   }
+  },
+  "mobilenet_unet|lora_r8": {
+   "max_abs_delta_dice": 0.00228,
+   "ipe_uncorr_none": 2.60226,
+   "ipe_uncorr_by_dist": {
+    "none": 2.6,
+    "offset+0.10": 2.7,
+    "offset+0.30": 2.92,
+    "offset+0.60": 3.22,
+    "tilt0.10": 2.62,
+    "bowl0.10": 2.61,
+    "astig0.10": 2.6,
+    "tilt0.25": 2.64,
+    "bowl0.25": 2.63,
+    "astig0.25": 2.57,
+    "tilt0.50": 2.64,
+    "bowl0.50": 2.63,
+    "astig0.50": 2.45
+   },
+   "dice_by_dist": {
+    "none": 0.4118,
+    "offset+0.10": 0.4118,
+    "offset+0.30": 0.4118,
+    "offset+0.60": 0.4118,
+    "tilt0.10": 0.4119,
+    "bowl0.10": 0.412,
+    "astig0.10": 0.4116,
+    "tilt0.25": 0.412,
+    "bowl0.25": 0.4123,
+    "astig0.25": 0.4112,
+    "tilt0.50": 0.4122,
+    "bowl0.50": 0.4127,
+    "astig0.50": 0.4103
+   }
+  }
+ }
+}

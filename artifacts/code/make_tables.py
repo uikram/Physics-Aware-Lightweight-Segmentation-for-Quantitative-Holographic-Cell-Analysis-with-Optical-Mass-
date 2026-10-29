@@ -109,6 +109,12 @@ def t1():
         w = ann["wrapping"]["by_class"][cl]
         rows.append({"Item": f"  {C.CLASS_DISPLAY[cl]}: cells (wrapped)", "Value": f"{w['n_cells']} ({w['n_wrapped']}, {w['pct_wrapped']:.1f}%)",
                      "Source": "compiled cell_analysis annotation"})
+    nw = gt_all[~gt_all.wrapped.astype(bool)]
+    pk = nw.max_phase_rad
+    rows.append({"Item": "Peak phase of the non-wrapped annotated cells, background-referenced (rad): median (5th to 95th percentile), max",
+                 "Value": f"{pk.median():.2f} ({pk.quantile(0.05):.2f} to {pk.quantile(0.95):.2f}), {pk.max():.2f}", "Source": "cells_gt.csv max_phase_rad"})
+    note_number("annotated_peak_phase_rad", {"median": round(float(pk.median()), 2), "p95": round(float(pk.quantile(0.95)), 2),
+                                             "max": round(float(pk.max()), 2)}, "outputs/cell_analysis/annotation/cells_gt.csv, non-wrapped")
     note_number("n_train_views", views, "metrics.json n_train_views")
     note_number("n_val_images", nval, "metrics.json n_val_images")
     note_number("annotated_cells_all", ann["n_cells_all"], "outputs/compiled/cell_analysis_multiseed.json annotation")
