@@ -1,0 +1,7 @@
+Objective,Architecture,r = 2,r = 4,r = 8,r = 16,r = 32
+Full physics-aware,MobileSAM,0/3,0/3,0/3,0/3,"1/3 (s43: sphero(2), stomato(4))"
+Full physics-aware,EdgeSAM,1/3 (s44: sphero(2)),0/3,1/3 (s44: sphero(2)),1/3 (s44: sphero(2)),0/3
+Full physics-aware,MobileNet-UNet,"3/3 (s42: sphero(2), stomato(4); s43: sphero(2), stomato(4); s44: sphero(2), stomato(4))","3/3 (s42: sphero(2), stomato(4); s43: sphero(2), stomato(4); s44: sphero(2), stomato(4))","3/3 (s42: sphero(2), stomato(4); s43: sphero(2), stomato(4); s44: sphero(2), stomato(4))","3/3 (s42: sphero(2), stomato(4); s43: sphero(2), stomato(4); s44: sphero(2), stomato(4))","3/3 (s42: sphero(2), stomato(4); s43: sphero(2), stomato(4); s44: sphero(2))"
+Dice only,MobileSAM,1/3 (s42: sphero(2)),0/3,0/3,0/3,2/3 (s42: sphero(2); s43: sphero(2))
+Dice only,EdgeSAM,0/3,1/3 (s43: sphero(2)),1/3 (s43: sphero(2)),2/3 (s43: sphero(2); s44: sphero(2)),2/3 (s43: sphero(2); s44: sphero(2))
+Dice only,MobileNet-UNet,"3/3 (s42: sphero(2), stomato(4); s43: sphero(2), stomato(4); s44: sphero(2), stomato(4))","3/3 (s42: sphero(2), stomato(4); s43: sphero(2), stomato(4); s44: sphero(2))","2/3 (s42: sphero(2), echino(3), stomato(4); s44: sphero(2), stomato(4))","2/3 (s42: sphero(2), echino(3), stomato(4); s44: sphero(2))","3/3 (s42: sphero(2), echino(3), stomato(4); s43: sphero(2), stomato(4); s44: sphero(2), stomato(4))"

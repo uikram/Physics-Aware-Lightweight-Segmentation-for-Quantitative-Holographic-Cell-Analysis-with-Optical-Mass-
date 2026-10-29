@@ -1,4 +1,4 @@
-# Checklist (updated 27 Oct 2026)
+# Checklist (updated 29 Oct 2026)
 
 `[x]` = verified by execution (evidence given). `[ ]` = not done or not verified (reason given). Nothing is marked done on the strength of reading code alone.
 
@@ -20,19 +20,23 @@
 ## Benchmark (protocol v5, D-26)
 - [x] Six combinations (three models x PyTorch / ONNX Runtime FP32), three seeds, reported run on physical GPU 2: `scripts/verify_outputs.py` errors = 0, warnings = 0.
 - [x] ONNX FP32 against PyTorch FP32 on the 66 validation images: accepted for all three models by the fixed gate (agreement >= 99.9 %, |change in mean Dice| <= 0.001, dry-mass error mean <= 0.1 %, p99 <= 0.5 %).
-- [x] Tests: 70 pass on the server before series C; 85 pass on a complete copy of the project after it (15 new in `tests/test_cell_analysis.py`).
+- [x] Tests: 70 pass on the server before series C; 85 pass on a complete copy of the project after it (15 new in `tests/test_cell_analysis.py`); 102 pass, 2 skipped on the CPU container on 29 Oct with the outputs present (4 new in `tests/test_artifacts.py`).
 - [ ] Server: copy `manuscript/make_tex.py` and rerun `./ops/make_manuscript_outputs.sh` (single maximum Peak VRAM display).
 - [ ] Causes untested: the two speed levels of EdgeSAM, MobileSAM slower in ONNX Runtime, larger ONNX memory. Stale config keys `benchmark.precisions` and `benchmark.onnx_skip` are not read by the code.
 
 ## Per-cell analysis of all runs (series C)
 - [x] `scripts/run_cell_analysis.py`, `ops/run_cell_analysis.sh`, `scripts/check_freshness.py` written; 15 tests in `tests/test_cell_analysis.py` pass on synthetic data (no real run was available when they were written).
-- [ ] Run `./ops/run_cell_analysis.sh` on the server and read the reference check: the seed-42 numbers recomputed from the saved predictions must equal `analysis/drymass.json`, `phase_integral.json` and `architecture_comparison.json`.
-- [ ] `python scripts/check_freshness.py` reports every result file ok.
+- [x] Series C run for all 183 runs: `outputs/compiled/cell_analysis_multiseed.json` complete, 0 problems (29 Oct, `artifacts/01_EXPERIMENT_STATUS.md`).
+- [x] Compiled files complete; the revision tables are checked against a fresh build by `artifacts/code/verify_artifacts.py` (OK, 29 Oct).
 
 ## Manuscript outputs
 - [x] `manuscript/results.py` writes one `results.json` (Tables 1 to 7, S-1, analyses, run flags, dataset report, configuration, environment, SHA-256 of every input); aborts if an input is missing, a run is unfinished or modes are mixed. `manuscript/figures.py` writes the figures from actual outputs. No number is typed by hand.
 - [x] Class-name exchange (D-25) applied where results are read; `results.py` checks it against the raw `metrics.json` of every selected run.
-- [ ] Manuscript, supplement and response letter are not edited yet; the fix list is in the project note `revised-ms-line-audit-2026-10-26.md`.
+- [x] Revision artifacts generated (29 Oct): `artifacts/` (tables, figures, code, guides). Plan: `artifacts/00_START_HERE.md`.
+- [ ] Manuscript and SI not edited yet: follow `artifacts/03_MANUSCRIPT_CHANGES.md` and `04_SI_CHANGES.md`.
+- [ ] Image figures (FQ1, FQS1, FQS2) need `data/processed`: run `artifacts/code/make_qualitative_figures.py` on the server.
+- [ ] `outputs/multiseed/runs/edge_sam_abl_dice_only_r4__s43/predictions_last.npz` is missing from the repository (its cell analysis exists); copy it from the server.
+- [x] Class labels confirmed (mask 2 = spherocyte, 3 = echinocyte, D-31); tied to the raw predictions by `verify_artifacts.py` check 6.
 
 ## Cleanup
 - [ ] Move the old helper files and notes into `to_delete/` on the PC and the server (listed in the project note `benchmark-v5-fp32-reduction-2026-10-26.md`), then delete `to_delete/` at the end.

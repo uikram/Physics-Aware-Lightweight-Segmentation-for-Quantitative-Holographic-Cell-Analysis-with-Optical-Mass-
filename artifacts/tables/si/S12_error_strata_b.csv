@@ -1,0 +1,5 @@
+Configuration,"FN rate Q1, Dice+PMC+BGA (%)","FN rate Q1, full (+IPP) (%)","Δ (full − without IPP), pp"
+MobileSAM r = 8,20.8 ± 1.2,23.2 ± 0.8,"+2.4 [-1.2, +5.9]"
+EdgeSAM r = 32,32.1 ± 2.3,28.0 ± 2.5,"-4.0 [-5.3, -2.8]"
+EdgeSAM r = 8,33.0 ± 3.2,26.0 ± 5.1,"-7.0 [-20.9, +6.9]"
+MobileNet-UNet r = 8,26.8 ± 5.3,25.7 ± 1.1,"-1.1 [-16.8, +14.5]"

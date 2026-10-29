@@ -51,6 +51,11 @@ bash run_full_experiment.sh                 # full run; sets CUDA_VISIBLE_DEVICE
   `outputs/full/analysis/`, `outputs/full/benchmark/`, `outputs/full/run_metadata.json`, `manuscript/outputs/results.json`,
   `manuscript/outputs/figures/`.
 
+## Revision (29 Oct 2026)
+
+All tables, figures and the step-by-step revision guide for the resubmission are in [`artifacts/`](artifacts/README.md); start with
+`artifacts/00_START_HERE.md`. Class labels: mask value 2 = spherocyte, 3 = echinocyte (`artifacts/00_CLASS_LABELS.md`, D-31).
+
 ## Status (27 Oct 2026)
 
 * Data: the date-named float maps were re-delivered at the correct scale (D-20) and phase-wrapped cells are excluded from the

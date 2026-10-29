@@ -1,0 +1,518 @@
+{
+ "n_train_views": {
+  "value": 728,
+  "source": "metrics.json n_train_views"
+ },
+ "n_val_images": {
+  "value": 66,
+  "source": "metrics.json n_val_images"
+ },
+ "annotated_cells_all": {
+  "value": 2049,
+  "source": "outputs/compiled/cell_analysis_multiseed.json annotation"
+ },
+ "annotated_cells_nowrap": {
+  "value": 1988,
+  "source": "same"
+ },
+ "annotated_cells_wrapped_pct": {
+  "value": 2.98,
+  "source": "same"
+ },
+ "mobile_sam_r8_mean_dice": {
+  "value": {
+   "mean": 0.8105,
+   "sd": 0.0063
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json mobile_sam|lora_r8"
+ },
+ "mobile_sam_r8_aji": {
+  "value": {
+   "mean": 0.2617,
+   "sd": 0.0165
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json mobile_sam|lora_r8"
+ },
+ "mobile_sam_r8_bf1": {
+  "value": {
+   "mean": 0.8017,
+   "sd": 0.0108
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json mobile_sam|lora_r8"
+ },
+ "mobile_sam_r8_ipe_global_pct": {
+  "value": {
+   "mean": 1.3194,
+   "sd": 0.0909
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json mobile_sam|lora_r8"
+ },
+ "edge_sam_r32_mean_dice": {
+  "value": {
+   "mean": 0.7381,
+   "sd": 0.0061
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json edge_sam|lora_r32"
+ },
+ "edge_sam_r32_aji": {
+  "value": {
+   "mean": 0.3354,
+   "sd": 0.0198
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json edge_sam|lora_r32"
+ },
+ "edge_sam_r32_bf1": {
+  "value": {
+   "mean": 0.642,
+   "sd": 0.0047
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json edge_sam|lora_r32"
+ },
+ "edge_sam_r32_ipe_global_pct": {
+  "value": {
+   "mean": 3.0153,
+   "sd": 0.8445
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json edge_sam|lora_r32"
+ },
+ "lost_runs_full_objective_rank_sweep": {
+  "value": {
+   "MobileSAM": "1/15",
+   "EdgeSAM": "3/15",
+   "MobileNet-UNet": "15/15"
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json"
+ },
+ "ablation_mobile_sam_r8_full_minus_dice_only_ipe_pp": {
+  "value": {
+   "n": 3,
+   "mean": -0.212,
+   "lo": -0.751,
+   "hi": 0.326,
+   "n_b_greater": 1,
+   "excludes_zero": false
+  },
+  "source": "seed-paired differences of compiled per-seed values"
+ },
+ "ablation_mobile_sam_r8_full_minus_pmc_bga_ipe_pp": {
+  "value": {
+   "n": 3,
+   "mean": -0.162,
+   "lo": -0.412,
+   "hi": 0.088,
+   "n_b_greater": 0,
+   "excludes_zero": false
+  },
+  "source": "seed-paired differences of compiled per-seed values"
+ },
+ "ablation_edge_sam_r32_full_minus_dice_only_ipe_pp": {
+  "value": {
+   "n": 3,
+   "mean": -8.184,
+   "lo": -23.52,
+   "hi": 7.152,
+   "n_b_greater": 0,
+   "excludes_zero": false
+  },
+  "source": "seed-paired differences of compiled per-seed values"
+ },
+ "ablation_edge_sam_r32_full_minus_pmc_bga_ipe_pp": {
+  "value": {
+   "n": 3,
+   "mean": -0.627,
+   "lo": -0.746,
+   "hi": -0.509,
+   "n_b_greater": 0,
+   "excludes_zero": true
+  },
+  "source": "seed-paired differences of compiled per-seed values"
+ },
+ "ablation_edge_sam_r8_full_minus_dice_only_ipe_pp": {
+  "value": {
+   "n": 3,
+   "mean": -7.008,
+   "lo": -19.675,
+   "hi": 5.659,
+   "n_b_greater": 0,
+   "excludes_zero": false
+  },
+  "source": "seed-paired differences of compiled per-seed values"
+ },
+ "ablation_edge_sam_r8_full_minus_pmc_bga_ipe_pp": {
+  "value": {
+   "n": 3,
+   "mean": -0.437,
+   "lo": -4.772,
+   "hi": 3.897,
+   "n_b_greater": 2,
+   "excludes_zero": false
+  },
+  "source": "seed-paired differences of compiled per-seed values"
+ },
+ "ablation_mobilenet_unet_r8_full_minus_dice_only_ipe_pp": {
+  "value": {
+   "n": 3,
+   "mean": -12.876,
+   "lo": -44.657,
+   "hi": 18.905,
+   "n_b_greater": 1,
+   "excludes_zero": false
+  },
+  "source": "seed-paired differences of compiled per-seed values"
+ },
+ "ablation_mobilenet_unet_r8_full_minus_pmc_bga_ipe_pp": {
+  "value": {
+   "n": 3,
+   "mean": -11.357,
+   "lo": -42.488,
+   "hi": 19.774,
+   "n_b_greater": 1,
+   "excludes_zero": false
+  },
+  "source": "seed-paired differences of compiled per-seed values"
+ },
+ "mobile_sam_r8_mdare_pct": {
+  "value": {
+   "mean": 2.873,
+   "sd": 0.208
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json mobile_sam|lora_r8"
+ },
+ "mobile_sam_r8_bias_pg": {
+  "value": {
+   "mean": 0.657,
+   "sd": 0.313
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json mobile_sam|lora_r8"
+ },
+ "mobile_sam_r8_pearson_r": {
+  "value": {
+   "mean": 0.24,
+   "sd": 0.104
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json mobile_sam|lora_r8"
+ },
+ "mobile_sam_r8_percell_abs_median_pct_nowrap": {
+  "value": {
+   "mean": 1.114,
+   "sd": 0.088
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json mobile_sam|lora_r8"
+ },
+ "mobile_sam_r8_day0_median_dry_mass_pg": {
+  "value": {
+   "mean": 28.212,
+   "sd": 0.073
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json mobile_sam|lora_r8"
+ },
+ "edge_sam_r32_mdare_pct": {
+  "value": {
+   "mean": 3.928,
+   "sd": 0.518
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json edge_sam|lora_r32"
+ },
+ "edge_sam_r32_bias_pg": {
+  "value": {
+   "mean": 0.457,
+   "sd": 0.683
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json edge_sam|lora_r32"
+ },
+ "edge_sam_r32_pearson_r": {
+  "value": {
+   "mean": 0.385,
+   "sd": 0.142
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json edge_sam|lora_r32"
+ },
+ "edge_sam_r32_percell_abs_median_pct_nowrap": {
+  "value": {
+   "mean": 1.884,
+   "sd": 0.24
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json edge_sam|lora_r32"
+ },
+ "edge_sam_r32_day0_median_dry_mass_pg": {
+  "value": {
+   "mean": 27.877,
+   "sd": 0.428
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json edge_sam|lora_r32"
+ },
+ "edge_sam_r8_mdare_pct": {
+  "value": {
+   "mean": 3.63,
+   "sd": 0.02
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json edge_sam|lora_r8"
+ },
+ "edge_sam_r8_bias_pg": {
+  "value": {
+   "mean": 0.886,
+   "sd": 0.237
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json edge_sam|lora_r8"
+ },
+ "edge_sam_r8_pearson_r": {
+  "value": {
+   "mean": 0.309,
+   "sd": 0.116
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json edge_sam|lora_r8"
+ },
+ "edge_sam_r8_percell_abs_median_pct_nowrap": {
+  "value": {
+   "mean": 2.04,
+   "sd": 0.653
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json edge_sam|lora_r8"
+ },
+ "edge_sam_r8_day0_median_dry_mass_pg": {
+  "value": {
+   "mean": 28.152,
+   "sd": 0.455
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json edge_sam|lora_r8"
+ },
+ "mobilenet_unet_r8_mdare_pct": {
+  "value": {
+   "mean": 2.479,
+   "sd": 0.315
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json mobilenet_unet|lora_r8"
+ },
+ "mobilenet_unet_r8_bias_pg": {
+  "value": {
+   "mean": -0.168,
+   "sd": 0.07
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json mobilenet_unet|lora_r8"
+ },
+ "mobilenet_unet_r8_pearson_r": {
+  "value": {
+   "mean": 0.537,
+   "sd": 0.102
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json mobilenet_unet|lora_r8"
+ },
+ "mobilenet_unet_r8_percell_abs_median_pct_nowrap": {
+  "value": {
+   "mean": 1.363,
+   "sd": 0.028
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json mobilenet_unet|lora_r8"
+ },
+ "mobilenet_unet_r8_day0_median_dry_mass_pg": {
+  "value": {
+   "mean": 28.057,
+   "sd": 0.155
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json mobilenet_unet|lora_r8"
+ },
+ "annotation_day0_median_dry_mass_pg": {
+  "value": 27.83,
+  "source": "compiled annotation consistency_nowrap"
+ },
+ "annotation_day0_over_mch": {
+  "value": 0.928,
+  "source": "compiled annotation consistency_nowrap"
+ },
+ "annotation_per_image_median_dry_mass_pg": {
+  "value": {
+   "mean": 28.66,
+   "sd": 1.55,
+   "min": 24.96,
+   "max": 33.0,
+   "n_images": 66
+  },
+  "source": "derived: cells_gt.csv, non-wrapped cells, median per image"
+ },
+ "bench_mobile_sam_pytorch": {
+  "value": {
+   "p50_ms": 20.35,
+   "p50_sd": 0.15,
+   "fps_range": [
+    48.8,
+    49.5
+   ],
+   "peak_vram_mb_max": 358.0
+  },
+  "source": "outputs/compiled/benchmark_multiseed.json"
+ },
+ "bench_mobile_sam_onnx": {
+  "value": {
+   "p50_ms": 25.43,
+   "p50_sd": 0.21,
+   "fps_range": [
+    39.1,
+    39.7
+   ],
+   "peak_vram_mb_max": 1178.0
+  },
+  "source": "outputs/compiled/benchmark_multiseed.json"
+ },
+ "bench_edge_sam_pytorch": {
+  "value": {
+   "p50_ms": 10.64,
+   "p50_sd": 1.45,
+   "fps_range": [
+    81.3,
+    102.8
+   ],
+   "peak_vram_mb_max": 42.0
+  },
+  "source": "outputs/compiled/benchmark_multiseed.json"
+ },
+ "bench_edge_sam_onnx": {
+  "value": {
+   "p50_ms": 4.11,
+   "p50_sd": 0.43,
+   "fps_range": [
+    229.1,
+    277.0
+   ],
+   "peak_vram_mb_max": 132.0
+  },
+  "source": "outputs/compiled/benchmark_multiseed.json"
+ },
+ "bench_mobilenet_unet_pytorch": {
+  "value": {
+   "p50_ms": 5.66,
+   "p50_sd": 0.1,
+   "fps_range": [
+    174.7,
+    180.4
+   ],
+   "peak_vram_mb_max": 52.0
+  },
+  "source": "outputs/compiled/benchmark_multiseed.json"
+ },
+ "bench_mobilenet_unet_onnx": {
+  "value": {
+   "p50_ms": 2.53,
+   "p50_sd": 0.19,
+   "fps_range": [
+    373.7,
+    431.0
+   ],
+   "peak_vram_mb_max": 152.0
+  },
+  "source": "outputs/compiled/benchmark_multiseed.json"
+ },
+ "storage_dry_mass_mobile_sam_r8": {
+  "value": {
+   "rho_mean": -0.165,
+   "late_vs_early_pct_mean": -2.6,
+   "p_range": [
+    0.10747224472753493,
+    0.27153894044588367
+   ]
+  },
+  "source": "outputs/analysis/cell/<run>.json storage.pred_nowrap"
+ },
+ "storage_dry_mass_edge_sam_r32": {
+  "value": {
+   "rho_mean": -0.274,
+   "late_vs_early_pct_mean": -6.07,
+   "p_range": [
+    0.007815399740253299,
+    0.05181458415684875
+   ]
+  },
+  "source": "outputs/analysis/cell/<run>.json storage.pred_nowrap"
+ },
+ "storage_dry_mass_mobilenet_unet_r8": {
+  "value": {
+   "rho_mean": -0.471,
+   "late_vs_early_pct_mean": -8.18,
+   "p_range": [
+    5.4999750369083925e-05,
+    8.187190754612996e-05
+   ]
+  },
+  "source": "outputs/analysis/cell/<run>.json storage.pred_nowrap"
+ },
+ "storage_area_annotation": {
+  "value": {
+   "rho": -0.532,
+   "p": 4.244455439713003e-06,
+   "late_vs_early_pct": -43.95,
+   "mw_p": 5.343270653107707e-06
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json annotation.storage_nowrap"
+ },
+ "storage_dry_mass_annotation": {
+  "value": {
+   "rho": -0.115,
+   "p": 0.35810540564579174,
+   "late_vs_early_pct": -0.79,
+   "mw_p": 0.2117255824820854
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json annotation.storage_nowrap"
+ },
+ "edge_sam_r32_minus_r8_dice": {
+  "value": {
+   "n": 3,
+   "mean": 0.091,
+   "lo": -0.196,
+   "hi": 0.379,
+   "n_b_greater": 3,
+   "excludes_zero": false
+  },
+  "source": "seed-paired"
+ },
+ "edge_sam_r32_minus_r8_aji": {
+  "value": {
+   "n": 3,
+   "mean": 0.086,
+   "lo": 0.026,
+   "hi": 0.146,
+   "n_b_greater": 3,
+   "excludes_zero": true
+  },
+  "source": "seed-paired"
+ },
+ "ablation_sign_Full \u2212 Dice only": {
+  "value": {
+   "lower_ipe": "15/15",
+   "ci_excludes_0": "3/15"
+  },
+  "source": "Table S5"
+ },
+ "ablation_sign_Full \u2212 (Dice+PMC+BGA) = IPP": {
+  "value": {
+   "lower_ipe": "13/15",
+   "ci_excludes_0": "1/15"
+  },
+  "source": "Table S5"
+ },
+ "ablation_sign_(Dice+PMC) \u2212 Dice only = PMC": {
+  "value": {
+   "lower_ipe": "8/15",
+   "ci_excludes_0": "1/15"
+  },
+  "source": "Table S5"
+ },
+ "ablation_sign_(Dice+PMC+BGA) \u2212 (Dice+PMC) = BGA": {
+  "value": {
+   "lower_ipe": "11/15",
+   "ci_excludes_0": "0/15"
+  },
+  "source": "Table S5"
+ },
+ "configs_with_spurious_dry_mass_decline": {
+  "value": "15/15 rank-sweep configurations show a larger late-vs-early dry-mass decline than the annotation",
+  "source": "Table S13"
+ },
+ "validation_background_offset_rad": {
+  "value": {
+   "min_rad": 0.661676,
+   "median_rad": 1.499129,
+   "max_rad": 2.502313,
+   "n_images": 66
+  },
+  "source": "outputs/compiled/cell_analysis_multiseed.json annotation.phase_offsets"
+ }
+}

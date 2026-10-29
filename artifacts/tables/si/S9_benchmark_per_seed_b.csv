@@ -1,0 +1,4 @@
+Architecture,"Arg-max agreement, 16 maps (%)",Max |Δ logit|,"Arg-max agreement, 66 images (%)",|Δ mean Dice|,Dry-mass rel. error mean / P99,Verdict
+EdgeSAM,99.9999,2.0e-04,100.0000,5.7e-07,4.5e-07 / 7.5e-06,accepted
+MobileSAM,100.0000,3.2e-04,100.0000,1.1e-07,5.2e-08 / 1.5e-06,accepted
+MobileNet-UNet,100.0000,2.0e-04,100.0000,2.3e-08,1.3e-08 / 2.9e-07,accepted
