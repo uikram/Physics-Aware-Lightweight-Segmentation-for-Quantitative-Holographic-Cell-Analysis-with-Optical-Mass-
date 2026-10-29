@@ -1,0 +1,86 @@
+#!/usr/bin/env python
+"""Inference benchmark, protocol v2 (qpi/benchmark.py, D-26). No training, no checkpoints.
+
+    python scripts/run_benchmark.py [--config-overlay smoke.yaml] [--gpu 0] [--seeds 42 43 44] [--respect-onnx-skip]
+
+Runs one pass per seed, each in its own process (``--worker``), then writes <output_root>/benchmark/benchmark.json, benchmark.csv,
+benchmark_passes.csv and benchmark_parameters_by_rank.csv. Existing benchmark outputs are replaced.
+"""
+from __future__ import annotations
+
+import argparse
+import warnings
+
+# Known harmless library warnings (ONNX tracing of data-dependent shape checks, deprecated imports, a missing optional dependency)
+# would otherwise fill the log; every real error still stops the run or is recorded in benchmark.json.
+warnings.filterwarnings("ignore", message=".*Converting a tensor to a Python boolean.*")
+warnings.filterwarnings("ignore", message=".*Using len to get tensor shape.*")
+warnings.filterwarnings("ignore", message=".*Constant folding.*")
+warnings.filterwarnings("ignore", message=".*Memory Efficient attention is a non-deterministic.*")
+warnings.filterwarnings("ignore", message=".*Unable to find acceptable character detection.*")
+warnings.filterwarnings("ignore", category=FutureWarning, module="timm.*")
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from qpi.benchmark import DEFAULT_SEEDS, parameters_by_rank, run_pass, write_outputs  # noqa: E402
+from qpi.config import load_config  # noqa: E402
+from qpi.utils.env import enforce_gpu_policy, resolve_device  # noqa: E402
+from qpi.utils.io import read_json, write_json  # noqa: E402
+from qpi.utils.outputs import claim_output_root  # noqa: E402
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--config-overlay", default=None)
+    ap.add_argument("--gpu", type=int, default=None, help="visible GPU index (default: benchmark.gpu of the config)")
+    ap.add_argument("--seeds", type=int, nargs="+", default=list(DEFAULT_SEEDS))
+    ap.add_argument("--respect-onnx-skip", action="store_true",
+                    help="honour benchmark.onnx_skip; by default every architecture is tried and failures are recorded")
+    ap.add_argument("--worker", type=int, default=None, help="internal: run one pass for this seed")
+    ap.add_argument("--pass-index", type=int, default=0)
+    ap.add_argument("--pass-out", default=None)
+    a = ap.parse_args()
+    cfg = load_config(a.config_overlay)
+    out = claim_output_root(cfg) / "benchmark"
+    gpu = a.gpu if a.gpu is not None else cfg["benchmark"].get("gpu", 0)
+    enforce_gpu_policy(cfg["hardware"]["allowed_physical_gpus"])
+    dev = resolve_device(gpu)
+
+    if a.worker is not None:
+        res = run_pass(cfg, dev, a.worker, a.pass_index, out / "_onnx_tmp", try_onnx_for_all=not a.respect_onnx_skip)
+        write_json(a.pass_out, res)
+        return 0
+
+    # orchestrator: the previous benchmark outputs are replaced (no archive)
+    if out.exists():
+        shutil.rmtree(out)
+    passes_dir = out / "passes"
+    passes_dir.mkdir(parents=True)
+    passes = []
+    for i, seed in enumerate(a.seeds):
+        pj = passes_dir / f"pass_seed{seed}.json"
+        cmd = [sys.executable, str(Path(__file__).resolve()), "--worker", str(seed), "--pass-index", str(i),
+               "--pass-out", str(pj), "--gpu", str(gpu)]
+        if a.config_overlay:
+            cmd += ["--config-overlay", a.config_overlay]
+        if a.respect_onnx_skip:
+            cmd.append("--respect-onnx-skip")
+        print(f"[benchmark] pass {i + 1}/{len(a.seeds)} (seed {seed})", flush=True)
+        subprocess.run(cmd, check=True)
+        passes.append(read_json(pj))
+    archs = [x for x in cfg["architectures"] if not cfg.get("smoke") or x in cfg["smoke"]["architectures"]]
+    params = parameters_by_rank(cfg, archs)
+    res = write_outputs(cfg, out, passes, params, dev)
+    shutil.rmtree(out / "_onnx_tmp", ignore_errors=True)
+    print(f"[benchmark] wrote {out / 'benchmark.json'}: {len(res['rows'])} rows, {len(res['skipped'])} skipped/failed")
+    for s in res["skipped"]:
+        print("  skipped:", s)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

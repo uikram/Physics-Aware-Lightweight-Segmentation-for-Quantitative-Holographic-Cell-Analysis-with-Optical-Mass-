@@ -1,0 +1,97 @@
+# Base configuration. Every experiment is derived from this file + configs/experiments.yaml.
+# All paths are relative to the project root unless absolute.
+seed: 42
+
+paths:
+  raw_root: data                  # raw inputs (float32 phase, 8-bit exports, masks)
+  processed_root: data/processed  # produced by scripts/prepare_dataset.py
+  weights_dir: weights            # edge_sam_3x.pth, mobile_sam.pt
+  torch_cache: cache              # TORCH_HOME (MobileNetV2 ImageNet weights)
+  output_root: outputs/full       # everything a full run writes (never shared with smoke runs)
+  manuscript_outputs: manuscript/outputs
+
+hardware:
+  allowed_physical_gpus: [2, 3]   # enforced via CUDA_VISIBLE_DEVICES; GPUs 0 and 1 are never used
+
+physics:                          # imaging constants (manuscript Sec. 2.6 / 3.1)
+  pixel_size_um: 0.1441           # effective object-plane pixel pitch of the 768 x 768 phase maps
+  wavelength_um: 0.666
+  refractive_increment_ml_per_g: 0.2
+  mch_reference_pg: 30.0          # used ONLY as a consistency check, never as a calibration
+
+data:
+  num_classes: 5                  # 0 background, 1 discocyte, 2 echinocyte, 3 spherocyte, 4 stomatocyte
+  ignore_index: 255               # label for pixels outside the annotated field of view
+  class_names: [background, discocyte, echinocyte, spherocyte, stomatocyte]
+  native_size: 768
+  train_rotations: [0, 1, 2, 3]   # k -> np.rot90(base, -k); identical to the provided rotation<stem>_k files
+  val_rotations: [0]
+  day0_date: "2011-05-11"         # storage day 0 (first imaging date)
+  phase_reference: background     # background | none. See DECISIONS.md D-03: provided maps use inconsistent offsets
+  background_exclusion_px: 5      # pixels closer than this to an annotated cell are not used for the background level
+  num_workers: 4
+  max_train_samples: null         # smoke test only
+  max_val_samples: null           # smoke test only
+
+registration:                     # float phase -> 8-bit mask frame (used only to place masks onto float maps)
+  min_ecc_correlation: 0.98
+  min_pearson_r: 0.90
+  pyramid_factor: 4
+  # borderline acceptance (ECC in [min_ecc_borderline, min_ecc_correlation)) needs geometric evidence, see prepare.py
+  min_ecc_borderline: 0.90
+  min_spearman_r: 0.95
+  min_rank_gain: 0.02             # Spearman must exceed Pearson by this much (non-linear export, not misalignment)
+  max_peak_shift_px: 1.0
+
+training:
+  epochs: 50
+  optimizer: AdamW
+  mixed_precision: fp16
+  sampler: shuffle                # plain shuffling (decision recorded in checklist.md)
+  drop_last: true
+  log_every_steps: 10
+
+loss:
+  lambda_pmc: 0.1
+  lambda_bga: 0.05
+  lambda_pv: 0.1
+  pmc_margin: 0.1                 # radians (phase maps are in radians)
+  class_weights: [0.5, 1.0, 1.5, 2.0, 2.0]
+  pv_epsilon: 1.0e-4
+
+evaluation:
+  checkpoint: last                # last | best  (best = max val mean Dice, selected on the evaluation split)
+  also_evaluate_best: true        # best-by-val result is stored separately, flagged as optimistic
+  boundary_tolerance_px: 2
+  cell_area_range_um2: [15.0, 200.0]
+  match_iou: 0.5
+  background_exclusion_px: 5
+  bootstrap_resamples: 2000
+  bootstrap_seed: 0
+
+analysis:
+  selected_arch: edge_sam
+  selected_rank: 8
+  storage_early_max_day: 8        # Mann-Whitney early vs late groups
+  storage_late_min_day: 37
+  doublet_area_um2: 120.0         # sensitivity analysis threshold
+  # Phase-wrap exclusion (DECISIONS.md D-21). The rule was fixed on 24 Oct 2026, before the corrected-data results existed.
+  # A cell is "wrapped" if, within `dilation_px` of it, the RAW phase (processed phase + the stored offset) is within
+  # `ceiling_tolerance_rad` of the 2*pi ceiling, or two neighbouring pixels differ by more than `jump_rad`.
+  # Wrapped cells are left out of the dry-mass / per-cell phase results; segmentation is trained and scored on all cells.
+  wrapping:
+    ceiling_rad: 6.283185307179586
+    ceiling_tolerance_rad: 0.3
+    jump_rad: 3.141592653589793
+    dilation_px: 2
+  robustness:
+    offsets_rad: [0.1, 0.3, 0.6]
+    amplitudes_rad: [0.1, 0.25, 0.5]
+
+benchmark:
+  warmup_iterations: 50
+  timed_iterations: 500
+  precisions: [fp32, fp16]
+  gpu: 0                          # visible index (physical GPU 2 under CUDA_VISIBLE_DEVICES=2,3)
+  ranks: [2, 4, 8, 16, 32]        # LoRA is merged before timing; Table 6 uses the selected rank, Table S-1 all ranks
+  onnx_skip: [mobile_sam]         # decoder ops unsupported by the ORT CUDA provider (manuscript)

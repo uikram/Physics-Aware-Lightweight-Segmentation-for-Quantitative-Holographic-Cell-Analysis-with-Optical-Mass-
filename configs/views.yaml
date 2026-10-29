@@ -1,0 +1,17 @@
+# Views: which compiled configurations a table or paragraph shows. Used ONLY at the end (qpi.analysis.compile.apply_view);
+# the compiled files in outputs/compiled never contain a selection. A view is either a list of {arch, rank, loss} (in that order)
+# or a filter on arch / rank / loss (a missing key matches everything).
+# "preferred" lists the configurations the professor asked to present (26 Oct 2026); no rule or computation chooses them (D-27).
+views:
+  same_rank:                 # all architectures at the same LoRA rank, full objective
+    rank: 8
+    loss: full
+  preferred:
+    configs:
+      - {arch: mobile_sam, rank: 8, loss: full}
+      - {arch: edge_sam, rank: 32, loss: full}
+      - {arch: mobilenet_unet, rank: 8, loss: full}
+  rank_sweep:                # every rank of every architecture, full objective
+    loss: full
+  loss_ablation:             # every loss at every rank
+    {}
