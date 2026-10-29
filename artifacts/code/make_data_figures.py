@@ -197,6 +197,7 @@ def figS6(fates):
         bottom += v
     ann = [fates[C.SEEDS[0]][d]["ann_kept"] for d in days]
     ax[1].scatter(x, ann, marker="_", s=120, color=INK, linewidths=1.6, zorder=5, label="annotated cells (same filters)")
+    ax[1].set_ylim(0, 1.08 * max(bottom.max(), max(ann)))      # the whole stack of every day stays visible
     ax[1].set_xticks(x, [str(d) for d in days])
     ax[1].set_xlabel("Storage day")
     ax[1].set_ylabel("Predicted components (mean of 3 seeds)")
@@ -239,6 +240,7 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--processed-root", default=None)
     ap.add_argument("--seed", type=int, default=42, help="training seed shown in Fig. 6 (same seed for every model)")
+    ap.add_argument("--only-figS6", action="store_true", help="redraw only Fig. S-6 (fast; skips the other figures and numbers)")
     a = ap.parse_args()
     cfg = load_config()
     if a.processed_root:
@@ -248,6 +250,9 @@ def main() -> int:
         return 1
     val = load_validation(cfg)
     preds = {(ar, rk): load_predictions(C.run_dir(ar, rk, "full", a.seed), "last") for ar, rk in SHOW}
+    if a.only_figS6:
+        figS6({s: fate(val, load_predictions(C.run_dir("edge_sam", 32, "full", s), "last")) for s in C.SEEDS})
+        return 0
     fig6(val, preds, a.seed)
     figS4(val, preds)
     figS5(val, preds)

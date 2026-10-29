@@ -1,34 +1,21 @@
-# Publication versions of the manuscript and SI
+# Manuscript and SI: current versions (internal folder)
 
-Built from the final-review Word files (`artifacts/manuscript_in_prog/Claudes_Update/`) by
-
-    python artifacts/code/audit_claims.py          # recomputes the checkable claims -> artifacts/audit/claims_check.json
-    python artifacts/code/make_manuscript_figures.py
-    python artifacts/code/patch_static_figures.py  # Fig. 1 label corrections
-    python artifacts/code/build_final_docs.py
+**To send to Prof. Moon: only the files in `for_submission/`** (the two Word files and their PDFs). Everything else in
+this folder is internal working material (change log with file paths, build notes) and should not be sent.
 
 | File | Content |
 |---|---|
-| `revised_manuscript_final.docx` | main text; every changed or new run highlighted yellow (earlier yellow kept) |
-| `supplementary_information_final.docx` | rebuilt SI, sections S-I to S-IX with descriptive titles |
-| `*_review_copy.docx` | same documents with this round's changes in green, so they can be told apart from earlier revisions |
-| `change_log.md` | every edit (old -> new) and the source file/key of every number written |
-| `*.pdf` | LibreOffice renderings for proofreading |
+| `for_submission/revised_manuscript_final.docx` | main text; revised content highlighted yellow |
+| `for_submission/supplementary_information_final.docx` | SI, sections S-I to S-IX, Tables S-1 to S-7, Figs. S-1 to S-6 |
+| `revised_manuscript_final.docx`, `supplementary_information_final.docx` | working copies (identical to `for_submission/`) |
+| `change_log.md` | internal: every edit (old -> new) and the source file/key of every number |
 
-## What still needs your data (data/processed)
+The figures that need the processed phase maps (Fig. 6, Figs. S-4 to S-6) were generated with
+`artifacts/code/make_data_figures.py --seed 42` and inserted by hand. Fig. S-6 must be redrawn once more after the y-axis fix:
 
-Fig. 6 and Figs. S-4, S-5 and S-6 are placeholders. On the machine that has `data/processed`, run
+    python artifacts/code/make_data_figures.py --seed 42 --only-figS6
 
-    python artifacts/code/make_data_figures.py --seed 42
+then replace the Fig. S-6 picture in the SI (right-click > Change Picture).
 
-It writes `artifacts/figures/manuscript/{Fig6_qualitative,FigS4_gradient_alignment,FigS5_storage_images,FigS6_component_fate}.png`
-(in Word: right-click the placeholder > Change Picture) and `artifacts/audit/server_numbers.json`, which recomputes the
-numbers listed at the end of `change_log.md` that cannot be checked from `outputs/` (unannotated fraction, day-15
-foreground fraction, pixel confusion, bridged cells, day-15 component fate). Update those sentences if the values differ.
-
-## Main-text structure after this revision
-
-Tables: 1 same-rank comparison (+ EdgeSAM (r=32)); 2 LoRA vs full fine-tuning (seed 42); 3 loss ablation;
-4 benchmark (rank 8); 5 dry-mass agreement and storage trends. The former per-class tables (old Tables 4, 5) are Table S-3,
-the per-day storage table (old Table 7) is Table S-4, MobileSAM storage is Table S-5, date-clustered statistics Table S-6, per-seed per-day values Table S-7 (replaces the former Supplementary Data file).
-Figures 1-8 keep their numbers; Fig. 5 no longer uses a second y-axis; the SI radar chart was removed.
+Text and table corrections are applied with `python artifacts/code/refresh_final_docs.py`, which keeps every inserted
+picture; do not rerun `build_final_docs.py`, which would restore placeholders.

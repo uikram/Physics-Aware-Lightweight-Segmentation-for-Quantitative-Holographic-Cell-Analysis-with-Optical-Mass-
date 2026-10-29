@@ -4,9 +4,8 @@ facts() returns {key: Fact(text, source)}. The document builder (build_final_doc
 keys and writes artifacts/manuscript_final/change_log.md listing every key used, its value and its source, so that each
 number can be traced and re-checked.
 
-Date-clustered statistics come from artifacts/audit/claims_check.json (artifacts/code/audit_claims.py; 20,000 date-block
-permutations and 20,000 date-bootstrap resamples, RNG seed 20261029). Monte-Carlo p-values can differ in the third decimal
-from another run with a different RNG seed.
+Date-clustered statistics come from artifacts/audit/claims_check.json (artifacts/code/audit_claims.py; exact date-permutation
+p-values over all 11! permutations, 20,000 date-bootstrap resamples with RNG seed 20261029).
 """
 from __future__ import annotations
 

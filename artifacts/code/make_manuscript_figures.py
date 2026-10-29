@@ -225,10 +225,10 @@ def fig8():
     ax.set_ylim(lim)
     ax.set_xlabel("Annotation, per-image median (pg)")
     ax.set_ylabel("EdgeSAM (r=32), per-image median (pg)")
-    ax.set_title("(a) Dry mass per image", loc="left")
+    ax.set_title("(a) Dry mass per image", loc="left", pad=14)
     m, r = np.array(stats_["mdare"]), np.array(stats_["r"])
-    ax.text(0.03, 0.97, f"MdARE {m.mean():.1f} ± {m.std(ddof=1):.1f}%\nr = {r.mean():.2f} ± {r.std(ddof=1):.2f}",
-            transform=ax.transAxes, va="top", fontsize=7)
+    ax.text(0.0, 1.01, f"MdARE {m.mean():.1f} ± {m.std(ddof=1):.1f}%,  r = {r.mean():.2f} ± {r.std(ddof=1):.2f}",
+            transform=ax.transAxes, va="bottom", ha="left", fontsize=6.5, color=MUTED)
     sm = plt.cm.ScalarMappable(cmap=cmap, norm=plt.Normalize(-12, 47))
     from mpl_toolkits.axes_grid1 import make_axes_locatable
     cax = make_axes_locatable(ax).append_axes("right", size="4%", pad=0.05)
@@ -304,11 +304,12 @@ def figS2():
     cfgs = [("edge_sam", 8), ("edge_sam", 32), ("mobile_sam", 8), ("mobile_sam", 32)]
     fig, axes = plt.subplots(1, 4, figsize=(6.8, 2.0), sharey=True)
     for ax, (a, r) in zip(axes, cfgs):
-        for s, ls in zip(SEEDS, ["-", "--", ":"]):
+        for s, ls, mk in zip(SEEDS, ["-", "--", ":"], ["", "", "o"]):
             h = history(a, r, "full", s)
             lost = runs(a, r).set_index("seed").loc[s, "n_lost"] > 0
-            ax.plot(h.epoch, h.val_mean_dice, ls=ls, lw=1.1, color=ARCH_COL[a],
-                    label=f"seed {s}" + (" (class lost)" if lost else ""))
+            # seed 44 gets markers and is drawn on top, so it stays visible where it overlaps seed 42
+            ax.plot(h.epoch, h.val_mean_dice, ls=ls, lw=1.1, color=ARCH_COL[a], marker=mk or None, markevery=4, ms=2.5,
+                    zorder=3 if mk else 2, label=f"seed {s}" + (" (class lost)" if lost else ""))
         ax.set_title(label(a, r))
         ax.set_xlabel("Epoch")
         ax.set_ylim(0, 0.9)

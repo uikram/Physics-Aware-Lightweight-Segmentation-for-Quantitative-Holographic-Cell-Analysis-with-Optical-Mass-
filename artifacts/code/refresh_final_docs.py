@@ -53,6 +53,54 @@ def transplant(fresh_path: Path, target_path: Path, label: str) -> list:
     return changed
 
 
+# figures generated from outputs/ (not the hand-inserted data figures): caption prefix -> image file
+SWAP = {"revised_manuscript_final.docx": {"Fig. 8": B.FIG / "Fig8_dry_mass_and_area.png"},
+        "supplementary_information_final.docx": {"Fig. S-2": B.FIG / "FigS2_validation_curves.png"}}
+
+
+def swap_figures(path: Path, mapping: dict) -> list:
+    """Replace the picture that precedes each listed caption, if the image bytes differ (width kept)."""
+    d = docx.Document(path)
+    body = list(d.element.body.iterchildren())
+    done = []
+    for i, el in enumerate(body[:-1]):
+        blip = next(el.iter(PIC), None)
+        if blip is None:
+            continue
+        cap = text(body[i + 1])
+        for prefix, img in mapping.items():
+            if cap.startswith(prefix + " "):
+                part = d.part.related_parts[blip.get(qn("r:embed"))]
+                if part.blob != img.read_bytes():
+                    T.replace_image(d, el, img)
+                    done.append((i, prefix, img.name))
+    d.save(path)
+    return done
+
+
+def drop_unused_picture_bullets(path: Path) -> bool:
+    """Remove picture-bullet definitions (w:numPicBullet) that no paragraph uses, and their image relationship."""
+    d = docx.Document(path)
+    numbering = d.part.numbering_part
+    root = numbering.element
+    pics = root.findall(qn("w:numPicBullet"))
+    if not pics:
+        return False
+    for lvl in root.iter(qn("w:lvlPicBulletId")):
+        lvl.getparent().remove(lvl)
+    for pic in pics:
+        for blip in pic.iter("{urn:schemas-microsoft-com:vml}imagedata"):
+            rid = blip.get(qn("r:id"))
+            if rid in numbering.rels:
+                numbering.drop_rel(rid)
+        root.remove(pic)
+    for rid, rel in list(numbering.rels.items()):
+        if "image" in rel.reltype:
+            numbering.drop_rel(rid)
+    d.save(path)
+    return True
+
+
 def main() -> int:
     B.extra_facts()
     with tempfile.TemporaryDirectory() as tmp:
@@ -64,6 +112,11 @@ def main() -> int:
                             (tmp / "si.docx", "supplementary_information_final.docx")):
             for i, old, new in transplant(fresh, FINAL / name, name):
                 log.append(f"| {name} element {i} | refreshed | {old}… | {new}… |")
+    for name, mapping in SWAP.items():
+        for i, cap, img in swap_figures(FINAL / name, mapping):
+            log.append(f"| {name} element {i} | figure replaced | {cap} | {img} |")
+    if drop_unused_picture_bullets(FINAL / "supplementary_information_final.docx"):
+        log.append("| supplementary_information_final.docx | removed | unused picture-bullet image inherited from the SI template | – |")
     B.write_log(FINAL / "change_log.md")
     with open(FINAL / "change_log.md", "a") as fh:
         fh.write("\n## Refresh of the hand-edited files (figures kept)\n\n| Element | Action | Before | After |\n|---|---|---|---|\n")

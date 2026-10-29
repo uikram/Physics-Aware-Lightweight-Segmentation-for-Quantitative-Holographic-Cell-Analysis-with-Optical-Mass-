@@ -4,7 +4,7 @@ Writes artifacts/audit/claims_check.json and prints a readable summary. Analyses
   1. run design (180 LoRA runs + 3 full fine-tuning runs)
   2. seed-paired IPE comparisons of the loss ablation over the full rank sweep (45 per comparison)
   3. lost-class runs per architecture and loss
-  4. date-clustered storage statistics (permutation over the 11 dates, date bootstrap, leave-one-date-out)
+  4. date-clustered storage statistics (exact permutation over the 11 dates, date bootstrap, leave-one-date-out)
      for the annotation and for every seed of EdgeSAM (r=32) and MobileSAM (r=8)
   5. a storage-dependent dry-mass bias test: per-image (prediction - annotation) median dry mass vs storage day
   6. class composition differences, kept-component ratios
@@ -28,7 +28,7 @@ from common import (ART, ARCHS, config_key, CLASSES, COLLAPSE_DICE, LOSSES, RANK
                     compiled, metric, paired_diff, runs_frame)
 
 RNG_SEED = 20261029
-N_PERM, N_BOOT = 20000, 20000
+N_BOOT = 20000            # date-bootstrap resamples; the date-permutation p-values are exact (all 11! permutations)
 EARLY, LATE = (0, 5, 8), (37, 47)
 
 
@@ -36,17 +36,48 @@ def per_image(df: pd.DataFrame, col: str) -> pd.DataFrame:
     return df.groupby(["stem", "storage_day"])[col].median().reset_index()
 
 
+_PERMS = None
+
+
+def all_permutations(n: int = 11) -> np.ndarray:
+    """Every permutation of range(n) as an int8 array (n! rows), built by insertion; 11! = 39,916,800 rows (440 MB)."""
+    global _PERMS
+    if _PERMS is None:
+        p = np.zeros((1, 1), np.int8)
+        for k in range(1, n):
+            p = np.concatenate([np.concatenate([p[:, :i], np.full((len(p), 1), k, np.int8), p[:, i:]], axis=1)
+                                for i in range(k + 1)])
+        _PERMS = p
+    return _PERMS
+
+
+def exact_date_permutation_p(img: pd.DataFrame, col: str) -> float:
+    """Exact two-sided p of the image-level Spearman correlation with storage day, permuting the day labels over the
+    dates as whole blocks (all 11! assignments). With equal images per date (6), the tie-averaged day ranks of a date
+    depend only on the day it is given, so rho is a linear function of sum_d w[pi(d)] * S_d, with S_d the sum of the
+    value ranks in date d and w the centred day ranks; the count is done in integers, so there is no Monte Carlo error."""
+    days = np.array(sorted(img.storage_day.unique()))
+    sizes = img.groupby("storage_day").size()
+    if sizes.nunique() != 1:
+        raise ValueError("exact test needs the same number of images per date")
+    yr2 = (2 * stats.rankdata(img[col].to_numpy())).astype(np.int64)
+    S = np.array([yr2[(img.storage_day == d).to_numpy()].sum() for d in days], np.int64)
+    S = S - S.mean().astype(np.int64) if (S.sum() % len(S) == 0) else S * len(S) - S.sum()
+    w = np.arange(len(days), dtype=np.int64) - (len(days) - 1) // 2          # centred day ranks (11 dates: -5..5)
+    t_obs = abs(int((w * S).sum()))
+    P = all_permutations(len(days))
+    cnt = 0
+    for i in range(0, len(P), 4_000_000):
+        t = np.abs(w[P[i:i + 4_000_000]] @ S)
+        cnt += int((t >= t_obs).sum())
+    return cnt / len(P)
+
+
 def date_clustered(img: pd.DataFrame, col: str, rng: np.random.Generator) -> dict:
     """Image-level Spearman rho vs storage day; days permuted / resampled as whole dates (one date per day)."""
     days = np.array(sorted(img.storage_day.unique()))
     groups = {d: img.loc[img.storage_day == d, col].to_numpy() for d in days}
     rho = stats.spearmanr(img.storage_day, img[col]).statistic
-    cnt = 0
-    for _ in range(N_PERM):
-        perm = rng.permutation(days)
-        x = np.concatenate([np.full(len(groups[d]), p) for d, p in zip(days, perm)])
-        y = np.concatenate([groups[d] for d in days])
-        cnt += abs(stats.spearmanr(x, y).statistic) >= abs(rho) - 1e-12
     boots = []
     for _ in range(N_BOOT):
         pick = rng.choice(days, len(days), replace=True)
@@ -59,7 +90,7 @@ def date_clustered(img: pd.DataFrame, col: str, rng: np.random.Generator) -> dic
     early = img.loc[img.storage_day.isin(EARLY), col].median()
     late = img.loc[img.storage_day.isin(LATE), col].median()
     return {"rho": float(rho), "p_naive": float(stats.spearmanr(img.storage_day, img[col]).pvalue),
-            "p_perm_dates": float((cnt + 1) / (N_PERM + 1)),
+            "p_perm_dates": exact_date_permutation_p(img, col),
             "boot95": [float(np.percentile(boots, 2.5)), float(np.percentile(boots, 97.5))],
             "lodo_range": [float(min(lodo)), float(max(lodo))],
             "early_late_pct": float(100 * (late - early) / early) if col != "diff" else float(late - early)}
