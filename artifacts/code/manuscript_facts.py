@@ -228,6 +228,8 @@ def facts() -> Dict[str, Fact]:
             put(f"{k}_{Q}_p", ", ".join(pval(p) for p in ps), f"{AUD}: storage.{tag}_s<seed>.{q}.p_perm_dates (seeds 42, 43, 44)")
             put(f"{k}_{Q}_boot", "; ".join(f"{num(b[0])} to {num(b[1])}" for b in bs), f"{AUD}: storage.{tag}_s<seed>.{q}.boot95")
             put(f"{k}_{Q}_rho", ", ".join(f"{x:.2f}" for x in rh).replace("-", "−"), f"{AUD}: storage.{tag}_s<seed>.{q}.rho")
+            put(f"{k}_{Q}_pnaive", ", ".join(pval(st[f"{tag}_s{s}"][q]["p_naive"]) for s in SEEDS),
+                f"{AUD}: storage.{tag}_s<seed>.{q}.p_naive (image-level Spearman, images treated as independent)")
             put(f"{k}_{Q}_pmin", pval(min(ps)), f"{AUD}: min over seeds")
             put(f"{k}_{Q}_pmax", pval(max(ps)), f"{AUD}: max over seeds")
             put(f"{k}_{Q}_boot_excl0", sum(1 for b in bs if b[0] > 0 or b[1] < 0), f"{AUD}: count of seeds whose boot95 excludes 0")

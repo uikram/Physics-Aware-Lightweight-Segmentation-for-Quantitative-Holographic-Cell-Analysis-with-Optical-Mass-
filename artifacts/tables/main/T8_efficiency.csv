@@ -1,7 +1,7 @@
-Architecture,Runtime,Input (px),"Trainable params, preferred rank","Trainable params, r = 8",P50 (ms),P99 (ms),FPS (per-seed range),"Peak VRAM (MB, max)"
-MobileSAM,PyTorch FP32,1024,0.67 M (r = 8),0.67 M,20.35 ± 0.15,20.51 ± 0.13,49-50,358
-MobileSAM,ONNX Runtime FP32,1024,0.67 M (r = 8),0.67 M,25.43 ± 0.21,25.56 ± 0.18,39-40,1178
-EdgeSAM,PyTorch FP32,256,1.47 M (r = 32),0.53 M,10.64 ± 1.45,12.97 ± 1.53,81-103,42
-EdgeSAM,ONNX Runtime FP32,256,1.47 M (r = 32),0.53 M,4.11 ± 0.43,5.58 ± 0.31,229-277,132
-MobileNet-UNet,PyTorch FP32,256,5.58 M (r = 8),5.58 M,5.66 ± 0.10,8.00 ± 0.63,175-180,52
-MobileNet-UNet,ONNX Runtime FP32,256,5.58 M (r = 8),5.58 M,2.53 ± 0.19,3.33 ± 0.79,374-431,152
+Architecture,Runtime,Input (px),Timed checkpoint,Trainable params of the timed model,P50 (ms),P99 (ms),FPS (per-seed range),"Peak VRAM (MB, max)"
+MobileSAM,PyTorch FP32,1024,"r = 8, LoRA merged",0.67 M,20.35 ± 0.15,20.51 ± 0.13,49-50,358
+MobileSAM,ONNX Runtime FP32,1024,"r = 8, LoRA merged",0.67 M,25.43 ± 0.21,25.56 ± 0.18,39-40,1178
+EdgeSAM,PyTorch FP32,256,"r = 8, LoRA merged",0.53 M,10.64 ± 1.45,12.97 ± 1.53,81-103,42
+EdgeSAM,ONNX Runtime FP32,256,"r = 8, LoRA merged",0.53 M,4.11 ± 0.43,5.58 ± 0.31,229-277,132
+MobileNet-UNet,PyTorch FP32,256,"r = 8, LoRA merged",5.58 M,5.66 ± 0.10,8.00 ± 0.63,175-180,52
+MobileNet-UNet,ONNX Runtime FP32,256,"r = 8, LoRA merged",5.58 M,2.53 ± 0.19,3.33 ± 0.79,374-431,152

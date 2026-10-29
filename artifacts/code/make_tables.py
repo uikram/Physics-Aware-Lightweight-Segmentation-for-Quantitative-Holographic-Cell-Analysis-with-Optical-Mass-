@@ -290,11 +290,10 @@ def t7():
                       "least-squares background plane; unmatched cells excluded."]}
 
 
-@table("T8_efficiency", "main", "Computational efficiency (NVIDIA RTX A5000, batch 1, strict FP32, 3 seeds)")
+@table("T8_efficiency", "main", "Computational efficiency of the rank-8 checkpoints (NVIDIA RTX A5000, batch 1, strict FP32, 3 timing passes)")
 def t8():
     b = C.compiled("benchmark")
     params = {(p["architecture"], p["lora_rank"]): p for p in b["parameters_by_rank"]}
-    pref = dict(C.PREFERRED + [C.BASELINE])
     rows = []
     for a in C.ARCHS:
         for be in ("pytorch", "onnx"):
@@ -302,8 +301,8 @@ def t8():
             fps = [v for v in r["fps"]["per_seed"].values()]
             rows.append({"Architecture": ARCH_LABEL[a], "Runtime": "PyTorch FP32" if be == "pytorch" else "ONNX Runtime FP32",
                          "Input (px)": r["input_size"],
-                         "Trainable params, preferred rank": f"{C.params_m(params[(a, pref[a])]['params_trainable'])} (r = {pref[a]})",
-                         "Trainable params, r = 8": C.params_m(params[(a, 8)]["params_trainable"]),
+                         "Timed checkpoint": "r = 8, LoRA merged",
+                         "Trainable params of the timed model": C.params_m(params[(a, 8)]["params_trainable"]),
                          "P50 (ms)": C.pm(r["latency_p50_ms"]["mean"], r["latency_p50_ms"]["sd"], 2),
                          "P99 (ms)": C.pm(r["latency_p99_ms"]["mean"], r["latency_p99_ms"]["sd"], 2),
                          "FPS (per-seed range)": f"{min(fps):.0f}-{max(fps):.0f}",
@@ -312,8 +311,9 @@ def t8():
                                             "fps_range": [round(min(fps), 1), round(max(fps), 1)], "peak_vram_mb_max": r["peak_vram_mb_max"]},
                         "outputs/compiled/benchmark_multiseed.json")
     return {"df": pd.DataFrame(rows),
-            "notes": ["LoRA is merged into the weights before timing, so latency and memory do not depend on the rank: one measurement "
-                      "per architecture covers every rank (trainable parameters differ, inference cost does not).",
+            "notes": ["Only the rank-8 checkpoints were timed. LoRA is merged into the weights before timing, so the deployed network "
+                      "has the same structure at every rank and its cost is expected to be rank-independent, but other ranks "
+                      "(including EdgeSAM r = 32) were NOT measured; do not pair these timings with r = 32 accuracy as one measurement.",
                       "MobileSAM is timed at 1024 px and the other two at 256 px (each model's native input), so the latency gap mixes "
                       "architecture and input resolution.",
                       "P50/P99: mean ± SD over three seeds (500 timed passes each after 50 warm-up; ONNX: 3 fresh sessions per seed). "
