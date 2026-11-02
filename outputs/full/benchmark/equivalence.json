@@ -1,0 +1,191 @@
+{
+  "rank": 8,
+  "precision": "fp32",
+  "tf32": {
+    "torch_cudnn_allow_tf32": false,
+    "torch_matmul_allow_tf32": false,
+    "torch_float32_matmul_precision": "highest",
+    "NVIDIA_TF32_OVERRIDE": "0",
+    "BENCH_TF32": "0",
+    "mode": "strict FP32 (TF32 off)",
+    "strict_effective": true
+  },
+  "acceptance": {
+    "argmax_agreement_pct_min": 99.9,
+    "mean_dice_abs_change_max": 0.001,
+    "dry_mass_mean_abs_rel_error_max": 0.001,
+    "dry_mass_p99_rel_error_max": 0.005
+  },
+  "architectures": [
+    {
+      "architecture": "edge_sam",
+      "rank": 8,
+      "checkpoint": "/sda/usama/lightweight_qpi_segmentation_fixes/outputs/full/runs/edge_sam_lora_r8/checkpoints/best.pt",
+      "checkpoint_epoch": 50,
+      "input_size": 256,
+      "n_inputs": 16,
+      "logit_comparison": {
+        "max_abs_logit_diff": 0.00019741058349609375,
+        "mean_abs_logit_diff": 2.942613491541124e-06,
+        "nonfinite_reference": 0,
+        "nonfinite_other": 0,
+        "argmax_agreement_pct": 99.99990463256836,
+        "disagree_pct": 9.5367431640625e-05,
+        "n_pixels": 1048576,
+        "n_disagree": 1,
+        "max_margin_at_disagreeing_pixels": 3.6954879760742188e-06,
+        "all_disagreements_within_2x_max_logit_diff": true,
+        "explained_by_near_ties": true
+      },
+      "quality": {
+        "rotation": 0,
+        "n_images": 66,
+        "candidates": [
+          {
+            "candidate": "pytorch_fp32",
+            "n_images": 66,
+            "n_images_in_dry_mass_error": 66,
+            "n_images_zero_reference_mass": 0,
+            "reference_dry_mass_min_pg": 74.01436616289573,
+            "dry_mass_worst_image": "20110511_1",
+            "argmax_agreement_pct": 100.0,
+            "mean_dice": 0.7056954730686753,
+            "mean_dice_change": 0.0,
+            "dry_mass_mean_abs_rel_error": 0.0,
+            "dry_mass_p99_rel_error": 0.0,
+            "dry_mass_max_rel_error": 0.0,
+            "verdict": "reference"
+          },
+          {
+            "candidate": "onnx_fp32",
+            "n_images": 66,
+            "n_images_in_dry_mass_error": 66,
+            "n_images_zero_reference_mass": 0,
+            "reference_dry_mass_min_pg": 74.01436616289573,
+            "dry_mass_worst_image": "20110516_5",
+            "argmax_agreement_pct": 99.9999766865775,
+            "mean_dice": 0.7056960470930618,
+            "mean_dice_change": 5.740243864682526e-07,
+            "dry_mass_mean_abs_rel_error": 4.4676287969170577e-07,
+            "dry_mass_p99_rel_error": 7.476947964140544e-06,
+            "dry_mass_max_rel_error": 1.207711631902032e-05,
+            "verdict": "accepted"
+          }
+        ]
+      }
+    },
+    {
+      "architecture": "mobile_sam",
+      "rank": 8,
+      "checkpoint": "/sda/usama/lightweight_qpi_segmentation_fixes/outputs/full/runs/mobile_sam_lora_r8/checkpoints/best.pt",
+      "checkpoint_epoch": 38,
+      "input_size": 1024,
+      "n_inputs": 16,
+      "logit_comparison": {
+        "max_abs_logit_diff": 0.0003204345703125,
+        "mean_abs_logit_diff": 8.565381904190872e-06,
+        "nonfinite_reference": 0,
+        "nonfinite_other": 0,
+        "argmax_agreement_pct": 100.0,
+        "disagree_pct": 0.0,
+        "n_pixels": 16777216,
+        "n_disagree": 0,
+        "all_disagreements_within_2x_max_logit_diff": true,
+        "explained_by_near_ties": true
+      },
+      "quality": {
+        "rotation": 0,
+        "n_images": 66,
+        "candidates": [
+          {
+            "candidate": "pytorch_fp32",
+            "n_images": 66,
+            "n_images_in_dry_mass_error": 66,
+            "n_images_zero_reference_mass": 0,
+            "reference_dry_mass_min_pg": 29.32636446617426,
+            "dry_mass_worst_image": "20110511_1",
+            "argmax_agreement_pct": 100.0,
+            "mean_dice": 0.8114336785344983,
+            "mean_dice_change": 0.0,
+            "dry_mass_mean_abs_rel_error": 0.0,
+            "dry_mass_p99_rel_error": 0.0,
+            "dry_mass_max_rel_error": 0.0,
+            "verdict": "reference"
+          },
+          {
+            "candidate": "onnx_fp32",
+            "n_images": 66,
+            "n_images_in_dry_mass_error": 66,
+            "n_images_zero_reference_mass": 0,
+            "reference_dry_mass_min_pg": 29.32636446617426,
+            "dry_mass_worst_image": "20110627_3",
+            "argmax_agreement_pct": 99.99998834328875,
+            "mean_dice": 0.8114337886764529,
+            "mean_dice_change": 1.1014195455683051e-07,
+            "dry_mass_mean_abs_rel_error": 5.2167599945110875e-08,
+            "dry_mass_p99_rel_error": 1.5490549572329407e-06,
+            "dry_mass_max_rel_error": 2.296450268041031e-06,
+            "verdict": "accepted"
+          }
+        ]
+      }
+    },
+    {
+      "architecture": "mobilenet_unet",
+      "rank": 8,
+      "checkpoint": "/sda/usama/lightweight_qpi_segmentation_fixes/outputs/full/runs/mobilenet_unet_lora_r8/checkpoints/best.pt",
+      "checkpoint_epoch": 34,
+      "input_size": 256,
+      "n_inputs": 16,
+      "logit_comparison": {
+        "max_abs_logit_diff": 0.00020456314086914062,
+        "mean_abs_logit_diff": 5.550083187699784e-06,
+        "nonfinite_reference": 0,
+        "nonfinite_other": 0,
+        "argmax_agreement_pct": 100.0,
+        "disagree_pct": 0.0,
+        "n_pixels": 1048576,
+        "n_disagree": 0,
+        "all_disagreements_within_2x_max_logit_diff": true,
+        "explained_by_near_ties": true
+      },
+      "quality": {
+        "rotation": 0,
+        "n_images": 66,
+        "candidates": [
+          {
+            "candidate": "pytorch_fp32",
+            "n_images": 66,
+            "n_images_in_dry_mass_error": 66,
+            "n_images_zero_reference_mass": 0,
+            "reference_dry_mass_min_pg": 340.3097360346514,
+            "dry_mass_worst_image": "20110511_1",
+            "argmax_agreement_pct": 100.0,
+            "mean_dice": 0.41797140183549863,
+            "mean_dice_change": 0.0,
+            "dry_mass_mean_abs_rel_error": 0.0,
+            "dry_mass_p99_rel_error": 0.0,
+            "dry_mass_max_rel_error": 0.0,
+            "verdict": "reference"
+          },
+          {
+            "candidate": "onnx_fp32",
+            "n_images": 66,
+            "n_images_in_dry_mass_error": 66,
+            "n_images_zero_reference_mass": 0,
+            "reference_dry_mass_min_pg": 340.3097360346514,
+            "dry_mass_worst_image": "20110523_9",
+            "argmax_agreement_pct": 99.99999611442958,
+            "mean_dice": 0.41797142455358494,
+            "mean_dice_change": 2.271808630105454e-08,
+            "dry_mass_mean_abs_rel_error": 1.2579450921724801e-08,
+            "dry_mass_p99_rel_error": 2.9058531629183817e-07,
+            "dry_mass_max_rel_error": 8.302437608338368e-07,
+            "verdict": "accepted"
+          }
+        ]
+      }
+    }
+  ],
+  "all_accepted": true
+}

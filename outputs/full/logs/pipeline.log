@@ -1,0 +1,543 @@
+[10:05:48] full experiment started; project /sda/usama/lightweight_qpi_segmentation_fixes
+[10:05:48] >>> python environment
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/requests/__init__.py:92: RequestsDependencyWarning: Unable to find acceptable character detection dependency (chardet or charset_normalizer).
+  warnings.warn(
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/timm/models/layers/__init__.py:49: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/timm/models/registry.py:4: FutureWarning: Importing from timm.models.registry is deprecated, please import via timm.models
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.models", FutureWarning)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_5m_224 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_5m_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_11m_224 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_11m_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_224 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_384 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_384. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_512 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_512. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+  interpreter /home/usama/anaconda3/envs/segmentation/bin/python
+  python 3.10.18  torch 2.0.1+cu117  onnxruntime providers ['TensorrtExecutionProvider', 'CUDAExecutionProvider', 'AzureExecutionProvider', 'CPUExecutionProvider']
+[10:05:51] <<< python environment (3 s)
+[10:05:51] >>> GPU policy (GPUs 2,3 only)
+  visible cuda:0 -> physical GPU 2: NVIDIA RTX A5000, 23.7 GiB
+  visible cuda:1 -> physical GPU 3: NVIDIA RTX A5000, 23.7 GiB
+[10:05:53] <<< GPU policy (GPUs 2,3 only) (2 s)
+[10:05:53] >>> pretrained weights
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/requests/__init__.py:92: RequestsDependencyWarning: Unable to find acceptable character detection dependency (chardet or charset_normalizer).
+  warnings.warn(
+  MobileNetV2 ImageNet weights available
+[10:05:55] <<< pretrained weights (2 s)
+[10:05:55] >>> record run metadata (start)
+[record_run] start -> /sda/usama/lightweight_qpi_segmentation_fixes/outputs/full/run_metadata.json
+[10:05:57] <<< record run metadata (start) (2 s)
+[10:05:57] >>> build processed dataset
+[prepare] ok={'train': 182, 'val': 66} missing_float={'train': 74, 'val': 0} failed=0 valid_fraction={'min': 0.47312, 'mean': 0.8564964516129032, 'max': 1.0}
+[10:12:36] <<< build processed dataset (399 s)
+[10:12:36] >>> verify dataset
+[PASS] pairing_train: n_images=1024, n_masks=1024, only_images=[], only_masks=[]
+[PASS] pairing_val: n_images=66, n_masks=66, only_images=[], only_masks=[]
+[PASS] train_composition: n_base=256, n_rotation_files=768, expected_views=1024
+[PASS] rotation_convention_np_rot90_minus_k: n_checked=1536, n_bad=0, examples=[]
+[PASS] mask_labels_subset_of_0_to_4: labels=[0, 1, 2, 3, 4]
+[PASS] val_complete: n_processed=66, n_expected=66
+[WARN] train_float_coverage: n_processed=182, n_base_total=256, n_missing_float=74, training_views=728, warning=74 base training images have no float32 map and are excluded (missing_float_data.csv)
+[PASS] registration_quality: n_failed=0, min_ecc=0.96203, min_pearson=0.94742, max_abs_rotation_deg=0.1338, max_abs_shear=0.00204, max_peak_shift_px=0.0, extended_search=['20110526_1'], borderline_accepted=['X_train_00159']
+[PASS] annotated_coverage: valid_fraction_min=0.47312, valid_fraction_mean=0.8564964516129032, valid_fraction_max=1.0
+[PASS] processed_files_integrity: n_problems=0, examples=[]
+[PASS] no_leakage_between_splits: shared_stems=[], n_shared_content_hashes=0
+[PASS] validation_design: images_per_day={0: 6, 5: 6, 8: 6, 12: 6, 15: 6, 19: 6, 23: 6, 27: 6, 30: 6, 37: 6, 47: 6}
+[PASS] all_classes_present_train: pixels_per_class=[92557605, 5422829, 404323, 800214, 363986]
+[PASS] all_classes_present_val: pixels_per_class=[20006471, 4628824, 365047, 444418, 291487]
+dataset verification passed
+[10:13:00] <<< verify dataset (24 s)
+[10:13:00] >>> write experiment grid
+wrote /sda/usama/lightweight_qpi_segmentation_fixes/outputs/full/grid.json (30 entries)
+[10:13:00] <<< write experiment grid (0 s)
+[10:13:00] >>> train all runs (2 GPU slots)
+[queue] 27 runs, 2 slot(s)
+[queue] start mobile_sam_abl_dice_only on visible GPU 0
+[queue] start mobile_sam_abl_pmc on visible GPU 1
+[queue] done mobile_sam_abl_dice_only (exit 0)
+[queue] start mobile_sam_abl_pmc_bga on visible GPU 0
+[queue] done mobile_sam_abl_pmc (exit 0)
+[queue] start mobile_sam_full_finetune on visible GPU 1
+[queue] done mobile_sam_full_finetune (exit 0)
+[queue] start mobile_sam_lora_r16 on visible GPU 1
+[queue] done mobile_sam_abl_pmc_bga (exit 0)
+[queue] start mobile_sam_lora_r2 on visible GPU 0
+[queue] done mobile_sam_lora_r16 (exit 0)
+[queue] start mobile_sam_lora_r32 on visible GPU 1
+[queue] done mobile_sam_lora_r2 (exit 0)
+[queue] start mobile_sam_lora_r4 on visible GPU 0
+[queue] done mobile_sam_lora_r32 (exit 0)
+[queue] start mobile_sam_lora_r8 on visible GPU 1
+[queue] done mobile_sam_lora_r4 (exit 0)
+[queue] start edge_sam_abl_dice_only on visible GPU 0
+[queue] done edge_sam_abl_dice_only (exit 0)
+[queue] start edge_sam_abl_pmc on visible GPU 0
+[queue] done edge_sam_abl_pmc (exit 0)
+[queue] start edge_sam_abl_pmc_bga on visible GPU 0
+[queue] done mobile_sam_lora_r8 (exit 0)
+[queue] start edge_sam_full_finetune on visible GPU 1
+[queue] done edge_sam_abl_pmc_bga (exit 0)
+[queue] start edge_sam_lora_r16 on visible GPU 0
+[queue] done edge_sam_full_finetune (exit 0)
+[queue] start edge_sam_lora_r2 on visible GPU 1
+[queue] done edge_sam_lora_r16 (exit 0)
+[queue] start edge_sam_lora_r32 on visible GPU 0
+[queue] done edge_sam_lora_r2 (exit 0)
+[queue] start edge_sam_lora_r4 on visible GPU 1
+[queue] done edge_sam_lora_r32 (exit 0)
+[queue] start edge_sam_lora_r8 on visible GPU 0
+[queue] done edge_sam_lora_r4 (exit 0)
+[queue] start mobilenet_unet_abl_dice_only on visible GPU 1
+[queue] done mobilenet_unet_abl_dice_only (exit 0)
+[queue] start mobilenet_unet_abl_pmc on visible GPU 1
+[queue] done edge_sam_lora_r8 (exit 0)
+[queue] start mobilenet_unet_abl_pmc_bga on visible GPU 0
+[queue] done mobilenet_unet_abl_pmc (exit 0)
+[queue] start mobilenet_unet_full_finetune on visible GPU 1
+[queue] done mobilenet_unet_abl_pmc_bga (exit 0)
+[queue] start mobilenet_unet_lora_r16 on visible GPU 0
+[queue] done mobilenet_unet_full_finetune (exit 0)
+[queue] start mobilenet_unet_lora_r2 on visible GPU 1
+[queue] done mobilenet_unet_lora_r16 (exit 0)
+[queue] start mobilenet_unet_lora_r32 on visible GPU 0
+[queue] done mobilenet_unet_lora_r2 (exit 0)
+[queue] start mobilenet_unet_lora_r4 on visible GPU 1
+[queue] done mobilenet_unet_lora_r32 (exit 0)
+[queue] start mobilenet_unet_lora_r8 on visible GPU 0
+[queue] done mobilenet_unet_lora_r4 (exit 0)
+[queue] done mobilenet_unet_lora_r8 (exit 0)
+[queue] all runs finished
+[13:34:41] <<< train all runs (2 GPU slots) (12101 s)
+[13:34:41] >>> analysis (phase integral, dry mass, robustness)
+[analysis] phase_integral: 30 runs
+[analysis] drymass: 1319 predicted / 2049 annotated cells
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/requests/__init__.py:92: RequestsDependencyWarning: Unable to find acceptable character detection dependency (chardet or charset_normalizer).
+  warnings.warn(
+[LoRA] Injected 81 LoRA layers (strategy=encoder_only, r=8)
+[LoRA] Trainable params: 359,320 / 5,829,448 (6.16%)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/torch/_utils.py:776: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/timm/models/registry.py:4: FutureWarning: Importing from timm.models.registry is deprecated, please import via timm.models
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.models", FutureWarning)
+[LoRA] Injected 10 LoRA layers (strategy=attention_blocks, r=8)
+[LoRA] Trainable params: 77,600 / 6,124,348 (1.27%)
+[MobileNetUNet] Using OFFICIAL implementation
+[MobileNetUNet] Source: torchvision.models package
+[MobileNetUNet] Model class: MobileNetV2
+[MobileNetUNet] Checkpoint: None (Random Weights)
+[LoRA] Injected 35 LoRA layers (strategy=encoder_only, r=8)
+[LoRA] Trainable params: 189,901 / 7,773,357 (2.44%)
+[LoRA] Injected 81 LoRA layers (strategy=encoder_only, r=8)
+[LoRA] Trainable params: 359,320 / 5,829,448 (6.16%)
+[LoRA] Injected 10 LoRA layers (strategy=attention_blocks, r=8)
+[LoRA] Trainable params: 77,600 / 6,124,348 (1.27%)
+[MobileNetUNet] Using OFFICIAL implementation
+[MobileNetUNet] Source: torchvision.models package
+[MobileNetUNet] Model class: MobileNetV2
+[MobileNetUNet] Checkpoint: None (Random Weights)
+[LoRA] Injected 35 LoRA layers (strategy=encoder_only, r=8)
+[LoRA] Trainable params: 189,901 / 7,773,357 (2.44%)
+[analysis] robustness: 6 runs x 13 distortions
+[13:45:08] <<< analysis (phase integral, dry mass, robustness) (627 s)
+[13:45:08] >>> inference benchmark (visible cuda:0, nothing else running)
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/requests/__init__.py:92: RequestsDependencyWarning: Unable to find acceptable character detection dependency (chardet or charset_normalizer).
+  warnings.warn(
+[benchmark] edge_sam r=2 fp32 pytorch
+[LoRA] Injected 81 LoRA layers (strategy=encoder_only, r=2)
+[LoRA] Trainable params: 125,074 / 5,595,202 (2.24%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+[benchmark] edge_sam r=2 fp32 onnx
+[LoRA] Injected 81 LoRA layers (strategy=encoder_only, r=2)
+[LoRA] Trainable params: 125,074 / 5,595,202 (2.24%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+/sda/usama/lightweight_qpi_segmentation_fixes/qpi/models/edge_sam.py:83: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  if x.shape[-1] != self.image_size or x.shape[-2] != self.image_size:
+/sda/usama/lightweight_qpi_segmentation_fixes/qpi/models/edge_sam.py:86: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  if logits.shape[2:] != size:
+============= Diagnostic Run torch.onnx.export version 2.0.1+cu117 =============
+verbose: False, log level: Level.ERROR
+======================= 0 NONE 0 NOTE 0 WARNING 0 ERROR ========================
+
+[benchmark] edge_sam r=2 fp16 pytorch
+[LoRA] Injected 81 LoRA layers (strategy=encoder_only, r=2)
+[LoRA] Trainable params: 125,074 / 5,595,202 (2.24%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+[benchmark] edge_sam r=2 fp16 onnx
+[LoRA] Injected 81 LoRA layers (strategy=encoder_only, r=2)
+[LoRA] Trainable params: 125,074 / 5,595,202 (2.24%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+============= Diagnostic Run torch.onnx.export version 2.0.1+cu117 =============
+verbose: False, log level: Level.ERROR
+======================= 0 NONE 0 NOTE 0 WARNING 0 ERROR ========================
+
+[benchmark] edge_sam r=4 fp32 pytorch
+[LoRA] Injected 81 LoRA layers (strategy=encoder_only, r=4)
+[LoRA] Trainable params: 203,156 / 5,673,284 (3.58%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+[benchmark] edge_sam r=4 fp32 onnx
+[LoRA] Injected 81 LoRA layers (strategy=encoder_only, r=4)
+[LoRA] Trainable params: 203,156 / 5,673,284 (3.58%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+============= Diagnostic Run torch.onnx.export version 2.0.1+cu117 =============
+verbose: False, log level: Level.ERROR
+======================= 0 NONE 0 NOTE 0 WARNING 0 ERROR ========================
+
+[benchmark] edge_sam r=4 fp16 pytorch
+[LoRA] Injected 81 LoRA layers (strategy=encoder_only, r=4)
+[LoRA] Trainable params: 203,156 / 5,673,284 (3.58%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+[benchmark] edge_sam r=4 fp16 onnx
+[LoRA] Injected 81 LoRA layers (strategy=encoder_only, r=4)
+[LoRA] Trainable params: 203,156 / 5,673,284 (3.58%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+============= Diagnostic Run torch.onnx.export version 2.0.1+cu117 =============
+verbose: False, log level: Level.ERROR
+======================= 0 NONE 0 NOTE 0 WARNING 0 ERROR ========================
+
+[benchmark] edge_sam r=8 fp32 pytorch
+[LoRA] Injected 81 LoRA layers (strategy=encoder_only, r=8)
+[LoRA] Trainable params: 359,320 / 5,829,448 (6.16%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+[benchmark] edge_sam r=8 fp32 onnx
+[LoRA] Injected 81 LoRA layers (strategy=encoder_only, r=8)
+[LoRA] Trainable params: 359,320 / 5,829,448 (6.16%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+============= Diagnostic Run torch.onnx.export version 2.0.1+cu117 =============
+verbose: False, log level: Level.ERROR
+======================= 0 NONE 0 NOTE 0 WARNING 0 ERROR ========================
+
+[benchmark] edge_sam r=8 fp16 pytorch
+[LoRA] Injected 81 LoRA layers (strategy=encoder_only, r=8)
+[LoRA] Trainable params: 359,320 / 5,829,448 (6.16%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+[benchmark] edge_sam r=8 fp16 onnx
+[LoRA] Injected 81 LoRA layers (strategy=encoder_only, r=8)
+[LoRA] Trainable params: 359,320 / 5,829,448 (6.16%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+============= Diagnostic Run torch.onnx.export version 2.0.1+cu117 =============
+verbose: False, log level: Level.ERROR
+======================= 0 NONE 0 NOTE 0 WARNING 0 ERROR ========================
+
+[benchmark] edge_sam r=16 fp32 pytorch
+[LoRA] Injected 81 LoRA layers (strategy=encoder_only, r=16)
+[LoRA] Trainable params: 671,648 / 6,141,776 (10.94%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+[benchmark] edge_sam r=16 fp32 onnx
+[LoRA] Injected 81 LoRA layers (strategy=encoder_only, r=16)
+[LoRA] Trainable params: 671,648 / 6,141,776 (10.94%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+============= Diagnostic Run torch.onnx.export version 2.0.1+cu117 =============
+verbose: False, log level: Level.ERROR
+======================= 0 NONE 0 NOTE 0 WARNING 0 ERROR ========================
+
+[benchmark] edge_sam r=16 fp16 pytorch
+[LoRA] Injected 81 LoRA layers (strategy=encoder_only, r=16)
+[LoRA] Trainable params: 671,648 / 6,141,776 (10.94%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+[benchmark] edge_sam r=16 fp16 onnx
+[LoRA] Injected 81 LoRA layers (strategy=encoder_only, r=16)
+[LoRA] Trainable params: 671,648 / 6,141,776 (10.94%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+============= Diagnostic Run torch.onnx.export version 2.0.1+cu117 =============
+verbose: False, log level: Level.ERROR
+======================= 0 NONE 0 NOTE 0 WARNING 0 ERROR ========================
+
+[benchmark] edge_sam r=32 fp32 pytorch
+[LoRA] Injected 81 LoRA layers (strategy=encoder_only, r=32)
+[LoRA] Trainable params: 1,296,304 / 6,766,432 (19.16%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+[benchmark] edge_sam r=32 fp32 onnx
+[LoRA] Injected 81 LoRA layers (strategy=encoder_only, r=32)
+[LoRA] Trainable params: 1,296,304 / 6,766,432 (19.16%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+============= Diagnostic Run torch.onnx.export version 2.0.1+cu117 =============
+verbose: False, log level: Level.ERROR
+======================= 0 NONE 0 NOTE 0 WARNING 0 ERROR ========================
+
+[benchmark] edge_sam r=32 fp16 pytorch
+[LoRA] Injected 81 LoRA layers (strategy=encoder_only, r=32)
+[LoRA] Trainable params: 1,296,304 / 6,766,432 (19.16%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+[benchmark] edge_sam r=32 fp16 onnx
+[LoRA] Injected 81 LoRA layers (strategy=encoder_only, r=32)
+[LoRA] Trainable params: 1,296,304 / 6,766,432 (19.16%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+============= Diagnostic Run torch.onnx.export version 2.0.1+cu117 =============
+verbose: False, log level: Level.ERROR
+======================= 0 NONE 0 NOTE 0 WARNING 0 ERROR ========================
+
+[benchmark] mobile_sam r=2 fp32 pytorch
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/timm/models/registry.py:4: FutureWarning: Importing from timm.models.registry is deprecated, please import via timm.models
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.models", FutureWarning)
+[LoRA] Injected 10 LoRA layers (strategy=attention_blocks, r=2)
+[LoRA] Trainable params: 33,056 / 6,079,804 (0.54%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+/home/usama/anaconda3/envs/segmentation/lib/python3.10/site-packages/torch/nn/modules/activation.py:1160: UserWarning: Memory Efficient attention is a non-deterministic algorithm. To explicitly disable Memory Efficient attention call torch.use_deterministic_algorithms(True, warn_only=False). (Triggered internally at ../aten/src/ATen/native/transformers/cuda/sdp_utils.h:419.)
+  return torch._native_multi_head_attention(
+[benchmark] mobile_sam r=2 fp16 pytorch
+[LoRA] Injected 10 LoRA layers (strategy=attention_blocks, r=2)
+[LoRA] Trainable params: 33,056 / 6,079,804 (0.54%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+[benchmark] mobile_sam r=4 fp32 pytorch
+[LoRA] Injected 10 LoRA layers (strategy=attention_blocks, r=4)
+[LoRA] Trainable params: 47,904 / 6,094,652 (0.79%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+[benchmark] mobile_sam r=4 fp16 pytorch
+[LoRA] Injected 10 LoRA layers (strategy=attention_blocks, r=4)
+[LoRA] Trainable params: 47,904 / 6,094,652 (0.79%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+[benchmark] mobile_sam r=8 fp32 pytorch
+[LoRA] Injected 10 LoRA layers (strategy=attention_blocks, r=8)
+[LoRA] Trainable params: 77,600 / 6,124,348 (1.27%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+[benchmark] mobile_sam r=8 fp16 pytorch
+[LoRA] Injected 10 LoRA layers (strategy=attention_blocks, r=8)
+[LoRA] Trainable params: 77,600 / 6,124,348 (1.27%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+[benchmark] mobile_sam r=16 fp32 pytorch
+[LoRA] Injected 10 LoRA layers (strategy=attention_blocks, r=16)
+[LoRA] Trainable params: 136,992 / 6,183,740 (2.22%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+[benchmark] mobile_sam r=16 fp16 pytorch
+[LoRA] Injected 10 LoRA layers (strategy=attention_blocks, r=16)
+[LoRA] Trainable params: 136,992 / 6,183,740 (2.22%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+[benchmark] mobile_sam r=32 fp32 pytorch
+[LoRA] Injected 10 LoRA layers (strategy=attention_blocks, r=32)
+[LoRA] Trainable params: 255,776 / 6,302,524 (4.06%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+[benchmark] mobile_sam r=32 fp16 pytorch
+[LoRA] Injected 10 LoRA layers (strategy=attention_blocks, r=32)
+[LoRA] Trainable params: 255,776 / 6,302,524 (4.06%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+[benchmark] mobilenet_unet r=2 fp32 pytorch
+[MobileNetUNet] Using OFFICIAL implementation
+[MobileNetUNet] Source: torchvision.models package
+[MobileNetUNet] Model class: MobileNetV2
+[MobileNetUNet] Checkpoint: None (Random Weights)
+[LoRA] Injected 35 LoRA layers (strategy=encoder_only, r=2)
+[LoRA] Trainable params: 76,999 / 7,660,455 (1.01%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+[benchmark] mobilenet_unet r=2 fp32 onnx
+[MobileNetUNet] Using OFFICIAL implementation
+[MobileNetUNet] Source: torchvision.models package
+[MobileNetUNet] Model class: MobileNetV2
+[MobileNetUNet] Checkpoint: None (Random Weights)
+[LoRA] Injected 35 LoRA layers (strategy=encoder_only, r=2)
+[LoRA] Trainable params: 76,999 / 7,660,455 (1.01%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+/sda/usama/lightweight_qpi_segmentation_fixes/qpi/models/mobilenet_unet.py:39: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  if x.shape != skip.shape:
+============= Diagnostic Run torch.onnx.export version 2.0.1+cu117 =============
+verbose: False, log level: Level.ERROR
+======================= 0 NONE 0 NOTE 0 WARNING 0 ERROR ========================
+
+[benchmark] mobilenet_unet r=2 fp16 pytorch
+[MobileNetUNet] Using OFFICIAL implementation
+[MobileNetUNet] Source: torchvision.models package
+[MobileNetUNet] Model class: MobileNetV2
+[MobileNetUNet] Checkpoint: None (Random Weights)
+[LoRA] Injected 35 LoRA layers (strategy=encoder_only, r=2)
+[LoRA] Trainable params: 76,999 / 7,660,455 (1.01%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+[benchmark] mobilenet_unet r=2 fp16 onnx
+[MobileNetUNet] Using OFFICIAL implementation
+[MobileNetUNet] Source: torchvision.models package
+[MobileNetUNet] Model class: MobileNetV2
+[MobileNetUNet] Checkpoint: None (Random Weights)
+[LoRA] Injected 35 LoRA layers (strategy=encoder_only, r=2)
+[LoRA] Trainable params: 76,999 / 7,660,455 (1.01%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+============= Diagnostic Run torch.onnx.export version 2.0.1+cu117 =============
+verbose: False, log level: Level.ERROR
+======================= 0 NONE 0 NOTE 0 WARNING 0 ERROR ========================
+
+[benchmark] mobilenet_unet r=4 fp32 pytorch
+[MobileNetUNet] Using OFFICIAL implementation
+[MobileNetUNet] Source: torchvision.models package
+[MobileNetUNet] Model class: MobileNetV2
+[MobileNetUNet] Checkpoint: None (Random Weights)
+[LoRA] Injected 35 LoRA layers (strategy=encoder_only, r=4)
+[LoRA] Trainable params: 114,633 / 7,698,089 (1.49%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+[benchmark] mobilenet_unet r=4 fp32 onnx
+[MobileNetUNet] Using OFFICIAL implementation
+[MobileNetUNet] Source: torchvision.models package
+[MobileNetUNet] Model class: MobileNetV2
+[MobileNetUNet] Checkpoint: None (Random Weights)
+[LoRA] Injected 35 LoRA layers (strategy=encoder_only, r=4)
+[LoRA] Trainable params: 114,633 / 7,698,089 (1.49%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+============= Diagnostic Run torch.onnx.export version 2.0.1+cu117 =============
+verbose: False, log level: Level.ERROR
+======================= 0 NONE 0 NOTE 0 WARNING 0 ERROR ========================
+
+[benchmark] mobilenet_unet r=4 fp16 pytorch
+[MobileNetUNet] Using OFFICIAL implementation
+[MobileNetUNet] Source: torchvision.models package
+[MobileNetUNet] Model class: MobileNetV2
+[MobileNetUNet] Checkpoint: None (Random Weights)
+[LoRA] Injected 35 LoRA layers (strategy=encoder_only, r=4)
+[LoRA] Trainable params: 114,633 / 7,698,089 (1.49%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+[benchmark] mobilenet_unet r=4 fp16 onnx
+[MobileNetUNet] Using OFFICIAL implementation
+[MobileNetUNet] Source: torchvision.models package
+[MobileNetUNet] Model class: MobileNetV2
+[MobileNetUNet] Checkpoint: None (Random Weights)
+[LoRA] Injected 35 LoRA layers (strategy=encoder_only, r=4)
+[LoRA] Trainable params: 114,633 / 7,698,089 (1.49%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+============= Diagnostic Run torch.onnx.export version 2.0.1+cu117 =============
+verbose: False, log level: Level.ERROR
+======================= 0 NONE 0 NOTE 0 WARNING 0 ERROR ========================
+
+[benchmark] mobilenet_unet r=8 fp32 pytorch
+[MobileNetUNet] Using OFFICIAL implementation
+[MobileNetUNet] Source: torchvision.models package
+[MobileNetUNet] Model class: MobileNetV2
+[MobileNetUNet] Checkpoint: None (Random Weights)
+[LoRA] Injected 35 LoRA layers (strategy=encoder_only, r=8)
+[LoRA] Trainable params: 189,901 / 7,773,357 (2.44%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+[benchmark] mobilenet_unet r=8 fp32 onnx
+[MobileNetUNet] Using OFFICIAL implementation
+[MobileNetUNet] Source: torchvision.models package
+[MobileNetUNet] Model class: MobileNetV2
+[MobileNetUNet] Checkpoint: None (Random Weights)
+[LoRA] Injected 35 LoRA layers (strategy=encoder_only, r=8)
+[LoRA] Trainable params: 189,901 / 7,773,357 (2.44%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+============= Diagnostic Run torch.onnx.export version 2.0.1+cu117 =============
+verbose: False, log level: Level.ERROR
+======================= 0 NONE 0 NOTE 0 WARNING 0 ERROR ========================
+
+[benchmark] mobilenet_unet r=8 fp16 pytorch
+[MobileNetUNet] Using OFFICIAL implementation
+[MobileNetUNet] Source: torchvision.models package
+[MobileNetUNet] Model class: MobileNetV2
+[MobileNetUNet] Checkpoint: None (Random Weights)
+[LoRA] Injected 35 LoRA layers (strategy=encoder_only, r=8)
+[LoRA] Trainable params: 189,901 / 7,773,357 (2.44%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+[benchmark] mobilenet_unet r=8 fp16 onnx
+[MobileNetUNet] Using OFFICIAL implementation
+[MobileNetUNet] Source: torchvision.models package
+[MobileNetUNet] Model class: MobileNetV2
+[MobileNetUNet] Checkpoint: None (Random Weights)
+[LoRA] Injected 35 LoRA layers (strategy=encoder_only, r=8)
+[LoRA] Trainable params: 189,901 / 7,773,357 (2.44%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+============= Diagnostic Run torch.onnx.export version 2.0.1+cu117 =============
+verbose: False, log level: Level.ERROR
+======================= 0 NONE 0 NOTE 0 WARNING 0 ERROR ========================
+
+[benchmark] mobilenet_unet r=16 fp32 pytorch
+[MobileNetUNet] Using OFFICIAL implementation
+[MobileNetUNet] Source: torchvision.models package
+[MobileNetUNet] Model class: MobileNetV2
+[MobileNetUNet] Checkpoint: None (Random Weights)
+[LoRA] Injected 35 LoRA layers (strategy=encoder_only, r=16)
+[LoRA] Trainable params: 340,437 / 7,923,893 (4.30%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+[benchmark] mobilenet_unet r=16 fp32 onnx
+[MobileNetUNet] Using OFFICIAL implementation
+[MobileNetUNet] Source: torchvision.models package
+[MobileNetUNet] Model class: MobileNetV2
+[MobileNetUNet] Checkpoint: None (Random Weights)
+[LoRA] Injected 35 LoRA layers (strategy=encoder_only, r=16)
+[LoRA] Trainable params: 340,437 / 7,923,893 (4.30%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+============= Diagnostic Run torch.onnx.export version 2.0.1+cu117 =============
+verbose: False, log level: Level.ERROR
+======================= 0 NONE 0 NOTE 0 WARNING 0 ERROR ========================
+
+[benchmark] mobilenet_unet r=16 fp16 pytorch
+[MobileNetUNet] Using OFFICIAL implementation
+[MobileNetUNet] Source: torchvision.models package
+[MobileNetUNet] Model class: MobileNetV2
+[MobileNetUNet] Checkpoint: None (Random Weights)
+[LoRA] Injected 35 LoRA layers (strategy=encoder_only, r=16)
+[LoRA] Trainable params: 340,437 / 7,923,893 (4.30%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+[benchmark] mobilenet_unet r=16 fp16 onnx
+[MobileNetUNet] Using OFFICIAL implementation
+[MobileNetUNet] Source: torchvision.models package
+[MobileNetUNet] Model class: MobileNetV2
+[MobileNetUNet] Checkpoint: None (Random Weights)
+[LoRA] Injected 35 LoRA layers (strategy=encoder_only, r=16)
+[LoRA] Trainable params: 340,437 / 7,923,893 (4.30%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+============= Diagnostic Run torch.onnx.export version 2.0.1+cu117 =============
+verbose: False, log level: Level.ERROR
+======================= 0 NONE 0 NOTE 0 WARNING 0 ERROR ========================
+
+[benchmark] mobilenet_unet r=32 fp32 pytorch
+[MobileNetUNet] Using OFFICIAL implementation
+[MobileNetUNet] Source: torchvision.models package
+[MobileNetUNet] Model class: MobileNetV2
+[MobileNetUNet] Checkpoint: None (Random Weights)
+[LoRA] Injected 35 LoRA layers (strategy=encoder_only, r=32)
+[LoRA] Trainable params: 641,509 / 8,224,965 (7.80%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+[benchmark] mobilenet_unet r=32 fp32 onnx
+[MobileNetUNet] Using OFFICIAL implementation
+[MobileNetUNet] Source: torchvision.models package
+[MobileNetUNet] Model class: MobileNetV2
+[MobileNetUNet] Checkpoint: None (Random Weights)
+[LoRA] Injected 35 LoRA layers (strategy=encoder_only, r=32)
+[LoRA] Trainable params: 641,509 / 8,224,965 (7.80%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+============= Diagnostic Run torch.onnx.export version 2.0.1+cu117 =============
+verbose: False, log level: Level.ERROR
+======================= 0 NONE 0 NOTE 0 WARNING 0 ERROR ========================
+
+[benchmark] mobilenet_unet r=32 fp16 pytorch
+[MobileNetUNet] Using OFFICIAL implementation
+[MobileNetUNet] Source: torchvision.models package
+[MobileNetUNet] Model class: MobileNetV2
+[MobileNetUNet] Checkpoint: None (Random Weights)
+[LoRA] Injected 35 LoRA layers (strategy=encoder_only, r=32)
+[LoRA] Trainable params: 641,509 / 8,224,965 (7.80%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+[benchmark] mobilenet_unet r=32 fp16 onnx
+[MobileNetUNet] Using OFFICIAL implementation
+[MobileNetUNet] Source: torchvision.models package
+[MobileNetUNet] Model class: MobileNetV2
+[MobileNetUNet] Checkpoint: None (Random Weights)
+[LoRA] Injected 35 LoRA layers (strategy=encoder_only, r=32)
+[LoRA] Trainable params: 641,509 / 8,224,965 (7.80%)
+[LoRA] All eligible LoRA weights merged into base weights and graph stripped for ONNX.
+============= Diagnostic Run torch.onnx.export version 2.0.1+cu117 =============
+verbose: False, log level: Level.ERROR
+======================= 0 NONE 0 NOTE 0 WARNING 0 ERROR ========================
+
+benchmark written to /sda/usama/lightweight_qpi_segmentation_fixes/outputs/full/benchmark
+[13:52:04] <<< inference benchmark (visible cuda:0, nothing else running) (416 s)
+[13:52:04] >>> manuscript results (results.json)
+wrote /sda/usama/lightweight_qpi_segmentation_fixes/manuscript/outputs/results.json (34 inputs, 27 runs, mode=full)
+[13:52:04] <<< manuscript results (results.json) (0 s)
+[13:52:04] >>> manuscript figures
+[figures] wrote /sda/usama/lightweight_qpi_segmentation_fixes/manuscript/outputs/figures/fig3_per_class_dice.png
+[figures] wrote /sda/usama/lightweight_qpi_segmentation_fixes/manuscript/outputs/figures/fig4_lora_vs_full_per_class.png
+[figures] wrote /sda/usama/lightweight_qpi_segmentation_fixes/manuscript/outputs/figures/fig5_loss_ablation.png
+[figures] wrote /sda/usama/lightweight_qpi_segmentation_fixes/manuscript/outputs/figures/fig6_qualitative.png
+[figures] wrote /sda/usama/lightweight_qpi_segmentation_fixes/manuscript/outputs/figures/fig7_composition_over_storage.png
+[figures] wrote /sda/usama/lightweight_qpi_segmentation_fixes/manuscript/outputs/figures/fig8_dry_mass.png
+[figures] wrote /sda/usama/lightweight_qpi_segmentation_fixes/manuscript/outputs/figures/figS1_rank_vs_dice.png
+[figures] wrote /sda/usama/lightweight_qpi_segmentation_fixes/manuscript/outputs/figures/figS2_aggregate_radar.png
+[figures] wrote /sda/usama/lightweight_qpi_segmentation_fixes/manuscript/outputs/figures/figS3_accuracy_throughput.png
+[figures] wrote /sda/usama/lightweight_qpi_segmentation_fixes/manuscript/outputs/figures/figS4_gradient_alignment.png
+[figures] wrote /sda/usama/lightweight_qpi_segmentation_fixes/manuscript/outputs/figures/figS5_storage_examples.png
+[13:52:17] <<< manuscript figures (13 s)
+[13:52:17] >>> record run metadata (end)
+[record_run] end -> /sda/usama/lightweight_qpi_segmentation_fixes/outputs/full/run_metadata.json
+[13:52:19] <<< record run metadata (end) (2 s)
+[13:52:19] >>> verify outputs
+verify_outputs: mode=full errors=0 warnings=0
+[13:52:19] <<< verify outputs (0 s)
+[13:52:19] pipeline finished successfully in 13591 s

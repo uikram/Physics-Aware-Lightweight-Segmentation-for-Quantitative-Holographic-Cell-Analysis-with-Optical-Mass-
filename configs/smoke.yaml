@@ -1,0 +1,32 @@
+# Overlay for the server smoke test. Applied on top of base.yaml + experiments.yaml.
+# Writes ONLY under outputs/smoke and manuscript/outputs_smoke; the run script refuses to start
+# if these paths equal the full-run paths.
+paths:
+  output_root: outputs/smoke
+  manuscript_outputs: manuscript/outputs_smoke
+  processed_root: data/processed_smoke   # separate dataset built by the smoke script from a subset of the raw data
+data:
+  num_workers: 0
+  train_rotations: [0, 1]
+  max_train_samples: 8
+  max_val_samples: 6
+training:
+  epochs: 1
+  log_every_steps: 1
+evaluation:
+  also_evaluate_best: true
+  bootstrap_resamples: 50
+analysis:
+  robustness:
+    offsets_rad: [0.3]
+    amplitudes_rad: [0.25]
+benchmark:
+  warmup_iterations: 2
+  timed_iterations: 5
+  ranks: [8]
+  precisions: [fp32, fp16]
+smoke:
+  max_steps_per_epoch: 2            # forward/backward steps per epoch
+  architectures: [edge_sam, mobile_sam, mobilenet_unet]
+  ranks: [8]                        # rank sweep reduced to the selected rank
+  groups: {rank_sweep: true, full_finetune: true, ablation: true}

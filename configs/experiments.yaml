@@ -1,0 +1,37 @@
+# Experiment grid. One training run per entry; identical (arch, rank, loss) combinations are trained once
+# and re-used (`alias_of`), so no number in the manuscript is produced by two different runs.
+architectures:
+  edge_sam:
+    image_size: 256
+    insertion_strategy: encoder_only
+    batch_size: 16
+    learning_rate: 0.0005
+    pretrained_weights: edge_sam_3x.pth
+  mobile_sam:
+    image_size: 1024
+    insertion_strategy: attention_blocks
+    batch_size: 8
+    learning_rate: 0.0005
+    pretrained_weights: mobile_sam.pt
+  mobilenet_unet:
+    image_size: 256
+    insertion_strategy: encoder_only
+    batch_size: 16
+    learning_rate: 0.001
+    pretrained_weights: null          # torchvision ImageNet weights
+
+lora:
+  ranks: [2, 4, 8, 16, 32]            # rank sweep; alpha = r (scaling 1.0)
+  selected_rank: 8
+  dropout: 0.0
+
+ablation_losses:                      # at the selected rank
+  dice_only: {loss_type: dice_only}
+  pmc:       {loss_type: physics_aware, lambda_pmc: 0.1, lambda_bga: 0.0,  lambda_pv: 0.0}
+  pmc_bga:   {loss_type: physics_aware, lambda_pmc: 0.1, lambda_bga: 0.05, lambda_pv: 0.0}
+  full:      {loss_type: physics_aware, lambda_pmc: 0.1, lambda_bga: 0.05, lambda_pv: 0.1}  # == rank-sweep run at selected rank
+
+groups:
+  rank_sweep: true
+  full_finetune: true
+  ablation: true

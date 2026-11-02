@@ -1,0 +1,54 @@
+{
+  "architecture": "edge_sam",
+  "precision": "fp32",
+  "backend": "onnx",
+  "seed": 42,
+  "input_size": 256,
+  "batch_size": 1,
+  "weights": "trained",
+  "checkpoint_sha256_16": "8fd6b79896b2964c",
+  "latency_p50_ms": 3.61045,
+  "latency_p99_ms": 5.223659,
+  "fps": 276.97378443130356,
+  "peak_vram_mb": 132.0,
+  "n_timed": 1500,
+  "session_p50_ms": [
+    4.445433616638184,
+    3.56195867061615,
+    3.4871064126491547
+  ],
+  "peak_vram_mb_by_session": [
+    132.0,
+    124.0,
+    100.0
+  ],
+  "argmax_agreement_pct": 100.0,
+  "max_abs_logit_diff": 0.00011110305786132812,
+  "status": "complete",
+  "gpu_at_start": {
+    "sm_clock_mhz": 0.0,
+    "sm_clock_max_mhz": 2100.0,
+    "temperature_c": 32.0,
+    "power_w": 21.09,
+    "utilization_pct": 0.0,
+    "memory_used_mb": 3.0,
+    "physical_gpu": 2
+  },
+  "unit_schema": 1,
+  "provenance": {
+    "generated_utc": "2026-10-27T04:35:59+00:00",
+    "sources": [
+      {
+        "path": "outputs/full/benchmark/benchmark.json",
+        "bytes": 23683,
+        "sha256": "dede867d2f0e7188b49c0c4a959df4458abfecfaeb67bde7aab620e869c469b0"
+      }
+    ],
+    "config_sha256": {
+      "configs/base.yaml": "8664a8a49182610bebb8d7698b503c36ff82512e0b15f93f7481cdaa4512689f",
+      "configs/experiments.yaml": "96642e8d74fac13213dd031f57db003ed74db956d956cf96fcef7c8dd28b37f8",
+      "configs/multiseed.yaml": "aec9145d8bd7d827c4f3b295115788480692a6730a9afb832c63aef2ebb90697"
+    },
+    "migrated_from": "outputs/full/benchmark/benchmark.json"
+  }
+}

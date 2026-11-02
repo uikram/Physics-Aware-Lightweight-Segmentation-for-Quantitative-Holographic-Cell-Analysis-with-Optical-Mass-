@@ -1,164 +1,137 @@
+#!/usr/bin/env python
+"""Entry point for training + evaluation of a single experiment run.
+
+    python main.py list-runs   [--config-overlay smoke.yaml]
+    python main.py write-grid  [--config-overlay smoke.yaml]
+    python main.py run --run-id edge_sam_lora_r8 --gpu 0 [--config-overlay smoke.yaml] [--force]
+
+GPU indices are *visible* indices (after CUDA_VISIBLE_DEVICES remapping). Physical GPUs outside
+hardware.allowed_physical_gpus are refused.
 """
-Main Entry Point for Holographic AI Framework.
-Strictly separates Training, Evaluation, and Rank Sweep modes.
-"""
+from __future__ import annotations
+
 import argparse
 import os
-os.environ["TORCH_HOME"] = os.path.join(os.path.dirname(__file__), "cache")
-import gc
-import torch
+import sys
+import time
 import warnings
 from pathlib import Path
 
-os.environ["TOKENIZERS_PARALLELISM"] = "false"
-warnings.filterwarnings("ignore")
+PROJECT_ROOT = Path(__file__).resolve().parent
+sys.path.insert(0, str(PROJECT_ROOT))
 
-from datasets.qpi_dataset import get_qpi_loaders
-from models import get_model
-from training.trainer_seg import SegmentationTrainer
-from evaluation.evaluate import SegmentationEvaluator
-from evaluation.metrics import MetricsTracker
-from utils.helpers import seed_everything
-from utils.config import load_config_from_yaml
+from qpi.config import load_config  # noqa: E402
+from qpi.experiments import build_grid, resolve, run_config, run_dir, trainable_specs  # noqa: E402
+from qpi.utils.io import read_json, write_json  # noqa: E402
+from qpi.utils.outputs import claim_output_root, mode_of  # noqa: E402
 
-def parse_args():
-    parser = argparse.ArgumentParser(description="Physics-Aware QPI Segmentation Models")
-    # Added 'sweep' to the allowed modes
-    parser.add_argument('--mode', type=str, required=True, choices=['train', 'evaluate', 'sweep'])
-    parser.add_argument('--config', type=str, required=True, help="Path to config yaml")
-    parser.add_argument('--gpu', type=int, default=0)
-    parser.add_argument('--seed', type=int, default=42)
-    # Added ranks argument specifically for the sweep mode
-    parser.add_argument('--ranks', type=int, nargs='+', default=[2, 4, 8, 16], help="List of LoRA ranks to sweep")
-    return parser.parse_args()
 
-def init_environment(args, override_rank=None):
-    """Setup config, device, data, and model."""
-    config = load_config_from_yaml(args.config)
-    config.device = f"cuda:{args.gpu}" if torch.cuda.is_available() else "cpu"
-    seed_everything(args.seed)
-    
-    # If sweeping, dynamically override the rank and directories in memory
-    if override_rank is not None:
-        config.lora_r = override_rank
-        config.lora_alpha = float(override_rank)  # Override alpha BEFORE the model is built
-        base_dir = getattr(config, 'results_dir', Path('results'))
-        # Create separate output folders for each rank (e.g., results_dir_r8)
-        config.results_dir = Path(f"{str(base_dir)}_r{override_rank}")
-        config.checkpoint_dir = config.results_dir / "checkpoints"
-        
-    print(f"Initializing {config.architecture.upper()} (LoRA r={getattr(config, 'lora_r', 'None')})")
-    
-    if hasattr(config, 'lora_r') and hasattr(config, 'lora_alpha'):
-        scaling = float(config.lora_alpha) / float(config.lora_r)
-        print(f"  -> Verified LoRA Config: r={config.lora_r}, alpha={config.lora_alpha}, scaling={scaling:.2f}")
+def cmd_list(cfg) -> int:
+    for s in trainable_specs(build_grid(cfg)):
+        print(s.run_id)
+    return 0
 
-    model = get_model(config.architecture, config)
-    model.to(config.device)
-    
-    return model, config
 
-def run_train(args):
-    model, config = init_environment(args)
-    
-    train_loader, val_loader, _ = get_qpi_loaders(config, num_workers=config.num_workers)
-    metrics_tracker = MetricsTracker(config.architecture, config.results_dir)
-    
-    print(f"\n{'='*40}\nSTARTING TRAINING\n{'='*40}")
-    trainer = SegmentationTrainer(
-        model=model, 
-        config=config,
-        metrics_tracker=metrics_tracker
-    )
-    trainer.train()
-    print("Training Complete.")
+def cmd_write_grid(cfg) -> int:
+    root = claim_output_root(cfg)
+    grid = [s.to_dict() for s in build_grid(cfg)]
+    write_json(root / "grid.json", {"mode": mode_of(cfg), "runs": grid})
+    print(f"wrote {root / 'grid.json'} ({len(grid)} entries)")
+    return 0
 
-def run_evaluate(args):
-    model, config = init_environment(args)
-    
-    best_model_path = config.checkpoint_dir / "best_model.pt"
-    if best_model_path.exists():
-        ckpt = torch.load(best_model_path, map_location=config.device)
-        model.load_state_dict(ckpt.get("model_state", ckpt))
-        print(f"Loaded checkpoint from {best_model_path}")
-    else:
-        print("Warning: No checkpoint found. Evaluating with initialized weights.")
-        
-    model.eval()
-    
-    # FIX: Extract the test_loader (3rd element) instead of val_loader
-    _, _, test_loader = get_qpi_loaders(config, num_workers=config.num_workers)
-    
-    if test_loader is None:
-        print("No test dataset found. Aborting evaluation.")
-        return
-        
-    evaluator = SegmentationEvaluator(model, config)
-    
-    print(f"\n{'='*40}\nSTARTING EVALUATION\n{'='*40}")
-    # FIX: Evaluate strictly on the test set
-    metrics = evaluator.evaluate(test_loader)
-    print("\nEvaluation Complete. Results:")
-    for k, v in metrics.items():
-        print(f"  {k}: {v:.4f}")
 
-def run_sweep(args):
-    """Executes the systematic evaluation of different LoRA ranks sequentially."""
-    print(f"\n{'='*50}\nSTARTING LORA RANK SWEEP: {args.ranks}\n{'='*50}")
-    
-    for r in args.ranks:
-        print(f"\n\n>>>>> TRAINING WITH LORA RANK: {r} <<<<<")
-        
-        # Initialize everything with the overridden rank
-        model, config = init_environment(args, override_rank=r)
-        
-        # Override lora_alpha dynamically to keep the LoRA scaling ratio (alpha/r) equal to 1.0
-        config.lora_alpha = float(r)
-        metrics_tracker = MetricsTracker(f"{config.architecture}_r{r}", config.results_dir)
-        trainer = SegmentationTrainer(model, config, metrics_tracker)
-        trainer.train()
-        print(f"Finished training for rank {r}.")
-        # ==========================================
-        # AUTOMATIC EVALUATION BLOCK
-        # ==========================================
-        print(f"\n{'='*40}\nAUTOMATIC EVALUATION FOR RANK: {r}\n{'='*40}")
-        
-        # 1. Load the best weights that were just saved by the trainer
-        best_model_path = config.checkpoint_dir / "best_model.pt"
-        if best_model_path.exists():
-            ckpt = torch.load(best_model_path, map_location=config.device)
-            model.load_state_dict(ckpt.get("model_state", ckpt))
-            print(f"[Sweep Eval] Loaded best checkpoint from {best_model_path}")
-        else:
-            print("[Sweep Eval] Warning: No checkpoint found. Evaluating with current weights.")
-            
-        model.eval()
+def cmd_run(cfg, args) -> int:
+    os.environ.setdefault("TORCH_HOME", str(cfg["paths_abs"]["torch_cache"]))
+    warnings.filterwarnings("ignore", category=FutureWarning)
+    from qpi.data.dataset import build_loaders
+    from qpi.evaluation.evaluate import evaluate_checkpoint
+    from qpi.models import build_model
+    from qpi.training.trainer import Trainer
+    from qpi.utils.env import collect_environment, enforce_gpu_policy, resolve_device
+    from qpi.utils.seed import seed_everything
 
-        # 2. Get the evaluation dataloader
-        _, val_loader, test_loader = get_qpi_loaders(config, num_workers=getattr(config, 'num_workers', 4))
-        eval_loader = test_loader if test_loader is not None else val_loader
+    specs = build_grid(cfg)
+    spec = resolve(specs, args.run_id)
+    if spec.run_id != args.run_id:
+        print(f"{args.run_id} is an alias of {spec.run_id}; nothing to train")
+        return 0
+    claim_output_root(cfg)
+    rdir = run_dir(cfg, spec.run_id)
+    if (rdir / "metrics.json").exists() and read_json(rdir / "metrics.json").get("status") in ("complete", "diverged") \
+            and not args.force:
+        print(f"[skip] {spec.run_id}: already finished ({rdir / 'metrics.json'})")
+        return 0
+    rdir.mkdir(parents=True, exist_ok=True)
 
-        if eval_loader is not None:
-            config.lora_rank = r  # Ensure evaluate.py has the rank for the CSV naming
-            evaluator = SegmentationEvaluator(model, config)
-            metrics = evaluator.evaluate(eval_loader)
-            print(f"\nSweep Evaluation Complete for rank {r}.")
-        else:
-            print("No evaluation data found. Skipping evaluation.")
-        # Critical: Free up GPU memory before starting the next rank
-        del model
-        del trainer
-        gc.collect()
-        if torch.cuda.is_available():
-            torch.cuda.empty_cache()
-            
-    print(f"\n{'='*50}\nRANK SWEEP COMPLETE\n{'='*50}")
+    enforce_gpu_policy(cfg["hardware"]["allowed_physical_gpus"])
+    device = resolve_device(args.gpu)
+    rc = run_config(cfg, spec)
+    seed = int(rc["seed"])                       # cfg seed, or the seed of a multi-seed run (RunSpec.seed)
+    seed_everything(seed)
+    smoke = cfg.get("smoke")
+    if smoke:
+        rc["training"]["epochs"] = cfg["training"]["epochs"]
+    write_json(rdir / "config.json", {"run": rc, "run_spec": spec.to_dict(), "mode": mode_of(cfg),
+                                      "data": cfg["data"], "evaluation": cfg["evaluation"], "overlay": cfg["overlay"]})
 
-def main():
-    args = parse_args()
-    if args.mode == 'train': run_train(args)
-    elif args.mode == 'evaluate': run_evaluate(args)
-    elif args.mode == 'sweep': run_sweep(args)
+    train_loader, val_loader = build_loaders(cfg, rc, seed)
+    write_json(rdir / "sampler_info.json", train_loader.sampler_info)
+    model = build_model(rc, cfg["paths_abs"]["weights_dir"], pretrained=True)
+    counts = model.count_parameters()
+    print(f"[{spec.run_id}] params total={counts['total']:,} trainable={counts['trainable']:,} "
+          f"train_views={len(train_loader.dataset)} val_images={len(val_loader.dataset)} device={device}", flush=True)
+
+    t0 = time.time()
+    trainer = Trainer(model, rc, cfg, device, rdir, train_loader, val_loader,
+                      smoke["max_steps_per_epoch"] if smoke else None)
+    fit = trainer.fit()
+    result = {
+        "run_id": spec.run_id, "group": spec.group, "arch": spec.arch, "lora_r": spec.lora_r,
+        "status": "diverged" if fit["status"] == "diverged" else "complete",
+        "mode": mode_of(cfg), "seed": seed,
+        "base_run_id": spec.base_id, "block": spec.block, "sampler": rc["training"].get("sampler", "shuffle"),
+        "parameters": {"total": counts["total"], "trainable": counts["trainable"],
+                       "trainable_percent": 100.0 * counts["trainable"] / counts["total"]},
+        "training": {"epochs_completed": fit["epochs_completed"], "epochs_configured": rc["training"]["epochs"],
+                     "train_seconds": fit["train_seconds"], "best_epoch_by_val_dice": fit["best_by_val"]},
+        "primary_checkpoint": cfg["evaluation"]["checkpoint"],
+        "n_train_views": len(train_loader.dataset), "n_val_images": len(val_loader.dataset),
+        "environment": collect_environment(device),
+    }
+    if fit["epochs_completed"] > 0:
+        primary = cfg["evaluation"]["checkpoint"]
+        tags = [primary] + (["best"] if cfg["evaluation"]["also_evaluate_best"] and primary != "best" else [])
+        result["evaluation"] = {}
+        for tag in tags:
+            ck = rdir / "checkpoints" / f"{tag}.pt"
+            res = evaluate_checkpoint(model, ck, rc, cfg, device, rdir, tag)
+            res["selected_on_evaluation_split"] = tag == "best"
+            result["evaluation"][tag] = res
+            print(f"[{spec.run_id}] eval[{tag}] dice={res['mean_dice']:.4f} aji={res['aji']:.4f} "
+                  f"bf1={res['bf1']:.4f} ipe={res['ipe_global']:.4f}", flush=True)
+    result["wall_seconds"] = time.time() - t0
+    write_json(rdir / "metrics.json", result)
+    print(f"[{spec.run_id}] {result['status']} -> {rdir / 'metrics.json'}", flush=True)
+    return 0
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("command", choices=["list-runs", "write-grid", "run"])
+    ap.add_argument("--config-overlay", default=None)
+    ap.add_argument("--run-id", default=None)
+    ap.add_argument("--gpu", type=int, default=0, help="visible GPU index")
+    ap.add_argument("--force", action="store_true")
+    args = ap.parse_args()
+    cfg = load_config(args.config_overlay)
+    if args.command == "list-runs":
+        return cmd_list(cfg)
+    if args.command == "write-grid":
+        return cmd_write_grid(cfg)
+    if not args.run_id:
+        ap.error("--run-id is required for 'run'")
+    return cmd_run(cfg, args)
+
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

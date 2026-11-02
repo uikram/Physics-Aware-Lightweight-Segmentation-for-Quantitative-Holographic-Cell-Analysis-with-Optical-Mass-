@@ -1,0 +1,163 @@
+{
+  "run_id": "edge_sam_abl_pmc_bga_r16__s42",
+  "config": "edge_sam|abl_pmc_bga_r16",
+  "arch": "edge_sam",
+  "lora_rank": 16,
+  "loss": "pmc_bga",
+  "seed": 42,
+  "checkpoint": "last",
+  "status": "complete",
+  "checkpoint_file": {
+    "path": "outputs/multiseed/runs/edge_sam_abl_pmc_bga_r16__s42/checkpoints/last.pt",
+    "bytes": 25752351,
+    "sha256": "61f78e1a220d443299c2aadbc77dc6d0a7ff8586d518630d6cb616a638c761bf"
+  },
+  "rows": [
+    {
+      "run_id": "edge_sam_abl_pmc_bga_r16__s42",
+      "distortion": "none",
+      "macro_dice": 0.74836,
+      "fg_iou": 0.83633,
+      "ipe_bgcorr_true_pct": 2.74172,
+      "ipe_uncorrected_seen_pct": 2.73047,
+      "delta_macro_dice_vs_none": -0.0,
+      "invariant_by_construction": false
+    },
+    {
+      "run_id": "edge_sam_abl_pmc_bga_r16__s42",
+      "distortion": "offset+0.10",
+      "macro_dice": 0.74835,
+      "fg_iou": 0.83632,
+      "ipe_bgcorr_true_pct": 2.74168,
+      "ipe_uncorrected_seen_pct": 2.74664,
+      "delta_macro_dice_vs_none": -1e-05,
+      "invariant_by_construction": true
+    },
+    {
+      "run_id": "edge_sam_abl_pmc_bga_r16__s42",
+      "distortion": "offset+0.30",
+      "macro_dice": 0.74837,
+      "fg_iou": 0.83632,
+      "ipe_bgcorr_true_pct": 2.74164,
+      "ipe_uncorrected_seen_pct": 2.81024,
+      "delta_macro_dice_vs_none": 1e-05,
+      "invariant_by_construction": true
+    },
+    {
+      "run_id": "edge_sam_abl_pmc_bga_r16__s42",
+      "distortion": "offset+0.60",
+      "macro_dice": 0.74835,
+      "fg_iou": 0.83633,
+      "ipe_bgcorr_true_pct": 2.74103,
+      "ipe_uncorrected_seen_pct": 2.96935,
+      "delta_macro_dice_vs_none": -1e-05,
+      "invariant_by_construction": true
+    },
+    {
+      "run_id": "edge_sam_abl_pmc_bga_r16__s42",
+      "distortion": "tilt0.10",
+      "macro_dice": 0.74839,
+      "fg_iou": 0.83611,
+      "ipe_bgcorr_true_pct": 2.75775,
+      "ipe_uncorrected_seen_pct": 2.75612,
+      "delta_macro_dice_vs_none": 3e-05,
+      "invariant_by_construction": false
+    },
+    {
+      "run_id": "edge_sam_abl_pmc_bga_r16__s42",
+      "distortion": "bowl0.10",
+      "macro_dice": 0.74857,
+      "fg_iou": 0.83628,
+      "ipe_bgcorr_true_pct": 2.74764,
+      "ipe_uncorrected_seen_pct": 2.74901,
+      "delta_macro_dice_vs_none": 0.00021,
+      "invariant_by_construction": false
+    },
+    {
+      "run_id": "edge_sam_abl_pmc_bga_r16__s42",
+      "distortion": "astig0.10",
+      "macro_dice": 0.74779,
+      "fg_iou": 0.8361,
+      "ipe_bgcorr_true_pct": 2.76,
+      "ipe_uncorrected_seen_pct": 2.73983,
+      "delta_macro_dice_vs_none": -0.00057,
+      "invariant_by_construction": false
+    },
+    {
+      "run_id": "edge_sam_abl_pmc_bga_r16__s42",
+      "distortion": "tilt0.25",
+      "macro_dice": 0.7476,
+      "fg_iou": 0.83585,
+      "ipe_bgcorr_true_pct": 2.78241,
+      "ipe_uncorrected_seen_pct": 2.78394,
+      "delta_macro_dice_vs_none": -0.00076,
+      "invariant_by_construction": false
+    },
+    {
+      "run_id": "edge_sam_abl_pmc_bga_r16__s42",
+      "distortion": "bowl0.25",
+      "macro_dice": 0.74892,
+      "fg_iou": 0.83622,
+      "ipe_bgcorr_true_pct": 2.76681,
+      "ipe_uncorrected_seen_pct": 2.7842,
+      "delta_macro_dice_vs_none": 0.00056,
+      "invariant_by_construction": false
+    },
+    {
+      "run_id": "edge_sam_abl_pmc_bga_r16__s42",
+      "distortion": "astig0.25",
+      "macro_dice": 0.74722,
+      "fg_iou": 0.83639,
+      "ipe_bgcorr_true_pct": 2.73717,
+      "ipe_uncorrected_seen_pct": 2.69721,
+      "delta_macro_dice_vs_none": -0.00114,
+      "invariant_by_construction": false
+    },
+    {
+      "run_id": "edge_sam_abl_pmc_bga_r16__s42",
+      "distortion": "tilt0.50",
+      "macro_dice": 0.74727,
+      "fg_iou": 0.8359,
+      "ipe_bgcorr_true_pct": 2.787,
+      "ipe_uncorrected_seen_pct": 2.76729,
+      "delta_macro_dice_vs_none": -0.00109,
+      "invariant_by_construction": false
+    },
+    {
+      "run_id": "edge_sam_abl_pmc_bga_r16__s42",
+      "distortion": "bowl0.50",
+      "macro_dice": 0.74981,
+      "fg_iou": 0.83653,
+      "ipe_bgcorr_true_pct": 2.76327,
+      "ipe_uncorrected_seen_pct": 2.80605,
+      "delta_macro_dice_vs_none": 0.00145,
+      "invariant_by_construction": false
+    },
+    {
+      "run_id": "edge_sam_abl_pmc_bga_r16__s42",
+      "distortion": "astig0.50",
+      "macro_dice": 0.74678,
+      "fg_iou": 0.83594,
+      "ipe_bgcorr_true_pct": 2.75267,
+      "ipe_uncorrected_seen_pct": 2.65138,
+      "delta_macro_dice_vs_none": -0.00158,
+      "invariant_by_construction": false
+    }
+  ],
+  "unit_schema": 1,
+  "provenance": {
+    "generated_utc": "2026-10-27T05:47:05+00:00",
+    "sources": [
+      {
+        "path": "outputs/multiseed/runs/edge_sam_abl_pmc_bga_r16__s42/metrics.json",
+        "bytes": 3655,
+        "sha256": "b43000f6f63ded642ec9739dbada9e40b1370d12036fedafd8768d66d280cefa"
+      }
+    ],
+    "config_sha256": {
+      "configs/base.yaml": "8664a8a49182610bebb8d7698b503c36ff82512e0b15f93f7481cdaa4512689f",
+      "configs/experiments.yaml": "96642e8d74fac13213dd031f57db003ed74db956d956cf96fcef7c8dd28b37f8",
+      "configs/multiseed.yaml": "aec9145d8bd7d827c4f3b295115788480692a6730a9afb832c63aef2ebb90697"
+    }
+  }
+}

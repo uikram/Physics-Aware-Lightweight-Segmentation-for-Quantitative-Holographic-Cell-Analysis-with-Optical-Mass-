@@ -1,0 +1,71 @@
+# Multi-seed extension, revised 25 Oct 2026 (stages by architecture; 3 seeds for EVERY configuration, DECISIONS.md D-22).
+# Overlay: --config-overlay multiseed.yaml
+#
+# Questions (EXPERIMENTS.md, series M1):
+#   * is LoRA rank 8 a defensible default?                 rank sweep 2, 4, 8, 16, 32 for every architecture, seeds 42, 43, 44
+#   * does the effect of PMC, BGA and IPP depend on rank?  loss ablation (Dice only, +PMC, +PMC+BGA; the full objective is the rank-sweep run)
+#                                                          at EVERY rank 2, 4, 8, 16, 32 for every architecture, seeds 42, 43, 44
+#   Full fine-tuning is NOT part of this series (author decision 25 Oct 2026): it stays a single seed-42 run in outputs/full.
+# => every configuration of the series has exactly 3 seeds.
+#
+# Per architecture: 8 configurations of the main grid (5 ranks + 3 rank-8 ablations) get seeds 43, 44 (16 runs);
+# the loss ablation at ranks 2, 4, 16, 32 (12 configurations, not in the main grid) gets seeds 42, 43, 44 (36 runs) -> 52 runs.
+#
+# STAGES = architectures, so the paper can be written while the later ones run. Stage N means "all blocks of stages 1..N";
+# finished runs are skipped, so ./ops/start_multiseed.sh can be called again with a higher stage.
+#   stage 1  EdgeSAM          52 runs
+#   stage 2  MobileSAM        52 runs   (the slowest model)
+#   stage 3  MobileNet-UNet   52 runs   (the baseline, the fastest)
+# Total 156 new runs. Seed 42 of every main-grid configuration is NEVER retrained: it is the run of the same name in outputs/full.
+# New runs are written to outputs/multiseed/runs/<base run id>__s<seed>. Nothing in outputs/full or manuscript/outputs is touched.
+paths:
+  output_root: outputs/multiseed
+  manuscript_outputs: manuscript/outputs_multiseed
+
+multiseed:
+  main_output_root: outputs/full     # where the seed-42 runs live (read only)
+  main_seed: 42
+  blocks:
+    # lower stage first, then lower priority first, then longest run first (run_queue.py)
+    - name: edge_sam_main_grid_seeds       # EdgeSAM: rank sweep and rank-8 ablation, seeds 43, 44 (seed 42 = outputs/full) -> 16 runs
+      stage: 1
+      priority: 1
+      seeds: [43, 44]
+      runs: [edge_sam_lora_r2, edge_sam_lora_r4, edge_sam_lora_r8, edge_sam_lora_r16, edge_sam_lora_r32,
+             edge_sam_abl_dice_only, edge_sam_abl_pmc, edge_sam_abl_pmc_bga]
+    - name: edge_sam_ablation_other_ranks   # EdgeSAM: loss ablation at ranks 2, 4, 16, 32, seeds 42, 43, 44 (all new) -> 36 runs
+      stage: 1
+      priority: 2
+      seeds: [42, 43, 44]
+      ablation_by_rank:
+        archs: [edge_sam]
+        ranks: [2, 4, 16, 32]
+        losses: [dice_only, pmc, pmc_bga]
+    - name: mobile_sam_main_grid_seeds       # MobileSAM: rank sweep and rank-8 ablation, seeds 43, 44 (seed 42 = outputs/full) -> 16 runs
+      stage: 2
+      priority: 1
+      seeds: [43, 44]
+      runs: [mobile_sam_lora_r2, mobile_sam_lora_r4, mobile_sam_lora_r8, mobile_sam_lora_r16, mobile_sam_lora_r32,
+             mobile_sam_abl_dice_only, mobile_sam_abl_pmc, mobile_sam_abl_pmc_bga]
+    - name: mobile_sam_ablation_other_ranks   # MobileSAM: loss ablation at ranks 2, 4, 16, 32, seeds 42, 43, 44 (all new) -> 36 runs
+      stage: 2
+      priority: 2
+      seeds: [42, 43, 44]
+      ablation_by_rank:
+        archs: [mobile_sam]
+        ranks: [2, 4, 16, 32]
+        losses: [dice_only, pmc, pmc_bga]
+    - name: mobilenet_unet_main_grid_seeds       # MobileNet-UNet: rank sweep and rank-8 ablation, seeds 43, 44 (seed 42 = outputs/full) -> 16 runs
+      stage: 3
+      priority: 1
+      seeds: [43, 44]
+      runs: [mobilenet_unet_lora_r2, mobilenet_unet_lora_r4, mobilenet_unet_lora_r8, mobilenet_unet_lora_r16, mobilenet_unet_lora_r32,
+             mobilenet_unet_abl_dice_only, mobilenet_unet_abl_pmc, mobilenet_unet_abl_pmc_bga]
+    - name: mobilenet_unet_ablation_other_ranks   # MobileNet-UNet: loss ablation at ranks 2, 4, 16, 32, seeds 42, 43, 44 (all new) -> 36 runs
+      stage: 3
+      priority: 2
+      seeds: [42, 43, 44]
+      ablation_by_rank:
+        archs: [mobilenet_unet]
+        ranks: [2, 4, 16, 32]
+        losses: [dice_only, pmc, pmc_bga]

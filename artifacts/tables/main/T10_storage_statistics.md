@@ -1,0 +1,23 @@
+# T10_storage_statistics: Storage trends with the image as the unit of analysis (per-image medians, 66 images)
+
+| Quantity | Masks | Spearman ρ vs day | Late vs early (%) | Partial ρ (dry mass | area) |
+|---|---|---|---|---|
+| Projected area | Annotation | -0.53 (p = 4.2e-06) | -43.9 (MW p = 5.3e-06) |  |
+| Projected area | MobileSAM r = 8 | -0.56 ± 0.06 (p 1.5e-07 to 2.6e-05) | -40.6 ± 1.3 (MW p 5.3e-06 to 2.1e-05) |  |
+| Projected area | EdgeSAM r = 32 | -0.65 ± 0.08 (p 6.8e-13 to 1e-07) | -44.3 ± 1.2 (MW p 5.3e-06 to 6.5e-06) |  |
+| Projected area | MobileNet-UNet r = 8 | -0.67 ± 0.03 (p 2.5e-11 to 4.5e-09) | -53.0 ± 0.6 (MW p 5.3e-06 to 5.3e-06) |  |
+| Dry mass | Annotation | -0.11 (p = 0.36) | -0.8 (MW p = 0.21) | 0.08 (p = 0.5) |
+| Dry mass | MobileSAM r = 8 | -0.17 ± 0.03 (p 0.11 to 0.27) | -2.6 ± 0.4 (MW p 0.094 to 0.12) | 0.04 ± 0.07 (p 0.35 to 0.85) |
+| Dry mass | EdgeSAM r = 32 | -0.27 ± 0.04 (p 0.0078 to 0.052) | -6.1 ± 0.3 (MW p 0.013 to 0.049) | 0.08 ± 0.09 (p 0.24 to 0.87) |
+| Dry mass | MobileNet-UNet r = 8 | -0.47 ± 0.01 (p 5.5e-05 to 8.2e-05) | -8.2 ± 0.5 (MW p 0.00035 to 0.00056) | -0.10 ± 0.02 (p 0.35 to 0.57) |
+| Circularity | Annotation | 0.19 (p = 0.12) | +0.1 (MW p = 0.75) |  |
+| Circularity | MobileSAM r = 8 | 0.14 ± 0.08 (p 0.07 to 0.56) | +0.1 ± 0.1 (MW p 0.094 to 0.85) |  |
+| Circularity | EdgeSAM r = 32 | -0.15 ± 0.10 (p 0.09 to 0.79) | -1.7 ± 0.7 (MW p 0.0021 to 0.17) |  |
+| Circularity | MobileNet-UNet r = 8 | -0.51 ± 0.03 (p 2.1e-06 to 3.5e-05) | -1.7 ± 0.4 (MW p 4.4e-05 to 7.6e-05) |  |
+
+Notes:
+
+* Early = days 0 to 8 (18 images), late = days 37 and 47 (12 images); two-sided Mann-Whitney (MW).
+* Model rows: mean ± SD over seeds of ρ and of the late-vs-early change; p-values as the range over seeds.
+* Partial ρ: Spearman correlation of dry mass with storage day after removing the rank-linear dependence on area.
+* Key reading: annotation-derived dry mass does not change with storage while area falls; the models reproduce the area trend but add a small spurious dry-mass decline (segmentation bias, not biology).

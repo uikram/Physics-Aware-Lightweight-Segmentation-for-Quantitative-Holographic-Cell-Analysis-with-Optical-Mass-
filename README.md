@@ -1,413 +1,290 @@
 # Physics-Aware Lightweight Segmentation for Quantitative Holographic Cell Analysis with Optical Mass Preservation
 
-**Usama Ikram**¹, **Youhyun Kim**², and **Inkyu Moon**¹²\*
-¹ Department of Artificial Intelligence, DGIST, Daegu, South Korea
-² Department of Robotics & Mechatronics Engineering, DGIST, Daegu, South Korea
+Code, results and figures for the Applied Physics B manuscript of the same name.
 
-Official PyTorch implementation of a **physics-aware, LoRA-adapted lightweight segmentation framework** for red blood cell (RBC) quantitative phase images (QPI) acquired with digital holographic microscopy (DHM).
+Usama Ikram<sup>1</sup>, Youhyun Kim<sup>2</sup>, Inkyu Moon<sup>1,2,\*</sup>
 
-<p align="center">
-  <img src="docs/figures/fig01_framework_overview.png" width="100%" alt="Framework overview">
-</p>
+Intelligent Imaging and Vision Systems Laboratory, DGIST
 
-<p align="center"><em><b>Fig. 1.</b> Framework overview. LoRA-adapted lightweight networks segment cells from quantitative phase images. The raw, unnormalised phase goes straight into the Physics-Aware Phase Consistency Loss (PMC + BGA + IPP), so the predicted masks work as physically meaningful measurement domains for integrated phase and dry mass.</em></p>
+<sup>1</sup> Department of Artificial Intelligence, DGIST, Daegu 42988, South Korea ·
+<sup>2</sup> Department of Robotics & Mechatronics Engineering, DGIST, Daegu 42988, South Korea
+\* Corresponding author
 
----
+Segmentation networks trained with overlap losses (Dice, cross-entropy) say nothing about the phase
+integrated inside the predicted boundary, which is exactly the quantity a quantitative phase imaging
+(QPI) pipeline goes on to turn into dry mass. This repository implements a physics-aware objective
+that adds three terms on the background-referenced phase — phase-mask contrast (PMC),
+boundary-gradient alignment (BGA) and integrated-phase preservation (IPP) — on top of a frozen
+lightweight encoder adapted with LoRA, and evaluates it on red blood cells imaged over a 47-day
+storage period.
 
-## Contents
+![Framework overview](artifacts/figures/manuscript/Fig1_framework.png)
 
-- [Overview](#overview)
-- [Key results](#key-results)
-- [Method](#method)
-- [Repository structure](#repository-structure)
-- [Installation](#installation)
-- [Data](#data)
-- [Pretrained backbone weights](#pretrained-backbone-weights)
-- [Usage](#usage)
-- [Results and figures](#results-and-figures)
-- [Reproducing the manuscript figures and tables](#reproducing-the-manuscript-figures-and-tables)
-- [Citation](#citation)
+*Five stages: QPI preprocessing, a frozen lightweight encoder with LoRA adapters, a trainable
+decoder, the physics-aware phase consistency loss, and the quantitative readout (projected area,
+circularity, integrated phase, dry mass). The background-referenced phase in radians bypasses
+standardisation and enters the loss directly.*
 
 ---
 
-## Overview
+## Headline results
 
-In QPI, a segmentation mask is more than a geometric contour. It defines the **measurement domain** over which the phase signal is integrated to estimate biophysical quantities such as cellular **dry mass**. Losses like Dice or Cross-Entropy only reward geometric overlap, so a mask can score well and still gain or lose phase at its boundary, which then biases every measurement made from it.
+Three architectures (MobileSAM, EdgeSAM, MobileNet-UNet) × five LoRA ranks × four loss
+configurations × three seeds. Mean ± SD over seeds 42, 43 and 44; last-epoch checkpoint; metrics on
+the native 768 × 768 grid.
 
-This repository provides:
+### Segmentation at the preferred LoRA configurations
 
-- **Physics-Aware Phase Consistency Loss.** Class-weighted multi-class Dice combined with three phase-derived constraints: **Phase-Mask Contrast (PMC)**, **Boundary-Gradient Alignment (BGA)** and **Integrated-Phase Preservation (IPP)**.
-- **LoRA adaptation of three lightweight segmenters.** MobileNet-UNet (CNN), MobileSAM (TinyViT) and EdgeSAM (RepViT), adapted from RGB pre-training to single-channel phase maps with only a small fraction of trainable parameters.
-- **Complete experimental pipeline.** LoRA rank sweep, LoRA vs. full fine-tuning, component-wise loss ablation, GPU benchmarking (PyTorch / ONNX Runtime, FP32 / FP16) and per-cell morphology and dry-mass analysis over 47 days of blood storage.
-
-## Key results
-
-| | EdgeSAM + LoRA (r = 8), full physics-aware loss |
-|---|---|
-| Boundary F1 | **0.952** |
-| Mean Dice (4 RBC classes) | 0.727 |
-| Trainable parameters | **0.53 M** (8.9 %) |
-| Throughput (ONNX FP16, RTX A5000) | **228.3 FPS** (p50 latency 4.33 ms, 16.4 MB peak VRAM) |
-| Global integrated-phase error (IPE), Dice-only → full loss | 5.22 % → **3.04 %** (MobileNet-UNet: 15.52 % → 3.01 %) |
-| Dry-mass agreement, predicted vs. annotated masks | Pearson **r = 0.966**, median bias 1.5 % (1,974 cells, 66 images) |
-
-## Method
-
-**Input.** Single-channel reconstructed phase maps (float32, radians). A normalised copy is fed to the network for numerical stability. The **raw phase** is kept separately and used only by the physics-aware loss, so normalisation never changes the physical signal. Augmentations are geometric only (flips, 90° rotations, translation). No intensity or phase-value changes are applied.
-
-**LoRA.** For a frozen weight `W`, the adapted weight is `W' = W + (B·A)·α/r`. Adapters are inserted into the query/value projections of transformer encoders and into bottleneck convolutions of CNN encoders (`models/lora_utils.py`). The single-channel input stem, normalisation layers, decoder and output head stay trainable.
-
-**Loss** (`training/losses.py`):
-
-```
-L_total = L_Dice + λ1·L_PMC + λ2·L_BGA + λ3·L_IPP        (λ1 = 0.1, λ2 = 0.05, λ3 = 0.1)
-```
-
-| Term | What it does |
-|---|---|
-| `L_Dice` | Class-weighted, smoothed multi-class Dice, `w = [0.5, 1.0, 1.5, 2.0, 2.0]` (background, discocyte, echinocyte, spherocyte, stomatocyte) |
-| `L_PMC` | `max(0, μ_bg − μ_cell + margin)`: the predicted foreground must have higher phase than the background |
-| `L_BGA` | L1 distance between the max-normalised gradient of the predicted mask and of the raw phase, which anchors contours to phase transitions |
-| `L_IPP` | `|S_pred − S_GT| / (|S_GT| + ε)` with `S = Σ M_i φ_i`, which preserves the integrated phase inside the predicted region |
-
-The physics terms act on the binary foreground probability, so the physical constraint on the measurement domain stays separate from morphology classification.
-
-**Quantitative readout.** For each connected component the pipeline computes: projected area `A = N_Ω Δx²` (Δx = 0.1441 µm/px), circularity `C = 4πA/P²` (Crofton perimeter), integrated phase `S_φ = Σ φ_i Δx²`, and dry mass `m = λ/(2πα) · S_φ` (λ = 666 nm, α = 0.2 mL/g).
-
-## Repository structure
-
-```text
-.
-├── main.py                    # Entry point: --mode train | evaluate | sweep
-├── collect_metrics.py         # Aggregates all runs into results/*_metrics.csv / *_morphology.csv
-├── yaml_gen.py                # Generates the 12 loss-ablation configs in configs/ablation/
-├── extract_visual.py          # Runs the r=8 models on the val set; exports arrays for Figs. 7, 9, 11
-├── calibrated_dry_mass.py     # Per-cell area / circularity / dry mass (Table 8, Fig. 12)
-├── dry_mass.py                # Alternative per-cell dry-mass export from float phase maps
-├── requirements.txt
-│
-├── configs/
-│   ├── edge_sam_lora.yaml     # Main LoRA configs (used for the rank sweep)
-│   ├── mobile_sam_lora.yaml
-│   ├── mobilenet_unet_lora.yaml
-│   ├── full_finetune/         # Full fine-tuning baselines (no LoRA)
-│   └── ablation/<arch>/       # dice_only | pmc | pmc_bga | full  (loss ablation, r=8)
-│
-├── datasets/                  # QPI dataset, class-balanced sampler, geometric-only augmentation
-├── models/                    # EdgeSAM, MobileSAM, MobileNet-UNet wrappers + LoRA injection
-├── training/                  # Trainer (AdamW, cosine LR, FP16) and physics-aware losses
-├── evaluation/                # Dice / IoU / AJI / Boundary-F1 / IPE metrics, evaluator, metric tracker
-├── analysis/                  # Morphology extraction and plotting of trends and qualitative figures
-├── benchmark/benchmark.py     # Latency / FPS / VRAM benchmark (PyTorch and ONNX Runtime)
-├── visualization/             # Regenerates the data-driven manuscript figures from JSON
-├── utils/                     # YAML config loader, seeding
-│
-├── results/                   # Metrics and per-cell measurements behind every table (see below)
-├── docs/figures/              # Manuscript figures shown in this README
-└── weights/                   # Place pretrained EdgeSAM / MobileSAM checkpoints here (not tracked)
-```
-
-<details>
-<summary><b>Contents of <code>results/</code></b></summary>
-
-| Path | Content | Used for |
-|---|---|---|
-| `<arch>_lora_r{2,4,8,16,32}/<ARCH>_R<r>/metrics.json` | Per-run training history and best validation metrics | Tables 1–2, Figs. 2–4 |
-| `<arch>_lora_r*/default_run/morphology_trends_rank_*.csv` | Per-image morphology from the evaluator | Morphology analysis |
-| `full_finetune/<arch>/…` | Full fine-tuning runs | Table 3, Fig. 6 |
-| `ablation/<arch>/<loss>/…` | Loss-ablation runs (r = 8) | Tables 4–5, Fig. 8 |
-| `lora_sweep_*.csv/json`, `full_finetune_*.csv/json`, `ablation_*.csv/json` | Aggregated tables written by `collect_metrics.py` | All tables |
-| `compiled_training_metrics.csv`, `compiled_morphology_trends.csv` | Aggregated sweep metrics and morphology | Figure scripts |
-| `benchmarks/hardware_benchmark_cuda.csv` (+ terminal log) | Latency, FPS and VRAM for every model / rank / precision / runtime | Tables 2, 7, Fig. 5 |
-| `dry_mass_pred.csv`, `dry_mass_calibrated.csv` | Per-cell measurements from EdgeSAM-predicted and annotation masks | Table 8, Fig. 12 |
-| `dry_mass_cells.csv`, `dry_mass_by_day.csv` | Output of the alternative `dry_mass.py` export | Not used in the manuscript |
-| `analysis/*.npy` | Sample phase map, ground truth and r = 8 predictions | Figs. 7, 9 |
-
-Model checkpoints (`checkpoints/best_model.pt`) are not included in the repository.
-</details>
-
-## Installation
-
-Tested with Python 3.10, PyTorch 2.0.1 (CUDA 11.7) and ONNX Runtime 1.16.3 on an NVIDIA RTX A5000.
-
-```bash
-git clone https://github.com/uikram/Physics-Aware-Lightweight-Segmentation-for-Quantitative-Holographic-Cell-Analysis-with-Optical-Mass-.git
-cd Physics-Aware-Lightweight-Segmentation-for-Quantitative-Holographic-Cell-Analysis-with-Optical-Mass-
-
-conda create -n qpi-seg python=3.10 -y
-conda activate qpi-seg
-
-# 1. PyTorch (choose the build that matches your CUDA version: https://pytorch.org)
-pip install torch torchvision
-
-# 2. Project dependencies
-pip install -r requirements.txt
-
-# 3. Backbone packages
-pip install git+https://github.com/ChaoningZhang/MobileSAM.git        # provides `mobile_sam`
-git clone https://github.com/chongzhou/EdgeSAM.git && pip install -e EdgeSAM   # provides `edge_sam`
-```
-
-## Data
-
-The RBC QPI dataset (DHM, 47-day blood-storage study) is **not included** in this repository. Please contact the corresponding author about data access.
-
-- 1,090 densely annotated phase images from 11 storage time points (days 0, 5, 8, 12, 15, 19, 23, 27, 30, 37, 47)
-- Split: 1,024 training / 66 validation images (6 validation patches per time point)
-- 5-class semantic masks: `0` background, `1` discocyte, `2` echinocyte, `3` spherocyte, `4` stomatocyte
-
-Expected layout (the path is set by `data_root` in each config, default `./dataset`):
-
-```text
-dataset/
-├── X_train/   # single-channel phase maps (.tif / .npy), e.g. 20110511_1.tif
-├── Y_train/   # integer masks with the same stem (values 0–4)
-├── X_val/     # validation phase maps (also used for evaluation)
-└── Y_val/
-```
-
-File stems begin with the acquisition date (`YYYYMMDD_*`). The storage day is computed relative to the earliest date, which is needed for the longitudinal analysis.
-
-## Pretrained backbone weights
-
-Download the official checkpoints into `weights/` (see [`weights/README.md`](weights/README.md)):
-
-```bash
-mkdir -p weights
-wget -P weights https://huggingface.co/spaces/chongzhou/EdgeSAM/resolve/main/weights/edge_sam_3x.pth
-wget -P weights https://github.com/ChaoningZhang/MobileSAM/raw/master/weights/mobile_sam.pt
-```
-
-MobileNet-UNet uses torchvision's ImageNet `MobileNet_V2_Weights.IMAGENET1K_V1`, which is downloaded automatically.
-
-## Usage
-
-Run all commands from the repository root. Outputs are written under `results/`.
-
-### 1. Train a single model
-
-```bash
-python main.py --mode train --config configs/edge_sam_lora.yaml --gpu 0
-```
-
-### 2. LoRA rank sweep (Table 2, Fig. 4)
-
-Trains and evaluates one model per rank and writes `results/<arch>_lora_r<r>/`:
-
-```bash
-python main.py --mode sweep --config configs/edge_sam_lora.yaml      --ranks 2 4 8 16 32
-python main.py --mode sweep --config configs/mobile_sam_lora.yaml    --ranks 2 4 8 16 32
-python main.py --mode sweep --config configs/mobilenet_unet_lora.yaml --ranks 2 4 8 16 32
-```
-
-### 3. Full fine-tuning baselines (Table 3, Fig. 6)
-
-```bash
-for arch in edge_sam mobile_sam mobilenet_unet; do
-  python main.py --mode train    --config configs/full_finetune/$arch.yaml
-  python main.py --mode evaluate --config configs/full_finetune/$arch.yaml
-done
-```
-
-### 4. Physics-aware loss ablation (Tables 4–5, Fig. 8)
-
-The configs are already in `configs/ablation/`. Regenerate them with `python yaml_gen.py` if needed.
-
-```bash
-for arch in edge_sam mobile_sam mobilenet_unet; do
-  for loss in dice_only pmc pmc_bga full; do
-    python main.py --mode train    --config configs/ablation/$arch/$loss.yaml
-    python main.py --mode evaluate --config configs/ablation/$arch/$loss.yaml
-  done
-done
-```
-
-### 5. Aggregate metrics
-
-```bash
-python collect_metrics.py --results_dir results
-```
-
-### 6. Computational benchmark (Table 7, Fig. 5)
-
-50 warm-up iterations and 500 timed forward passes per configuration. `--onnx` adds ONNX Runtime (CUDA EP) runs. MobileSAM is reported under PyTorch only.
-
-```bash
-python benchmark/benchmark.py --ranks 0 2 4 8 16 32 --precisions fp32 fp16 --onnx
-```
-
-### 7. Per-cell morphology and dry mass (Table 8, Fig. 12)
-
-```bash
-# annotation masks  -> results/dry_mass_calibrated.csv
-python calibrated_dry_mass.py --tif-dir dataset/X_val --mask-dir dataset/Y_val
-# EdgeSAM r=8 masks -> results/dry_mass_pred.csv
-python calibrated_dry_mass.py --use-model --out results/dry_mass_pred.csv
-```
-
-The calibration constants and procedure are documented in the script header.
-
-### 8. Figures
-
-```bash
-python visualization/visualization.py            # Figs. 2–6, 8, 10, 12 from visualization/data/*.json
-python extract_visual.py                          # exports arrays + storage-timeline grid (needs checkpoints)
-python analysis/plot_trends.py --results_dir results   # boundary alignment, qualitative grid, training/morphology plots
-```
-
-## Results and figures
-
-All models were trained with the same schedule (AdamW, cosine LR, FP16, 50 epochs) and evaluated on the same 66-image validation split. Dice and IoU are macro-averaged over the four RBC classes, and a missed class counts as 0.
-
-### Architecture comparison at LoRA r = 8
-
-| Architecture | Mean Dice ↑ | AJI ↑ | Boundary F1 ↑ | Dice<sub>echi</sub> ↑ | Dice<sub>stom</sub> ↑ | Trainable params ↓ |
-|---|---|---|---|---|---|---|
-| MobileNet-UNet | 0.417 | 0.634 | 0.971 | 0.000 | 0.000 | 5.58 M |
-| MobileSAM | **0.812** | 0.249 | 0.644 | 0.852 | 0.710 | 0.67 M |
-| **EdgeSAM** | 0.727 | 0.484 | 0.952 | 0.776 | 0.536 | **0.53 M** |
-
-<p align="center">
-  <img src="docs/figures/fig02_per_class_dice.png" width="48%" alt="Per-class Dice">
-  <img src="docs/figures/fig03_radar_chart.png" width="42%" alt="Radar chart">
-</p>
-<p align="center"><em><b>Fig. 2</b> (left): per-class Dice at r = 8. MobileNet-UNet misses echinocytes and stomatocytes entirely (zero bars). <b>Fig. 3</b> (right): aggregate performance, each axis normalised to the best model. EdgeSAM is the only model that detects all four morphologies while also giving high boundary fidelity and reasonable instance separation.</em></p>
-
-### LoRA rank sweep (EdgeSAM)
-
-| Rank | Trainable | Mean Dice ↑ | Mean IoU ↑ | AJI ↑ | Boundary F1 ↑ | IPE (%) ↓ | p50 (ms) / VRAM (MB) |
+| Architecture | LoRA rank | Trainable params | Mean Dice | AJI | Boundary F1 | Global IPE (%) | Runs with a lost class |
 |---|---|---|---|---|---|---|---|
-| 2 | 0.30 M (5.20 %) | 0.633 | 0.482 | 0.465 | 0.905 | 8.62 | 15.54 / 177.3 |
-| 4 | 0.38 M (6.46 %) | 0.638 | 0.490 | 0.405 | 0.918 | 5.53 | 15.33 / 177.9 |
-| **8** | **0.53 M (8.90 %)** | **0.727** | **0.588** | **0.484** | **0.952** | 3.63 | 13.36 / 177.9 |
-| 16 | 0.85 M (13.40 %) | 0.676 | 0.533 | 0.420 | 0.946 | 3.86 | 13.32 / 177.9 |
-| 32 | 1.47 M (21.19 %) | 0.710 | 0.567 | 0.372 | 0.950 | 3.45 | 13.25 / 177.9 |
+| MobileSAM | 8 | 0.67 M (10.0 %) | **0.810 ± 0.006** | 0.262 ± 0.017 | 0.802 ± 0.011 | **1.32 ± 0.09** | 0/3 |
+| EdgeSAM | 32 | 1.47 M (21.2 %) | 0.738 ± 0.006 | 0.335 ± 0.020 | 0.642 ± 0.005 | 3.02 ± 0.84 | 0/3 |
+| MobileNet-UNet | 8 | 5.58 M (71.8 %) | 0.412 ± 0.004 | **0.551 ± 0.053** | **0.814 ± 0.003** | 2.60 ± 0.07 | 3/3 |
 
-<p align="center">
-  <img src="docs/figures/fig04_lora_rank_sweep.png" width="48%" alt="LoRA rank sweep">
-  <img src="docs/figures/fig05_accuracy_throughput.png" width="48%" alt="Accuracy-throughput frontier">
-</p>
-<p align="center"><em><b>Fig. 4</b> (left): mean Dice (line) and trainable parameters (bars) against LoRA rank. Ranks above 8 add parameters without improving accuracy. <b>Fig. 5</b> (right): accuracy–throughput frontier at r = 8, FP16. Arrows join the PyTorch and ONNX Runtime points of each architecture, and the dashed ring marks the selected EdgeSAM configuration.</em></p>
+MobileNet-UNet reaches a competitive boundary F1 and AJI while collapsing two of the four cell
+classes to Dice < 0.05 in every seed, which is why mean Dice is low — the full per-class breakdown
+is in [`artifacts/tables/main/T2_preferred.md`](artifacts/tables/main/T2_preferred.md).
 
-### LoRA vs. full fine-tuning
+![Per-class Dice](artifacts/figures/manuscript/Fig3_per_class_dice.png)
 
-| Architecture | Method | Trainable | Mean Dice ↑ | BF1 ↑ | AJI ↑ | IPE (%) ↓ | Dice<sub>echi</sub> | Dice<sub>stom</sub> |
-|---|---|---|---|---|---|---|---|---|
-| EdgeSAM | **LoRA (r = 8)** | 0.53 M (8.9 %) | **0.727** | **0.952** | **0.484** | **3.63** | **0.776** | 0.536 |
-| | Full FT | 5.69 M (100 %) | 0.557 | 0.931 | 0.431 | 5.08 | 0.000 | **0.625** |
-| MobileSAM | **LoRA (r = 8)** | 0.67 M (10.0 %) | **0.812** | 0.644 | 0.249 | **2.57** | **0.852** | **0.710** |
-| | Full FT | 6.66 M (100 %) | 0.419 | **0.665** | **0.280** | 2.76 | 0.000 | 0.000 |
-| MobileNet-UNet | LoRA (r = 8) | 5.58 M (71.8 %) | 0.417 | **0.971** | 0.634 | **2.60** | 0.000 | 0.000 |
-| | Full FT | 7.62 M (100 %) | **0.420** | 0.969 | **0.705** | 3.56 | 0.000 | 0.000 |
+### Loss ablation
 
-<p align="center"><img src="docs/figures/fig06_lora_vs_full_finetune.png" width="90%" alt="LoRA vs full fine-tuning"></p>
-<p align="center"><em><b>Fig. 6.</b> Per-class Dice for LoRA (r = 8) and full fine-tuning. Full fine-tuning wipes out minority classes (for example EdgeSAM echinocytes), whereas LoRA keeps them.</em></p>
+![Loss ablation](artifacts/figures/manuscript/Fig5_loss_ablation.png)
 
-### Physics-aware loss ablation (r = 8)
+Full tables, including every rank and the seed-paired differences:
+[`artifacts/tables/main/T5_loss_ablation.md`](artifacts/tables/main/T5_loss_ablation.md),
+[`artifacts/tables/si/S4_ablation_all_ranks.md`](artifacts/tables/si/S4_ablation_all_ranks.md).
 
-| Architecture | Loss | Dice ↑ | IoU ↑ | BF1 ↑ | AJI ↑ | IPE (%) ↓ |
-|---|---|---|---|---|---|---|
-| EdgeSAM | L<sub>Dice</sub> only | 0.757 | 0.621 | 0.938 | **0.525** | 5.22 |
-| | + L<sub>PMC</sub> | 0.608 | 0.511 | 0.386 | 0.339 | 47.20 |
-| | + L<sub>PMC</sub> + L<sub>BGA</sub> | **0.763** | **0.627** | 0.929 | 0.421 | 6.13 |
-| | **Full (+ L<sub>IPP</sub>)** | 0.740 | 0.601 | **0.953** | 0.377 | **3.04** |
-| MobileNet-UNet | L<sub>Dice</sub> only | **0.425** | **0.374** | 0.913 | 0.633 | 15.52 |
-| | **Full (+ L<sub>IPP</sub>)** | 0.419 | 0.363 | **0.970** | **0.675** | **3.01** |
-| MobileSAM | L<sub>Dice</sub> only | **0.813** | **0.695** | **0.665** | 0.235 | 2.46 |
-| | + L<sub>PMC</sub> + L<sub>BGA</sub> | 0.804 | 0.683 | 0.664 | **0.251** | **2.37** |
+### Integrated phase and optical mass (phase-wrapped cells excluded)
 
-*The full table, including every configuration and per-class IPE, is in `results/ablation_metrics.csv` and in the manuscript (Tables 4–5).*
-
-<p align="center"><img src="docs/figures/fig07_boundary_gradient_alignment.jpg" width="95%" alt="Boundary gradient alignment"></p>
-<p align="center"><em><b>Fig. 7.</b> Left to right: quantitative phase map, phase-gradient magnitude, and EdgeSAM (r = 8) contours overlaid on the gradient map. The predicted boundaries follow the phase transitions that the BGA term targets.</em></p>
-
-<p align="center"><img src="docs/figures/fig08_loss_ablation.png" width="95%" alt="Loss ablation"></p>
-<p align="center"><em><b>Fig. 8.</b> Component-wise loss ablation. Bars show Boundary F1 (left axis) and the dashed line shows global integrated-phase error (right axis). Adding IPP gives the lowest IPE for EdgeSAM and MobileNet-UNet. For MobileSAM the effect depends on the architecture.</em></p>
-
-### Integrated-phase preservation (r = 8)
-
-| Architecture | Global IPE (%) ↓ | Disco. | Echi. | Sphero. | Stom. | AJI ↑ |
-|---|---|---|---|---|---|---|
-| MobileNet-UNet | 2.60 | 61.2 | 100.0 | 27.6 | 100.0 | 0.634 |
-| MobileSAM | **2.57** | 6.8 | 33.0 | 33.7 | 47.9 | 0.249 |
-| EdgeSAM | 3.63 | 7.3 | 35.2 | 27.2 | 64.1 | 0.484 |
-
-A low global IPE alone is not enough. MobileNet-UNet misses two classes (100 % class IPE), and MobileSAM merges neighbouring cells (low AJI). EdgeSAM gives the most usable per-cell measurement domains.
-
-### Computational efficiency (NVIDIA RTX A5000, r = 8)
-
-| Model | Runtime | Precision | p50 (ms) ↓ | p99 (ms) ↓ | FPS ↑ | Peak VRAM (MB) ↓ |
-|---|---|---|---|---|---|---|
-| EdgeSAM | PyTorch | FP32 | 13.36 | 13.89 | 74.82 | 177.9 |
-| | ONNX | FP32 | 3.99 | 4.21 | 248.87 | 24.6 |
-| | PyTorch | FP16 | 15.87 | 16.96 | 62.64 | 157.4 |
-| | **ONNX** | **FP16** | **4.33** | **4.70** | **228.33** | **16.4** |
-| MobileNet-UNet | PyTorch | FP32 | 7.42 | 9.07 | 132.69 | 186.0 |
-| | ONNX | FP32 | 2.75 | 4.12 | 359.61 | 24.6 |
-| | PyTorch | FP16 | 6.62 | 8.22 | 148.87 | 161.2 |
-| | ONNX | FP16 | 2.62 | 4.15 | 376.10 | 16.4 |
-| MobileSAM | PyTorch | FP32 | 19.07 | 19.30 | 52.33 | 528.3 |
-| | PyTorch | FP16 | 17.33 | 19.55 | 57.18 | 270.7 |
-
-MobileSAM is reported under PyTorch only because parts of its mask decoder are not supported by the ONNX Runtime CUDA Execution Provider. These numbers describe desktop-GPU efficiency, not deployment on an embedded device.
-
-### Qualitative segmentation
-
-<p align="center"><img src="docs/figures/fig09_qualitative_segmentation.jpg" width="100%" alt="Qualitative segmentation"></p>
-<p align="center"><em><b>Fig. 9.</b> Raw phase, ground truth and r = 8 predictions. MobileNet-UNet returns almost empty masks for minority-class cells, MobileSAM merges neighbouring cells, and EdgeSAM gives individual cell contours.</em></p>
-
-### Biological analysis: 47-day RBC storage
-
-<p align="center">
-  <img src="docs/figures/fig10_morphology_composition.png" width="55%" alt="Morphology composition over storage">
-</p>
-<p align="center"><em><b>Fig. 10.</b> Predicted RBC morphology composition over storage (EdgeSAM, r = 8). Discocytes dominate early on, and echinocytes and spherocytes take over by day 47.</em></p>
-
-<p align="center"><img src="docs/figures/fig11_storage_timeline.jpg" width="100%" alt="Storage lesion timeline"></p>
-<p align="center"><em><b>Fig. 11.</b> Representative phase images (top) and EdgeSAM contours (bottom) across the storage period.</em></p>
-
-| Day | n | Area (µm²) | Circularity | Dry mass (pg) | Composition (%) |
+| Configuration | Global IPE (%) | Per-cell \|IPE\| median (%) | Dry-mass MdARE (%) | Dry-mass bias (pg) | Day-0 median dry mass (pg) |
 |---|---|---|---|---|---|
-| 0 | 181 | 63.1 ± 24.3 | 0.745 ± 0.123 | 31.8 ± 13.0 | Disco. 86, Stom. 10 |
-| 15 | 146 | 83.6 ± 40.2 | 0.651 ± 0.155 | 35.9 ± 18.2 | Disco. 72, Stom. 16, Sphero. 12 |
-| 30 | 228 | 61.9 ± 32.0 | 0.713 ± 0.146 | 30.5 ± 13.9 | Disco. 45, Sphero. 23, Stom. 20 |
-| 37 | 178 | 51.3 ± 26.4 | 0.748 ± 0.118 | 26.5 ± 11.8 | Echi. 32, Disco. 29, Sphero. 24 |
-| 47 | 250 | 43.4 ± 20.2 | 0.729 ± 0.136 | 26.6 ± 9.4 | Sphero. 42, Echi. 36, Stom. 15 |
+| MobileSAM r = 8 | 1.32 ± 0.09 | 1.11 ± 0.09 | 2.87 ± 0.21 | 0.66 ± 0.31 | 28.21 ± 0.07 |
+| EdgeSAM r = 32 | 3.02 ± 0.84 | 1.88 ± 0.24 | 3.93 ± 0.52 | 0.46 ± 0.68 | 27.88 ± 0.43 |
+| MobileNet-UNet r = 8 | 2.60 ± 0.07 | 1.36 ± 0.03 | 2.48 ± 0.31 | −0.17 ± 0.07 | 28.06 ± 0.15 |
+| Annotation (reference) | — | — | — | — | 27.83 |
 
-*Selected days shown. All 11 time points (1,974 cells in total) are in `results/dry_mass_pred.csv` and in manuscript Table 8.*
+Dry mass is computed as *m* = λ/(2πα) · Σ(φ − φ_bg) Δx², with λ = 0.666 µm, α = 0.2 mL/g and
+Δx = 0.1441 µm; no calibration to mean corpuscular haemoglobin is applied. Agreement statistics use
+per-image median dry mass over the 66 validation images. Because that median varies little between
+images (28.7 ± 1.6 pg), Pearson *r* and Lin's CCC are low even where the errors are small — MdARE,
+bias and the limits of agreement are the informative measures. Full table:
+[`artifacts/tables/main/T7_phase_and_mass.md`](artifacts/tables/main/T7_phase_and_mass.md).
 
-<p align="center"><img src="docs/figures/fig12_dry_mass_validation.png" width="95%" alt="Dry-mass validation"></p>
-<p align="center"><em><b>Fig. 12.</b> (a) Per-image median dry mass from EdgeSAM-predicted masks against annotation masks (r = 0.966, median bias +1.5 %). (b) Median projected area and dry mass relative to day 0. Projected area shrinks much more than dry mass during storage.</em></p>
+![Dry mass and projected area](artifacts/figures/manuscript/Fig8_dry_mass_and_area.png)
 
-## Reproducing the manuscript figures and tables
+### Inference cost (NVIDIA RTX A5000, batch 1, strict FP32, 3 timing passes)
 
-| Manuscript item | Source data | Script |
+| Architecture | Runtime | Input (px) | P50 (ms) | P99 (ms) | FPS | Peak VRAM (MB) |
+|---|---|---|---|---|---|---|
+| MobileSAM | PyTorch | 1024 | 20.35 ± 0.15 | 20.51 ± 0.13 | 49–50 | 358 |
+| MobileSAM | ONNX Runtime | 1024 | 25.43 ± 0.21 | 25.56 ± 0.18 | 39–40 | 1178 |
+| EdgeSAM | PyTorch | 256 | 10.64 ± 1.45 | 12.97 ± 1.53 | 81–103 | 42 |
+| EdgeSAM | ONNX Runtime | 256 | 4.11 ± 0.43 | 5.58 ± 0.31 | 229–277 | 132 |
+| MobileNet-UNet | PyTorch | 256 | 5.66 ± 0.10 | 8.00 ± 0.63 | 175–180 | 52 |
+| MobileNet-UNet | ONNX Runtime | 256 | 2.53 ± 0.19 | 3.33 ± 0.79 | 374–431 | 152 |
+
+Two caveats that matter when quoting these numbers: only the rank-8 checkpoints were timed (LoRA is
+merged before timing, so cost is expected to be rank-independent, but r = 32 was **not** measured),
+and each model runs at its own native input size, so the MobileSAM gap mixes architecture with
+resolution. The protocol is written out in
+[`manuscript/benchmarking_protocol.md`](manuscript/benchmarking_protocol.md) (v5).
+
+![Accuracy versus latency](artifacts/figures/main/F8_accuracy_vs_latency.png)
+
+---
+
+## Dataset
+
+| Item | Value |
+|---|---|
+| Training images with a float32 phase map | 182 (728 views after four lossless 90° rotations) |
+| Validation / evaluation images | 66 |
+| Storage days in the validation set | 11 (days 0, 5, 8, 12, 15, 19, 23, 27, 30, 37, 47) |
+| Annotated cells (15–200 µm², not cut by the field of view) | 2049 |
+| of which phase-wrapped, excluded from phase-derived results | 61 (3.0 %) across 29 images |
+| Cells used for phase-derived results | 1988 |
+
+Classes carry their mask value: 1 = discocyte, 2 = spherocyte, 3 = echinocyte, 4 = stomatocyte.
+Raw outputs and `configs/base.yaml` keep an earlier naming; the two names are exchanged where
+results are read (`qpi/utils/classnames.py`), so `results.json`, every table and every figure use the
+manuscript order.
+
+Inputs are single-channel float32 phase maps in radians on a 768 × 768 grid, used without resizing
+or cropping. Each map is referenced to the median phase of its own annotated background more than
+5 px from any cell. No phase unwrapping is applied. The network input is formed separately: resized
+to each architecture's input size (256 px for EdgeSAM and MobileNet-UNet, 1024 px for MobileSAM) and
+standardised per image to zero mean and unit variance. The loss sees the background-referenced phase
+in radians, not the standardised input.
+
+The phase maps are not redistributed here (see [Data availability](#data-availability)).
+
+---
+
+## Repository layout
+
+```
+main.py                     single-run entry point: list-runs | write-grid | run --run-id … --gpu …
+configs/                    base.yaml (all settings), experiments.yaml (architectures, ranks, ablation losses),
+                            multiseed.yaml, smoke.yaml (overlay), views.yaml
+qpi/
+  data/                     ECC registration, dataset build, dataset class, verification
+  models/                   EdgeSAM (vendored RepViT), MobileSAM, MobileNet-UNet, LoRA utilities
+  training/                 physics-aware loss, trainer
+  evaluation/               segmentation and IPE metrics, checkpoint evaluation
+  analysis/                 per-cell phase integral, dry mass, robustness, wrapping, multi-seed compilation
+  benchmark.py              inference benchmark, protocol v5 (FP32 PyTorch and ONNX Runtime, P50/P99/FPS/VRAM)
+  equivalence.py            ONNX FP32 against PyTorch FP32 with a fixed acceptance gate
+  utils/                    class names, env and GPU policy, io, layout, progress, seeding
+scripts/                    prepare_dataset, verify_dataset, run_queue, run_analysis, run_cell_analysis,
+                            run_benchmark, run_robustness, check_equivalence, check_freshness,
+                            compile_results, aggregate_multiseed, organise_results, verify_outputs, record_run
+ops/                        server helpers: run_benchmark.sh, run_cell_analysis.sh, make_manuscript_outputs.sh,
+                            organise_results.sh, start_multiseed.sh, check_multiseed.sh, progress.sh,
+                            status.sh, stop.sh, clean.sh, tidy.sh, pack_results.sh
+manuscript/
+  results.py                one JSON with every number used in the manuscript, from actual outputs only
+  figures.py, ms_tables.py, make_tex.py
+  benchmarking_protocol.md  what the benchmark measures and how (no results)
+  outputs/results.json      the generated numbers
+artifacts/
+  figures/manuscript/       the manuscript figures (PNG + PDF)
+  figures/main/, figures/si/  full result figures and supplementary figures
+  figures/pptx/Figures.pptx editable figure sources
+  tables/main/, tables/si/  every table as .md and .csv; ALL_TABLES.md is the concatenation
+  tables/raw/               all_runs.csv, cell_analysis_long.csv
+  code/                     the scripts that build the tables, figures and revision documents
+outputs/
+  full/                     seed-42 main experiment: runs/<run_id>/{config,history,metrics,checkpoints,predictions}
+  multiseed/                seeds 42/43/44 extension, plus summary/
+  analysis/, cell_analysis/, compiled/   per-cell analyses and the compiled multi-seed JSONs
+tests/                      unit tests (no GPU required)
+data/                       raw_data/, dataset/, X_train_raw/ (inputs); processed/ is built by scripts
+weights/                    pretrained MobileSAM / EdgeSAM checkpoints (not tracked, see below)
+run_full_experiment.sh      the full pipeline
+run_multiseed.sh            multi-seed extension, STAGE=1|2|3; needs outputs/full first
+run_smoke_test.sh           the same pipeline on a tiny budget, separate settings and outputs
+```
+
+---
+
+## Getting started
+
+```bash
+pip install -r requirements.txt     # on the server, install CUDA builds of torch/torchvision and onnxruntime-gpu
+python -m pytest -q tests           # unit tests, no GPU needed
+```
+
+Pretrained encoder checkpoints go in `weights/` (`mobile_sam.pt`, `edge_sam_3x.pth`); they are large
+binaries and are not tracked by git. The RepViT encoder of EdgeSAM is vendored in
+`qpi/models/vendor/edge_sam/` — the `edge_sam` pip package is not required.
+
+Build the dataset, then run:
+
+```bash
+python scripts/prepare_dataset.py        # float32 phase + mask per frame -> data/processed/
+python scripts/verify_dataset.py         # content-hash check of the train/val split
+bash run_smoke_test.sh                   # minutes; writes outputs/smoke, manuscript/outputs_smoke
+bash run_full_experiment.sh              # full run: main experiment, analysis, benchmark, figures
+```
+
+A single run:
+
+```bash
+python main.py list-runs
+python main.py run --run-id edge_sam_lora_r8 --gpu 0
+```
+
+Notes on running:
+
+* **GPU policy.** `run_full_experiment.sh` sets `CUDA_VISIBLE_DEVICES=2,3` itself and refuses any
+  other value; `enforce_gpu_policy` aborts if the variable contains anything else. Change
+  `hardware.allowed_physical_gpus` in `configs/base.yaml` for a different machine.
+* **Resumable.** Finished runs are skipped. To redo one, delete `outputs/full/runs/<run_id>` or pass
+  `--force`.
+* **Smoke and full outputs cannot mix.** `OUTPUT_MODE.json` binds an output directory to one mode.
+
+### Re-running individual pieces
+
+```bash
+./ops/make_manuscript_outputs.sh                  # results.json, figures, tex report, verification (no GPU)
+./ops/run_cell_analysis.sh                        # per-cell analyses, resumable; ARGS="--all" for all losses
+./ops/organise_results.sh                         # individual files + outputs/compiled/*_multiseed.json
+python scripts/check_freshness.py                 # which result file is older than its inputs, and how to rebuild it
+python scripts/run_robustness.py --scope all      # robustness of every run (GPU)
+GPU=1 SEEDS="42 43 44" ./ops/run_benchmark.sh     # benchmark + equivalence gate + manuscript outputs
+./ops/start_multiseed.sh N                        # rerun or extend the multi-seed series
+./ops/progress.sh --watch
+```
+
+---
+
+## Figure and table index
+
+| Figure | File | Shows |
 |---|---|---|
-| Fig. 1 | — (diagram) | — |
-| Figs. 2, 3, 4, 5, 6, 8, 10, 12 | `visualization/data/figureXX.json` (derived from `results/`) | `visualization/visualization.py` |
-| Fig. 7 (boundary alignment), Fig. 9 (qualitative grid) | `results/analysis/*.npy` | `extract_visual.py` → `analysis/plot_trends.py` |
-| Fig. 11 (storage timeline) | validation set + r = 8 checkpoint | `extract_visual.py` |
-| Tables 1–6 | `results/lora_sweep_metrics.csv`, `full_finetune_metrics.csv`, `ablation_metrics.csv` | `collect_metrics.py` |
-| Table 7 | `results/benchmarks/hardware_benchmark_cuda.csv` | `benchmark/benchmark.py` |
-| Table 8 | `results/dry_mass_pred.csv` | `calibrated_dry_mass.py --use-model` |
+| Fig. 1 | `artifacts/figures/manuscript/Fig1_framework.png` | framework overview |
+| Fig. 3 | `artifacts/figures/manuscript/Fig3_per_class_dice.png` | per-class Dice by architecture |
+| Fig. 4 | `artifacts/figures/manuscript/Fig4_lora_vs_full_finetuning.png` | LoRA against full fine-tuning |
+| Fig. 5 | `artifacts/figures/manuscript/Fig5_loss_ablation.png` | loss ablation |
+| Fig. 7 | `artifacts/figures/manuscript/Fig7_composition.png` | class composition over storage |
+| Fig. 8 | `artifacts/figures/manuscript/Fig8_dry_mass_and_area.png` | dry-mass agreement and storage trends |
+| Figs. S1–S3 | `artifacts/figures/manuscript/FigS*.png` | rank sweep by seed, validation curves, accuracy vs throughput |
+| Supplementary | `artifacts/figures/si/FS1–FS8` | per-class rank sweep, IPE heatmap, per-cell IPE CDF, robustness, parameters vs rank, error strata, training curves, annotation trends |
+
+| Table | File | Shows |
+|---|---|---|
+| T1 | `artifacts/tables/main/T1_dataset.md` | dataset after the corrected preprocessing |
+| T2 | `artifacts/tables/main/T2_preferred.md` | segmentation at the preferred LoRA configurations |
+| T3 | `artifacts/tables/main/T3_same_rank.md` | all architectures at r = 8, with seed-paired differences |
+| T4 | `artifacts/tables/main/T4_training_stability.md` | training stability |
+| T5 | `artifacts/tables/main/T5_loss_ablation.md` | loss ablation |
+| T6 | `artifacts/tables/main/T6_lora_vs_full_ft.md` | LoRA against full fine-tuning |
+| T7 | `artifacts/tables/main/T7_phase_and_mass.md` | integrated phase and optical mass |
+| T8 | `artifacts/tables/main/T8_efficiency.md` | computational efficiency |
+| T9, T10 | `artifacts/tables/main/T9_storage_per_day.md`, `T10_storage_statistics.md` | storage-day statistics |
+| S1–S14 | `artifacts/tables/si/` | rank sweeps, paired differences, all runs, per-class IPE, parameters by rank, benchmark per seed, robustness, wrapping, error strata, reference sensitivity |
+
+Everything concatenated: [`artifacts/tables/ALL_TABLES.md`](artifacts/tables/ALL_TABLES.md).
+The scripts that generate them live in `artifacts/code/`.
+
+---
+
+## Reproducibility
+
+Seed 42 for every run of the main experiment; the multi-seed extension adds seeds 43 and 44 (Python,
+NumPy, PyTorch and the data-loader generator are all seeded). Deterministic algorithms are requested,
+but operations without a deterministic CUDA kernel only warn, so bitwise equality across GPU models
+is not guaranteed. Full fine-tuning was trained once per architecture, at seed 42 only — compare it
+with the seed-42 LoRA rows in T6, not with the three-seed means.
+
+`outputs/<mode>/run_metadata.json` records configuration hashes, the data manifest hash, package
+versions (pip freeze), GPU names and timestamps. There is no split leakage: train and validation come
+from the provided split and are checked by content hash in `scripts/verify_dataset.py`.
+
+---
+
+## Data availability
+
+The quantitative phase maps are not redistributed in this repository. `data/raw_data/`,
+`data/dataset/`, `data/X_train_raw/` and the built `data/processed/` are excluded from version
+control by size. Requests for the data go to the corresponding author.
+
+## Licence
+
+Code in this repository: see `LICENSE` (to be added before public release). The RepViT encoder
+vendored in `qpi/models/vendor/edge_sam/` is distributed under the S-Lab **non-commercial** licence;
+its terms are in `qpi/models/vendor/edge_sam/LICENSE` and they constrain any licence chosen for the
+repository as a whole. MobileSAM is installed from its upstream repository at a pinned commit.
 
 ## Citation
 
-The manuscript is currently under review. If you use this code, please cite:
-
 ```bibtex
-@article{ikram2026physicsaware,
-  title   = {Physics-Aware Lightweight Segmentation for Quantitative Holographic Cell Analysis with Optical Mass Preservation},
+@article{ikram_physics_aware_holographic,
+  title   = {Physics-Aware Lightweight Segmentation for Quantitative Holographic
+             Cell Analysis with Optical Mass Preservation},
   author  = {Ikram, Usama and Kim, Youhyun and Moon, Inkyu},
-  year    = {2026},
-  note    = {Manuscript under review}
+  journal = {Applied Physics B},
+  note    = {under review}
 }
 ```
-
-## Acknowledgements
-
-This work builds on [EdgeSAM](https://github.com/chongzhou/EdgeSAM), [MobileSAM](https://github.com/ChaoningZhang/MobileSAM) and torchvision's [MobileNetV2](https://pytorch.org/vision/stable/models/mobilenetv2.html). Please follow the licences of these projects when using their pretrained weights.
-
-## Contact
-
-Usama Ikram, Department of Artificial Intelligence, DGIST

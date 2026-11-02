@@ -1,0 +1,163 @@
+{
+  "run_id": "mobile_sam_lora_r32__s44",
+  "config": "mobile_sam|lora_r32",
+  "arch": "mobile_sam",
+  "lora_rank": 32,
+  "loss": "full",
+  "seed": 44,
+  "checkpoint": "last",
+  "status": "complete",
+  "checkpoint_file": {
+    "path": "outputs/multiseed/runs/mobile_sam_lora_r32__s44/checkpoints/last.pt",
+    "bytes": 27739336,
+    "sha256": "9a1b92b5b61a5b83a2b418c28b2d1285fb776a1999f8c9f7f595554f6eeadcf4"
+  },
+  "rows": [
+    {
+      "run_id": "mobile_sam_lora_r32__s44",
+      "distortion": "none",
+      "macro_dice": 0.82733,
+      "fg_iou": 0.89134,
+      "ipe_bgcorr_true_pct": 1.44938,
+      "ipe_uncorrected_seen_pct": 1.40176,
+      "delta_macro_dice_vs_none": 0.0,
+      "invariant_by_construction": false
+    },
+    {
+      "run_id": "mobile_sam_lora_r32__s44",
+      "distortion": "offset+0.10",
+      "macro_dice": 0.82732,
+      "fg_iou": 0.89133,
+      "ipe_bgcorr_true_pct": 1.44915,
+      "ipe_uncorrected_seen_pct": 1.47385,
+      "delta_macro_dice_vs_none": -1e-05,
+      "invariant_by_construction": true
+    },
+    {
+      "run_id": "mobile_sam_lora_r32__s44",
+      "distortion": "offset+0.30",
+      "macro_dice": 0.82731,
+      "fg_iou": 0.89134,
+      "ipe_bgcorr_true_pct": 1.44956,
+      "ipe_uncorrected_seen_pct": 1.61543,
+      "delta_macro_dice_vs_none": -2e-05,
+      "invariant_by_construction": true
+    },
+    {
+      "run_id": "mobile_sam_lora_r32__s44",
+      "distortion": "offset+0.60",
+      "macro_dice": 0.82732,
+      "fg_iou": 0.89134,
+      "ipe_bgcorr_true_pct": 1.44932,
+      "ipe_uncorrected_seen_pct": 1.83966,
+      "delta_macro_dice_vs_none": -1e-05,
+      "invariant_by_construction": true
+    },
+    {
+      "run_id": "mobile_sam_lora_r32__s44",
+      "distortion": "tilt0.10",
+      "macro_dice": 0.82796,
+      "fg_iou": 0.89131,
+      "ipe_bgcorr_true_pct": 1.44981,
+      "ipe_uncorrected_seen_pct": 1.4132,
+      "delta_macro_dice_vs_none": 0.00063,
+      "invariant_by_construction": false
+    },
+    {
+      "run_id": "mobile_sam_lora_r32__s44",
+      "distortion": "bowl0.10",
+      "macro_dice": 0.82759,
+      "fg_iou": 0.89125,
+      "ipe_bgcorr_true_pct": 1.44431,
+      "ipe_uncorrected_seen_pct": 1.3848,
+      "delta_macro_dice_vs_none": 0.00026,
+      "invariant_by_construction": false
+    },
+    {
+      "run_id": "mobile_sam_lora_r32__s44",
+      "distortion": "astig0.10",
+      "macro_dice": 0.82665,
+      "fg_iou": 0.89112,
+      "ipe_bgcorr_true_pct": 1.46347,
+      "ipe_uncorrected_seen_pct": 1.41524,
+      "delta_macro_dice_vs_none": -0.00068,
+      "invariant_by_construction": false
+    },
+    {
+      "run_id": "mobile_sam_lora_r32__s44",
+      "distortion": "tilt0.25",
+      "macro_dice": 0.82819,
+      "fg_iou": 0.89126,
+      "ipe_bgcorr_true_pct": 1.44453,
+      "ipe_uncorrected_seen_pct": 1.42918,
+      "delta_macro_dice_vs_none": 0.00086,
+      "invariant_by_construction": false
+    },
+    {
+      "run_id": "mobile_sam_lora_r32__s44",
+      "distortion": "bowl0.25",
+      "macro_dice": 0.82783,
+      "fg_iou": 0.89112,
+      "ipe_bgcorr_true_pct": 1.4297,
+      "ipe_uncorrected_seen_pct": 1.35565,
+      "delta_macro_dice_vs_none": 0.0005,
+      "invariant_by_construction": false
+    },
+    {
+      "run_id": "mobile_sam_lora_r32__s44",
+      "distortion": "astig0.25",
+      "macro_dice": 0.82498,
+      "fg_iou": 0.89105,
+      "ipe_bgcorr_true_pct": 1.4607,
+      "ipe_uncorrected_seen_pct": 1.41264,
+      "delta_macro_dice_vs_none": -0.00235,
+      "invariant_by_construction": false
+    },
+    {
+      "run_id": "mobile_sam_lora_r32__s44",
+      "distortion": "tilt0.50",
+      "macro_dice": 0.82704,
+      "fg_iou": 0.8912,
+      "ipe_bgcorr_true_pct": 1.44694,
+      "ipe_uncorrected_seen_pct": 1.47669,
+      "delta_macro_dice_vs_none": -0.00029,
+      "invariant_by_construction": false
+    },
+    {
+      "run_id": "mobile_sam_lora_r32__s44",
+      "distortion": "bowl0.50",
+      "macro_dice": 0.82785,
+      "fg_iou": 0.89081,
+      "ipe_bgcorr_true_pct": 1.41603,
+      "ipe_uncorrected_seen_pct": 1.36281,
+      "delta_macro_dice_vs_none": 0.00052,
+      "invariant_by_construction": false
+    },
+    {
+      "run_id": "mobile_sam_lora_r32__s44",
+      "distortion": "astig0.50",
+      "macro_dice": 0.82254,
+      "fg_iou": 0.89095,
+      "ipe_bgcorr_true_pct": 1.44285,
+      "ipe_uncorrected_seen_pct": 1.425,
+      "delta_macro_dice_vs_none": -0.00479,
+      "invariant_by_construction": false
+    }
+  ],
+  "unit_schema": 1,
+  "provenance": {
+    "generated_utc": "2026-10-27T06:02:00+00:00",
+    "sources": [
+      {
+        "path": "outputs/multiseed/runs/mobile_sam_lora_r32__s44/metrics.json",
+        "bytes": 3639,
+        "sha256": "78ce04b7ba6a67bbc82f6b7a74cee1f379a07e364fbc72524178d69f0d62ad3c"
+      }
+    ],
+    "config_sha256": {
+      "configs/base.yaml": "8664a8a49182610bebb8d7698b503c36ff82512e0b15f93f7481cdaa4512689f",
+      "configs/experiments.yaml": "96642e8d74fac13213dd031f57db003ed74db956d956cf96fcef7c8dd28b37f8",
+      "configs/multiseed.yaml": "aec9145d8bd7d827c4f3b295115788480692a6730a9afb832c63aef2ebb90697"
+    }
+  }
+}
