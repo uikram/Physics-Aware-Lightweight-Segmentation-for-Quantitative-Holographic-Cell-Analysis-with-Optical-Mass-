@@ -5,7 +5,7 @@ Run on the machine that has data/processed, from the repository root:
 
     python artifacts/code/make_figure_objects.py [--processed-root data/processed] [--seed 42]
 
-Every panel is a bare image with a thin dark frame (no axes, titles, scale bars or text): labels, legends and 20 µm scale bars are editable shapes
+Every panel is a bare image (no axes, titles, scale bars or text): labels, legends and 20 µm scale bars are editable shapes
 on the slides. The Fig. 1 phase, z-score and volume panels include their colour bar with printed tick values, as one image
 (panel PANEL_H_IN high + 0.03 in gap + CBAR_W_IN bar and labels), so the values always line up with the bar; each image has
 the aspect ratio of its placeholder on slide 1.
@@ -19,13 +19,8 @@ In PowerPoint, right-click the placeholder with the same file name > Change Pict
       objects.json   colour-bar limits, chosen images/windows, storage days, scale-bar lengths
 
 Selection rules (deterministic, annotation only):
-  Fig. 1: the 256 x 256 px window (32 px grid, all validation images) that shows the most of the four classes in BOTH the
-          annotation and the EdgeSAM (r=32) prediction (a class counts when it covers >= MIN_CLASS_PX pixels, about half
-          a cell, in both); ties go to the window whose least-represented class is largest (per class, the smaller of the
-          annotated and predicted pixel counts), then to the most annotated pixels. Discocytes cover ~84% of the
-          predicted cell pixels, so a window chosen by foreground alone shows one class only.
-  Fig. S-4: the validation image with the most annotated foreground pixels and, in it, the 256 x 256 px window with the
-            most foreground (32 px grid); the same window as the S-4 panel in the SI.
+  Fig. 1 and Fig. S-4: the validation image with the most annotated foreground pixels and, in it, the 256 x 256 px window
+                       with the most foreground (32 px grid); the same window as the S-4 panel in the SI.
   Fig. 6: per class, the image with the most pixels of that class and, in it, the 256 x 256 px window with the most pixels
           of that class (32 px grid); all predictions from training seed --seed.
   Fig. S-5: the first validation image (alphabetical) of storage days 0, 8, 19, 27 and 47; contours of EdgeSAM (r=32).
@@ -54,7 +49,6 @@ PX_UM = 0.1441
 CLASS_RGB = {1: (0, 114, 178), 2: (0, 158, 115), 3: (213, 94, 0), 4: (204, 121, 167)}   # same colours as Figs. 6, 7
 OUTSIDE_RGB = (189, 189, 189)
 ARCH_RGB = {"edge_sam": (42, 120, 214), "mobile_sam": (235, 104, 52)}   # #2a78d6, #eb6834 as in the manuscript figures
-MIN_CLASS_PX = 1000                                        # ~21 µm², about half a cell: a class "is shown" in a window
 CBAR_W_IN, CBAR_GAP_IN = 0.28, 0.03                       # Fig. 1 colour bar with labels, right of the panel (inches)
 PANEL_H_IN = {"p1_phase": 1.344, "p2_norm": 1.329, "p4_volume": 1.622}   # panel height on slide 1 (inches)
 SHOW = [("mobilenet_unet", 8, "mobilenet_unet_r8"), ("mobile_sam", 8, "mobilesam_r8"), ("edge_sam", 8, "edgesam_r8"),
@@ -87,23 +81,7 @@ def upscale(rgb, k):
     return np.kron(rgb, np.ones((k, k, 1))) if k > 1 else rgb
 
 
-FRAME_RGB = (40, 40, 40)
-
-
-def frame_px(rgb):
-    return max(3, round(rgb.shape[1] / 170))                # 6 px on a 1024 px panel, 9 px on a 1536 px panel
-
-
-def framed(rgb, width=None):
-    """Thin dark border on the panel edge (drawn inside the image, so the size is unchanged)."""
-    w = width or frame_px(rgb)
-    out = np.array(rgb, dtype=float, copy=True)
-    out[:w], out[-w:], out[:, :w], out[:, -w:] = FRAME_RGB, FRAME_RGB, FRAME_RGB, FRAME_RGB
-    return out
-
-
 def save(rgb, path: Path):
-    rgb = framed(rgb)
     path.parent.mkdir(parents=True, exist_ok=True)
     Image.fromarray(np.clip(rgb, 0, 255).astype(np.uint8)).save(path, dpi=(300, 300))
 
@@ -131,7 +109,7 @@ def _font(px):
     return ImageFont.truetype(path, px)
 
 
-def colorbar(cmap: str, lo, hi, ticks, w_in, h_in, dpi, pt=7.0, lw=None):
+def colorbar(cmap: str, lo, hi, ticks, w_in, h_in, dpi, pt=7.0):
     """Vertical colour bar image (top = hi) with tick marks and printed values, w_in x h_in inches at dpi.
     ticks: list of (value, text); a value outside [lo, hi] is clamped to the end. The top and bottom labels are aligned to
     the ends of the bar so that nothing is cut off; the font shrinks (down to 5 pt) if the widest label does not fit."""
@@ -141,8 +119,8 @@ def colorbar(cmap: str, lo, hi, ticks, w_in, h_in, dpi, pt=7.0, lw=None):
     g = np.linspace(1, 0, H)[:, None].repeat(bar_w, axis=1)
     im.paste(Image.fromarray((255 * colormaps[cmap](g)[..., :3]).astype(np.uint8)), (0, 0))
     d = ImageDraw.Draw(im)
-    lw = lw or max(2, round(dpi / 200))
-    d.rectangle((0, 0, bar_w - 1, H - 1), outline=FRAME_RGB, width=lw)
+    lw = max(2, round(dpi / 200))
+    d.rectangle((0, 0, bar_w - 1, H - 1), outline=(0, 0, 0), width=lw)
     room = W - bar_w - tick - gap
     while True:
         font = _font(round(pt * dpi / 72))
@@ -152,7 +130,7 @@ def colorbar(cmap: str, lo, hi, ticks, w_in, h_in, dpi, pt=7.0, lw=None):
     for val, text in ticks:
         f = float(np.clip((val - lo) / (hi - lo), 0, 1)) if hi > lo else 0.5
         yc = round((1 - f) * (H - 1))
-        d.line((bar_w, yc, bar_w + tick, yc), fill=FRAME_RGB, width=lw)
+        d.line((bar_w, yc, bar_w + tick, yc), fill=(0, 0, 0), width=lw)
         top, bottom = d.textbbox((0, 0), text, font=font)[1::2]
         th = bottom - top
         ty = min(max(yc - th / 2, 0), H - th) - top
@@ -164,9 +142,7 @@ def save_with_colorbar(rgb, path: Path, key, cmap, lo, hi, ticks):
     """Panel and its labelled colour bar as one image; printed size PANEL_H_IN[key] high (dpi set accordingly)."""
     h_in = PANEL_H_IN[key]
     dpi = rgb.shape[0] / h_in
-    w = frame_px(rgb)
-    rgb = framed(rgb, w)
-    bar = colorbar(cmap, lo, hi, ticks, CBAR_W_IN, h_in, dpi, lw=w)          # same line weight as the panel frame
+    bar = colorbar(cmap, lo, hi, ticks, CBAR_W_IN, h_in, dpi)
     gap = round(CBAR_GAP_IN * dpi)
     im = Image.new("RGB", (rgb.shape[1] + gap + bar.width, rgb.shape[0]), (255, 255, 255))
     im.paste(Image.fromarray(np.clip(rgb, 0, 255).astype(np.uint8)), (0, 0))
@@ -193,30 +169,11 @@ def background(phase, gt_fg, valid, excl=5):
 
 
 # ------------------------------------------------------------------------------------------------ figures
-def class_window(val, pred, size=256, stride=32):
-    """Window with the most classes shown in both annotation and prediction (see the module docstring)."""
-    best, out = None, None
-    for stem in sorted(val):
-        v = val[stem]
-        integ = []
-        for lab in (v["gt"], pred[stem]):
-            for c in (1, 2, 3, 4):
-                m = ((lab == c) & v["valid"]).astype(np.int64)
-                integ.append(np.pad(m.cumsum(0).cumsum(1), ((1, 0), (1, 0))))
-        for y in range(0, v["gt"].shape[0] - size + 1, stride):
-            for x in range(0, v["gt"].shape[1] - size + 1, stride):
-                n = [int(I[y + size, x + size] - I[y, x + size] - I[y + size, x] + I[y, x]) for I in integ]
-                both = [min(a, b) for a, b in zip(n[:4], n[4:])]
-                shown = [b for b in both if b >= MIN_CLASS_PX]
-                key = (len(shown), min(shown) if shown else 0, sum(n[:4]))
-                if best is None or key > best:
-                    best, out = key, (stem, y, x, n[:4], n[4:])
-    return out
-
-
 def fig1(val, pred_e32, meta):
-    stem, y, x, n_gt, n_pred = class_window(val, pred_e32)
+    stems = sorted(val)
+    stem = max(stems, key=lambda s: (int(((val[s]["gt"] > 0) & val[s]["valid"]).sum()), -stems.index(s)))
     v = val[stem]
+    y, x = best_window(v["gt"] > 0, v["valid"])
     sl = (slice(y, y + 256), slice(x, x + 256))
     ph = v["phase"]
     lo, hi = np.percentile(ph[sl], [1, 99.5])
@@ -238,8 +195,6 @@ def fig1(val, pred_e32, meta):
     save_with_colorbar(upscale(vol, k), OUT / "Fig1" / "p4_volume.png", "p4_volume", "viridis", vlo, vhi,
                        [(vhi, "high"), (vlo, "low")])
     meta["Fig1"] = {"image": stem, "storage_day": v["day"], "window_yx": [y, x], "window_px": 256,
-                    "class_pixels_annotation": dict(zip(C.CLASSES, n_gt)),
-                    "class_pixels_edgesam_r32": dict(zip(C.CLASSES, n_pred)),
                     "p1_phase_colorbar_rad": [round(float(lo), 2), round(float(hi), 2)],
                     "p2_norm_colorbar": [-3, 3], "p4_volume_colorbar_rad": [vlo, round(vhi, 2)],
                     "p4_volume_colorbar_labels": ["low", "high"], "object_size_in": {k: [round(h + CBAR_GAP_IN + CBAR_W_IN, 3), h] for k, h in PANEL_H_IN.items()},
