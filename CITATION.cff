@@ -1,0 +1,34 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the accompanying article."
+title: "Physics-Aware Lightweight Segmentation for Quantitative Holographic Cell Analysis with Optical Mass Preservation"
+authors:
+  - family-names: Ikram
+    given-names: Usama
+    affiliation: "Department of Artificial Intelligence, DGIST, Daegu 42988, South Korea"
+  - family-names: Kim
+    given-names: Youhyun
+    affiliation: "Department of Robotics & Mechatronics Engineering, DGIST, Daegu 42988, South Korea"
+  - family-names: Moon
+    given-names: Inkyu
+    affiliation: "Department of Artificial Intelligence, DGIST, Daegu 42988, South Korea"
+    email: inkyu.moon@dgist.ac.kr
+repository-code: "https://github.com/uikram/Physics-Aware-Lightweight-Segmentation-for-Quantitative-Holographic-Cell-Analysis-with-Optical-Mass-"
+keywords:
+  - quantitative phase imaging
+  - digital holographic microscopy
+  - physics-aware segmentation
+  - optical mass
+  - LoRA
+  - lightweight deep learning
+preferred-citation:
+  type: article
+  title: "Physics-Aware Lightweight Segmentation for Quantitative Holographic Cell Analysis with Optical Mass Preservation"
+  authors:
+    - family-names: Ikram
+      given-names: Usama
+    - family-names: Kim
+      given-names: Youhyun
+    - family-names: Moon
+      given-names: Inkyu
+  journal: "Applied Physics B"
+  notes: "Under review"

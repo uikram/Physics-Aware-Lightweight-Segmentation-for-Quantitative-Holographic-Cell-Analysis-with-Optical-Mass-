@@ -1,6 +1,6 @@
 # Editable figures (PowerPoint)
 
-`Figures_revised.pptx` (built from `Figures_original.pptx` by `artifacts/code/build_figures_pptx.py`):
+`Figures.pptx` (built by `artifacts/code/build_figures_pptx.py`):
 
 | Slide | Figure | Content |
 |---|---|---|
