@@ -8,7 +8,7 @@ Intelligent Imaging and Vision Systems Laboratory, DGIST
 
 <sup>1</sup> Department of Artificial Intelligence, DGIST, Daegu 42988, South Korea ·
 <sup>2</sup> Department of Robotics & Mechatronics Engineering, DGIST, Daegu 42988, South Korea
-\* Corresponding author: inkyu.moon@dgist.ac.kr
+\* Corresponding author
 
 Segmentation networks trained with overlap losses (Dice, cross-entropy) say nothing about the phase
 integrated inside the predicted boundary, which is exactly the quantity a quantitative phase imaging

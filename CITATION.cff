@@ -11,7 +11,6 @@ authors:
   - family-names: Moon
     given-names: Inkyu
     affiliation: "Intelligent Imaging and Vision Systems Laboratory, Department of Artificial Intelligence, DGIST, Daegu 42988, South Korea"
-    email: inkyu.moon@dgist.ac.kr
 repository-code: "https://github.com/uikram/Physics-Aware-Lightweight-Segmentation-for-Quantitative-Holographic-Cell-Analysis-with-Optical-Mass-"
 keywords:
   - quantitative phase imaging
