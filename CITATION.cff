@@ -4,13 +4,13 @@ title: "Physics-Aware Lightweight Segmentation for Quantitative Holographic Cell
 authors:
   - family-names: Ikram
     given-names: Usama
-    affiliation: "Department of Artificial Intelligence, DGIST, Daegu 42988, South Korea"
+    affiliation: "Intelligent Imaging and Vision Systems Laboratory, Department of Artificial Intelligence, DGIST, Daegu 42988, South Korea"
   - family-names: Kim
     given-names: Youhyun
-    affiliation: "Department of Robotics & Mechatronics Engineering, DGIST, Daegu 42988, South Korea"
+    affiliation: "Intelligent Imaging and Vision Systems Laboratory, Department of Robotics & Mechatronics Engineering, DGIST, Daegu 42988, South Korea"
   - family-names: Moon
     given-names: Inkyu
-    affiliation: "Department of Artificial Intelligence, DGIST, Daegu 42988, South Korea"
+    affiliation: "Intelligent Imaging and Vision Systems Laboratory, Department of Artificial Intelligence, DGIST, Daegu 42988, South Korea"
     email: inkyu.moon@dgist.ac.kr
 repository-code: "https://github.com/uikram/Physics-Aware-Lightweight-Segmentation-for-Quantitative-Holographic-Cell-Analysis-with-Optical-Mass-"
 keywords:
