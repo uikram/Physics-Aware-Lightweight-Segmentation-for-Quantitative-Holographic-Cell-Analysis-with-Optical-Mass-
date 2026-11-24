@@ -1,0 +1,168 @@
+# Final QPI segmentation pipeline: the single configuration. Every script reads this file; paths are relative to the
+# project folder.
+
+paths:
+  raw: data/raw                      # INPUTS, copied by the user, never modified
+  raw_dataset: data/raw/dataset      # 8-bit exports X_train / X_val (registration only) and annotation masks Y_train / Y_val
+  raw_phase_dirs: [data/raw/raw_data, data/raw/X_train_raw]   # 32-bit float phase maps in radians
+  prepared: data/prepared            # built once by scripts/utilities/prepare_data.py
+  weights: weights                   # edge_sam_3x.pth, mobile_sam.pt, mobilenet_v2-b0353104.pth
+  training_results: training_results # <Arch>/<condition>/<loss>/seed<seed>/
+  results: results                   # <Arch>/<condition>/<loss>/seed<seed>/ + results/consolidated/
+  manuscript: manuscript             # publication figures only
+  logs: logs                         # queue logs
+
+physics:                             # imaging constants (asserted by qpicell/physics.py)
+  wavelength_um: 0.666
+  refractive_increment_ml_per_g: 0.2
+  pixel_size_um: 0.1441              # object-plane pixel pitch of the 768 x 768 float maps
+
+data:
+  num_classes: 5
+  class_names: [background, discocyte, spherocyte, echinocyte, stomatocyte]   # index = mask value
+  ignore_index: 255                  # float-grid pixels the annotated export does not cover
+  native_size: 768
+  train_rotations: [0, 1, 2, 3]      # np.rot90(image, -k): lossless augmentation of the training images
+  eval_rotations: [0]
+  day0: "2011-05-11"
+  num_workers: 4
+
+split:                               # three disjoint sets (checked by qpicell.physics.split_stems and the tests)
+  train: "training split, base images with sha1(stem) % 5 != 0"      # 141 images x 4 rotations
+  validation: "training split, base images with sha1(stem) % 5 == 0" # 41 images: per-epoch validation and best.pt
+  test: "validation split (66 images)"                                # untouched until evaluation; never used in training
+  fold_modulus: 5
+  validation_fold: 0
+  expected: {train: 141, validation: 41, test: 66}
+
+registration:                        # 8-bit export -> float grid (ECC affine), for the MASKS only; quality gate
+  pyramid_factor: 4
+  min_ecc: 0.98
+  min_ecc_borderline: 0.90
+  min_pearson: 0.90
+  min_spearman: 0.95
+  min_rank_gain: 0.02
+  max_peak_shift_px: 1.0
+
+background:                          # annotation-free reference, applied ONCE per image in preparation
+  order: 2
+  k_sigma: 3.0
+  grow_px: 5
+  max_iter: 30
+
+cells:                               # reference cell = watershed split of the annotated foreground
+  watershed_h: 3
+  territory_radius_native_px: 9
+  cell_map_size: 256
+  area_range_um2: [15.0, 200.0]      # cells outside are not scored
+  wrapping:
+    ceiling_rad: 6.283185307179586
+    ceiling_tolerance_rad: 0.3
+    jump_rad: 3.141592653589793
+    dilation_px: 2
+
+models:                              # architectures of the submitted manuscript
+  edge_sam:
+    display: EdgeSAM
+    image_size: 256
+    batch_size: 16
+    learning_rate: 0.0005            # LoRA runs
+    lora_strategy: encoder_only
+    weights: edge_sam_3x.pth
+    min_free_gpu_mib: 8000
+  mobile_sam:
+    display: MobileSAM
+    image_size: 1024
+    batch_size: 8
+    learning_rate: 0.0005
+    lora_strategy: attention_blocks
+    weights: mobile_sam.pt
+    min_free_gpu_mib: 16000
+  mobilenet_unet:
+    display: MobileNet_UNet
+    image_size: 256
+    batch_size: 16
+    learning_rate: 0.001
+    lora_strategy: encoder_only
+    weights: mobilenet_v2-b0353104.pth
+    min_free_gpu_mib: 6000
+
+conditions:                          # adaptation conditions; full fine-tuning is a separate condition, not a rank
+  lora_ranks: [8, 16, 32, 64]        # alpha = rank (scaling 1); dropout 0
+  lora_dropout: 0.0
+  full_finetune:
+    enabled: true
+    learning_rate: 0.0001            # all three architectures (author, 5 Nov 2026)
+
+training:
+  epochs: 100
+  seeds: [42, 43, 44]                # queue order: seed 42 for every run, then 43, then 44
+  optimizer: adamw
+  schedule: cosine                   # T_max = epochs
+  mixed_precision: fp16              # forward pass only; every loss in float32
+  drop_last: true
+  deterministic: true
+
+loss:
+  class_weights: [0.5, 1.0, 1.5, 2.0, 2.0]   # Dice weight per mask value
+  pmc_margin_rad: 0.1
+  ipp_epsilon: 1.0e-4
+  lambda_pmc: 0.1
+  lambda_bga: 0.05
+  lambda_ipp: 0.1                    # global IPP (old Full)
+  lambda_cipp: 0.1                   # cell-level IPP
+  cipp:
+    beta: 1.0                        # per-cell overlap
+    gamma: 1.0                       # phase predicted far from every cell
+    eta: 0.0                         # separation term OFF in every cIPP arm (asserted)
+    kappa: 0.25
+    delta: 0.05
+
+arms:                                # the seven loss configurations
+  dice:              {pmc: false, bga: false, ipp: false, cipp: false}
+  dice_pmc:          {pmc: true,  bga: false, ipp: false, cipp: false}
+  dice_pmc_bga:      {pmc: true,  bga: true,  ipp: false, cipp: false}
+  dice_pmc_bga_ipp:  {pmc: true,  bga: true,  ipp: true,  cipp: false}   # Old Full
+  dice_cipp:         {pmc: false, bga: false, ipp: false, cipp: true}    # eta = 0
+  dice_pmc_cipp:     {pmc: true,  bga: false, ipp: false, cipp: true}    # eta = 0
+  dice_pmc_bga_cipp: {pmc: true,  bga: true,  ipp: false, cipp: true}    # New Full, eta = 0
+
+selection:                           # how the representative LoRA rank is chosen (Section 3.5)
+  source: validation                 # validation | test. Which split the RULE reads. 'validation' takes the
+                                     # rank from the 41 held-out validation images, so no test image takes part
+                                     # in choosing it; the test metrics are then only reported at that rank.
+                                     # 'test' applies the rule to the test metrics, as before.
+  validation_results: additional_analysis/results/w9_validation_selection/w9_validation_selection.json
+  rule: balanced                     # balanced | within5. 'balanced' weighs the criteria that actually vary
+  stability: graded                  # graded | binary | none. 'graded' keeps the ranks at which the FEWEST
+                                     # seeds lost a class, so the rule needs no exception when no rank keeps
+                                     # every class. 'binary' is the earlier behaviour (keep only ranks at which
+                                     # no seed lost a class, and score all ranks when none qualifies), kept so
+                                     # the previously reported selection can be reproduced.
+  weights:                           # balanced score = sum(weight x metric), each metric scaled to 0..1
+    a2_scored_within_5pct_of_all_cells_pct: 0.5   # cell-level phase preservation (divided by 100)
+    dice_macro: 0.5                               # segmentation accuracy (already 0..1)
+  tolerance: 0.0                     # score points a smaller rank may give up; 0 means no trade is made
+  tie: smaller_rank
+  # Computational cost is deliberately not a term: the adapters are merged after training, so the deployed
+  # network and its inference cost are identical at every rank. Cost enters only through the tie-break.
+
+evaluation:
+  split: test                        # the 66 images
+  checkpoints: [last, best]          # last = primary; best = max validation Dice on fold 0 (never on the test images)
+  instances_primary: A2              # watershed h = cells.watershed_h on the predicted foreground
+  instances_secondary: CC            # 4-connected components, diagnostic only
+  match_iou: 0.5
+  boundary_tolerance_px: 2
+  lost_class_dice: 0.05
+  within_pct: 5.0                    # share of cells with |cell IPE| <= 5 %
+
+storage:                             # storage-time analysis of the 66 test images (11 storage days x 6 images)
+  early_max_day: 8                   # early = storage day <= 8
+  late_min_day: 37                   # late  = storage day >= 37
+  date_bootstrap: 20000              # resamples of whole storage days
+  instances: A2                      # predicted cells for the trends (A2, as every cell-level result)
+
+queue:
+  gpus: [0, 1, 2, 3, 4, 5, 6]
+  status_every_s: 60

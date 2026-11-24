@@ -1,0 +1,5 @@
+﻿Table 1. Selected configurations under the proposed objective
+Architecture,LoRA rank,Cells within 5% (%),Matched-cell IPE (%),Global IPE (%),Mean Dice,"AJI, cells","AJI, connected regions",Boundary F1,Runs that lost a class
+EdgeSAM,8,74.5 ± 2.3,1.89 ± 0.13,1.81 ± 0.23,0.724 ± 0.014,0.773 ± 0.003,0.313 ± 0.019,0.701 ± 0.017,0 of 3
+MobileSAM,32,90.9 ± 1.4,1.06 ± 0.09,1.74 ± 0.18,0.809 ± 0.003,0.853 ± 0.006,0.315 ± 0.050,0.837 ± 0.012,0 of 3
+MobileNet-UNet,16,93.4 ± 2.3,0.92 ± 0.05,1.92 ± 0.15,0.472 ± 0.300,0.883 ± 0.011,0.662 ± 0.043,0.893 ± 0.019,2 of 3

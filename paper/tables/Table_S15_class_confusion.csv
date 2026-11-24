@@ -1,0 +1,17 @@
+﻿Table S15. Reference class against predicted class of the scored reference cells
+Reference class,Discocyte,Spherocyte,Echinocyte,Stomatocyte,Unmatched,Missed,Total
+EdgeSAM (r = 8),,,,,,,
+Discocyte,5220,3,35,35,454,7,5754
+Spherocyte,21,750,15,5,10,0,801
+Echinocyte,102,149,431,7,25,15,729
+Stomatocyte,110,8,10,240,34,3,405
+MobileSAM (r = 32),,,,,,,
+Discocyte,5463,0,43,50,198,0,5754
+Spherocyte,4,774,18,2,3,0,801
+Echinocyte,38,118,560,4,8,1,729
+Stomatocyte,86,10,3,297,9,0,405
+MobileNet-UNet (r = 16),,,,,,,
+Discocyte,5623,2,25,13,88,3,5754
+Spherocyte,529,261,10,1,0,0,801
+Echinocyte,330,45,340,2,6,6,729
+Stomatocyte,298,2,4,96,5,0,405

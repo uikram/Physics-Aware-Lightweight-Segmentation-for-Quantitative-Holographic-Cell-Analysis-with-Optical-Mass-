@@ -1,0 +1,8 @@
+﻿"Table S11. Annotated cell pixels predicted as background (%), by phase quartile"
+Architecture,Objective,All pixels,Lowest-phase quartile,Second quartile,Third quartile,Highest-phase quartile
+EdgeSAM (r = 8),Dice alone,14.31 ± 2.64,32.06 ± 2.04,7.04 ± 0.74,5.05 ± 0.74,13.10 ± 7.73
+,Proposed (Dice + cIPP),7.74 ± 0.49,24.86 ± 0.76,3.01 ± 0.48,1.62 ± 0.34,1.49 ± 0.44
+MobileSAM (r = 32),Dice alone,5.01 ± 0.34,19.05 ± 1.25,0.59 ± 0.16,0.17 ± 0.03,0.24 ± 0.10
+,Proposed (Dice + cIPP),5.20 ± 0.85,19.96 ± 3.06,0.56 ± 0.25,0.13 ± 0.07,0.13 ± 0.05
+MobileNet-UNet (r = 16),Dice alone,13.46 ± 5.91,25.55 ± 3.19,4.04 ± 2.16,3.15 ± 1.97,21.12 ± 16.87
+,Proposed (Dice + cIPP),4.71 ± 0.53,17.96 ± 0.78,0.39 ± 0.58,0.21 ± 0.35,0.27 ± 0.44

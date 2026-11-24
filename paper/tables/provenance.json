@@ -1,0 +1,264 @@
+{
+  "script": "additional_analysis/tables_for_manuscript.py",
+  "allow_stale": false,
+  "representative_from": "results/consolidated/selection/rank_selection.csv",
+  "representative": {
+    "edge_sam": "r8",
+    "mobile_sam": "r32",
+    "mobilenet_unet": "r16"
+  },
+  "files_read_sha256": {
+    "results/consolidated/runs_last.json": "143ab2d1fdae39719ea0756851def5b015fe177278aae7374ccd344f0f41447e",
+    "results/consolidated/selection/rank_selection.csv": "f39f0d4183452c4bda39cb6aefd85db5a9df89b05fd0580ada6079e36980f08a",
+    "additional_analysis/results/w2_per_architecture/w2_per_architecture_last.json": "50ac6cd7865c6f8d4543f4639ab9fb3be554b2f31bd6d7ac0731687689b77a1c",
+    "results/consolidated/benchmark/benchmark.csv": "a0c0872d142fd04a02d7455790528202f3bfe3abf6093ca077381a6893930715",
+    "results/consolidated/storage/runs_last.json": "a6a5c8196cf4feaa97a883f1f188f9fe8e8c1001986738134f836c6d5cc822e1",
+    "results/consolidated/storage/annotation.json": "9178502efa83c55d8eaf33ae109a8e0fa7870db7696542400bd2bf75f2664b8d",
+    "results/EdgeSAM/r8/dice_cipp/seed42/cells_last.json": "9f8573546bf32014c08380180f6a5128b1f5f678d8b437036d5c86b56f227f99",
+    "results/EdgeSAM/r8/dice_cipp/seed42/metrics_last.json": "170e4a486fc22e8a951fcef99f09d2c223ef63038f841f9fd8a4e59699efb77b",
+    "results/EdgeSAM/r8/dice_cipp/seed43/cells_last.json": "2435b5829310b16834e0060ba019ebd278b9d6dbb8dede3e045c950fec6f05e0",
+    "results/EdgeSAM/r8/dice_cipp/seed43/metrics_last.json": "5ab2911494111396a0a5ceae954bbefb5685fc01f16d7950f49a877ca1ceebb5",
+    "results/EdgeSAM/r8/dice_cipp/seed44/cells_last.json": "c525fba2975f0d75dfad61cc9496494e84210c176056562260d2cc2723993a07",
+    "results/EdgeSAM/r8/dice_cipp/seed44/metrics_last.json": "29ed48418ba8321e55dc72288cabe6f840b9a1f5402cb5b320df92ec8a637190",
+    "results/MobileSAM/r32/dice_cipp/seed42/cells_last.json": "41295b9635b0b5a83c67737e3f92a873d7f9d0c5bcb42025f4761c52c7ef7021",
+    "results/MobileSAM/r32/dice_cipp/seed42/metrics_last.json": "5ba19d0aa5faa4b411d6fcaa0e6ebe118bfa96313c929d6727e7047a9ea99d56",
+    "results/MobileSAM/r32/dice_cipp/seed43/cells_last.json": "fae4fe6e787fc70e7db8f4e5dc664bb4fdce46bc8987d174e634e87f46a27cc6",
+    "results/MobileSAM/r32/dice_cipp/seed43/metrics_last.json": "3de506849d0271f8047bfb60ef77abb71f2e20b9b976b4d4938d37ee476455ab",
+    "results/MobileSAM/r32/dice_cipp/seed44/cells_last.json": "75ee7a21affa4cc56b4d3ca11f8ed0d9653f3e7b3e14d079e30b99075dc6602b",
+    "results/MobileSAM/r32/dice_cipp/seed44/metrics_last.json": "73fc31aae191099eebb92ecccc69a50a699a8b7e0f55e5e4d5009247dad68632",
+    "results/MobileNet_UNet/r16/dice_cipp/seed42/cells_last.json": "36ab1ed1a51392282cdbbf5445c776dcc25a6033d96034bea3d4234fa199444d",
+    "results/MobileNet_UNet/r16/dice_cipp/seed42/metrics_last.json": "b63fd2ffc556097bcaaafa5ac7102f0e6f17e8741ba4253b94b771ce426b0c63",
+    "results/MobileNet_UNet/r16/dice_cipp/seed43/cells_last.json": "e64258078355692ee2ddf7a5814080506fd19790efe484f4b8a4f414349a34be",
+    "results/MobileNet_UNet/r16/dice_cipp/seed43/metrics_last.json": "41da53dd79750295f455c57edf19c4dbb892ef62ad642956a7bd7fc401a81f06",
+    "results/MobileNet_UNet/r16/dice_cipp/seed44/cells_last.json": "7cbfdf3edd60a03a396f910d3b5edb0fde40a11e47f32b8b67b6990dfeec6fa0",
+    "results/MobileNet_UNet/r16/dice_cipp/seed44/metrics_last.json": "23ffd1bef02b3c86c9eb933a3104508f4ef12f78dc92b38c11546f26795018e3",
+    "additional_analysis/results/w5_reference_cells/w5_reference_cells.json": "35b81957eb3d56dba778275dcb37c109d704c9355af09e0717df21d4b4627ae3",
+    "results/consolidated/phase_range/phase_range.json": "21f2003e91284521ee8fd65dc2db2fd8b4e54490241954a843cfbf4b7b10633d",
+    "data/prepared/manifest.csv": "0292ff7efcebe00587fc94ddeb51bd50ba7f08ba52d6aa0f4d939b71f45c5a97",
+    "results/consolidated/background_invariance/background_invariance.json": "df40918739efbeafedb063d8e7b96de398416be3e07971c9d0eb6f38a96a5739",
+    "results/consolidated/benchmark/benchmark_per_pass.csv": "7c7516f9a036e3c4eb001c8155080c4f49653c9393794d7a954ba6a1c46eb064",
+    "additional_analysis/results/w2_per_architecture/w2_per_architecture_best.json": "7cfeec19be0480cca3f0ccfbca703b9247cc4396a58d8e384c922c134609372f",
+    "results/consolidated/selection/arm_confirmation.csv": "f80dcbfafd674526ab616bfb53dde4d8c2409d5726d82337a822eb1781b15707",
+    "additional_analysis/results/w4_cell_vs_global_ipp/w4_cell_vs_global_ipp.json": "885e672d7daa03c801172aa7df290016f38ca6ef8751264da40ee849d0f64a4a",
+    "additional_analysis/results/w1_cell_paired/w1_cell_paired.json": "65fd4d52ee935c3402dc6297f73a8245ad8096e6b63900353b2f640fa8e42517",
+    "results/consolidated/phase_quartile_fnr/phase_quartile_fnr.json": "8fd852ae17c8ca91824951daac1aa58ec40c88376390a9ae88b1a54b72c55a32",
+    "additional_analysis/results/w7_followup/w7_followup.json": "1aefd62b18799c4d42f0e8790c5b9719aefad19123aded7396ef9eff54e4b4b3",
+    "additional_analysis/results/w7_followup/w7a_dry_mass_outliers.csv": "41bd4a3964ac2a73d18ae66e7b2fc82b954858afc60a7d95269f2976f628f46f",
+    "additional_analysis/results/w8_signed_errors/w8_signed_errors.json": "c202a89fc7656b08ccaae8347a1744c35468950d05f36c06fada8b31bcac8dbc"
+  },
+  "tables": {
+    "1": {
+      "sources": [
+        "results/consolidated/runs_last.json",
+        "results/consolidated/selection/rank_selection.csv"
+      ],
+      "fields": [
+        "a2_scored_within_5pct_of_all_cells_pct",
+        "a2_scored_cell_ipe_abs_median_pct",
+        "ipe_global (x100)",
+        "dice_macro",
+        "a2_aji_cells",
+        "aji_cc",
+        "bf1",
+        "n_lost_classes"
+      ]
+    },
+    "2": {
+      "sources": [
+        "additional_analysis/results/w2_per_architecture/w2_per_architecture_last.json"
+      ],
+      "fields": [
+        "results[arch].lora_ranks_pooled.comparisons[loss_a=dice_cipp].metrics[k].{mean_a, mean_b, median_difference_a_minus_b, pairs_a_better, n_pairs, wilcoxon_p_holm_within_architecture}"
+      ]
+    },
+    "3": {
+      "sources": [
+        "results/consolidated/runs_last.json",
+        "results/consolidated/selection/rank_selection.csv"
+      ],
+      "fields": [
+        "a2_{touching,isolated}_within_5pct_of_all_cells_pct",
+        "a2_{touching,isolated}_cell_ipe_abs_median_pct",
+        "a2_scored_{match,missed,merged,fragmented}_pct"
+      ]
+    },
+    "4": {
+      "sources": [
+        "results/consolidated/benchmark/benchmark.csv"
+      ],
+      "fields": [
+        "latency_p50_ms(_sd)",
+        "latency_p99_ms(_sd)",
+        "images_per_second(_sd)",
+        "memory_mib(_sd)",
+        "input_size"
+      ]
+    },
+    "5": {
+      "sources": [
+        "results/consolidated/runs_last.json",
+        "results/consolidated/storage/runs_last.json",
+        "results/consolidated/storage/annotation.json",
+        "results/<arch>/<rank>/dice_cipp/seed<s>/metrics_last.json (per-image r)"
+      ],
+      "fields": [
+        "a2_scored_drymass_{bias_pg,pearson_r,ccc}",
+        "metrics_last: instances.A2.dry_mass.per_image_median.pearson_r",
+        "storage: {area,dry_mass}.{early_to_late_change_pct, rho, p_block_permutation}",
+        "storage: dry_mass.bias_vs_annotation.rho"
+      ]
+    },
+    "S1": {
+      "sources": [
+        "additional_analysis/results/w5_reference_cells/w5_reference_cells.json",
+        "results/<arch>/<rank>/dice_cipp/seed42/cells_last.json (reference columns; W-5 checks they are identical in every run)"
+      ],
+      "fields": [
+        "crowding_per_day[].{reference_cells, scored_cells, touching_pct, fg_mean}",
+        "cells: median area_um2 of scored A2 reference cells per storage_day"
+      ]
+    },
+    "S2": {
+      "sources": [
+        "results/consolidated/phase_range/phase_range.json",
+        "data/prepared/manifest.csv"
+      ],
+      "fields": [
+        "per_split/overall: n_images, n_cells, image_phase_max.max, cell_phase_max.{median,p99,max}, images_with_a_flagged_pixel, cells_containing_a_flagged_pixel",
+        "wrapping.{ceiling_rad, ceiling_tolerance_rad}",
+        "manifest: raw_max"
+      ]
+    },
+    "S3": {
+      "sources": [
+        "results/consolidated/background_invariance/background_invariance.json"
+      ],
+      "fields": [
+        "results[].{term, amplitude_rad, map_change_max_rad, cell_integrated_phase_change_pct.{median_abs,p95_abs,max_abs}, cell_dry_mass_change_pg.max_abs}"
+      ]
+    },
+    "S4": {
+      "sources": [
+        "results/consolidated/benchmark/benchmark_per_pass.csv"
+      ],
+      "fields": [
+        "per pass (ordered by pass_seed): latency_p50_ms, latency_p99_ms, memory_mib",
+        "class_map_agreement_pct (smallest over passes), max_abs_logit_difference (largest over passes)"
+      ]
+    },
+    "S5": {
+      "sources": [
+        "results/consolidated/runs_last.json"
+      ],
+      "fields": [
+        "a2_scored_within_5pct_of_all_cells_pct (seed mean per condition; LoRA mean over the 12 LoRA runs)",
+        "a2_scored_cell_ipe_abs_median_pct, ipe_global, dice_macro, a2_scored_merged_pct (LoRA means)",
+        "n_lost_classes (runs counted)"
+      ]
+    },
+    "S6": {
+      "sources": [
+        "additional_analysis/results/w2_per_architecture/w2_per_architecture_last.json",
+        "additional_analysis/results/w2_per_architecture/w2_per_architecture_best.json",
+        "results/consolidated/selection/arm_confirmation.csv"
+      ],
+      "fields": [
+        "W-2: median_difference_a_minus_b (wilcoxon_p_holm_within_architecture)",
+        "arm_confirmation.csv (loss_a = dice_cipp): median_difference_a_minus_b (wilcoxon_p), pooled column"
+      ]
+    },
+    "S7": {
+      "sources": [
+        "additional_analysis/results/w4_cell_vs_global_ipp/w4_cell_vs_global_ipp.json"
+      ],
+      "fields": [
+        "metrics[k].{mean_new_full, mean_old_full, median_difference, ci95_median_difference, pairs_new_full_better, n_pairs, wilcoxon_p}"
+      ]
+    },
+    "S8": {
+      "sources": [
+        "additional_analysis/results/w1_cell_paired/w1_cell_paired.json"
+      ],
+      "fields": [
+        "results[].groups.all.levels.within5_pct_{A,B}",
+        "statistics.{d_within5_pp, d_median_abs_e_assigned_pp}.{estimate, ci95_hierarchical_bootstrap, p_day_label_swap, p_holm}"
+      ]
+    },
+    "S9": {
+      "sources": [
+        "results/consolidated/runs_last.json"
+      ],
+      "fields": [
+        "params_trainable, params_total",
+        "a2_scored_within_5pct_of_all_cells_pct",
+        "a2_scored_cell_ipe_abs_median_pct",
+        "ipe_global (x100)",
+        "dice_macro",
+        "a2_aji_cells",
+        "bf1",
+        "a2_scored_drymass_ccc",
+        "n_lost_classes"
+      ]
+    },
+    "S10": {
+      "sources": [
+        "results/consolidated/runs_last.json"
+      ],
+      "fields": [
+        "dice_<class>, iou_<class>, ipe_<class> (x100), n_images_with_<class>, lost_<class>"
+      ]
+    },
+    "S11": {
+      "sources": [
+        "results/consolidated/phase_quartile_fnr/phase_quartile_fnr.json"
+      ],
+      "fields": [
+        "runs[].{false_negative_rate_pct, fnr_bin1..4_pct}"
+      ]
+    },
+    "S12": {
+      "sources": [
+        "results/consolidated/storage/runs_last.json",
+        "results/consolidated/storage/annotation.json"
+      ],
+      "fields": [
+        "{area,dry_mass}.{rho, p_asymptotic, p_block_permutation, rho_ci95_date_bootstrap, rho_leave_one_day_out, early_to_late_change_pct, bias_vs_annotation.{rho,p_block_permutation}}"
+      ]
+    },
+    "S13": {
+      "sources": [
+        "results/<arch>/<rank>/dice_cipp/seed<s>/cells_last.json (rescored)"
+      ],
+      "fields": [
+        "cells (instances A2): scored; prediction = matched and not pred_wrapped",
+        "area_um2 / area_pred_um2, dm_gt_pg / dm_pred_pg, gt_class / pred_class; per-day medians; mean over seeds; matched fraction = mean matched cells / scored reference cells of the day"
+      ]
+    },
+    "S14": {
+      "sources": [
+        "additional_analysis/results/w7_followup/w7_followup.json",
+        "additional_analysis/results/w7_followup/w7a_dry_mass_outliers.csv"
+      ],
+      "fields": [
+        "A_dry_mass_outliers['<arch> <rank> seed<s>']: matched_scored_cells, outliers_above/below, share_merged/share_touching.outliers (weighted by outliers), outliers_by_day, limits_of_agreement_{all,without_outliers} (mean over seeds)",
+        "w7a csv: area ratio = mean over seeds of the median area_pred_um2 / area_um2 of the outliers"
+      ]
+    },
+    "S15": {
+      "sources": [
+        "additional_analysis/results/w7_followup/w7_followup.json"
+      ],
+      "fields": [
+        "B_class_confusion['<arch> <rank> seed<s>'][reference][predicted], summed over seeds"
+      ]
+    },
+    "S16": {
+      "sources": [
+        "additional_analysis/results/w8_signed_errors/w8_signed_errors.json"
+      ],
+      "fields": [
+        "mean_sd_over_seeds[].{n_matched_per_seed, signed_median_pct, abs_median_pct, within5_pct}"
+      ]
+    }
+  }
+}

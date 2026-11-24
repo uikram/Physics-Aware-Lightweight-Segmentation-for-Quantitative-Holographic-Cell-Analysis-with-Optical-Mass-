@@ -1,0 +1,17 @@
+﻿Table S10. Per-class accuracy at the selected configurations
+Class,Dice,IoU,Class-specific IPE (%),Test images with the class,Runs that lost the class
+EdgeSAM (r = 8),,,,,
+Discocyte,0.901 ± 0.004,0.820 ± 0.006,10.3 ± 2.1,66,0 of 3
+Spherocyte,0.783 ± 0.008,0.643 ± 0.011,27.5 ± 2.8,38,0 of 3
+Echinocyte,0.621 ± 0.019,0.451 ± 0.020,34.4 ± 2.0,53,0 of 3
+Stomatocyte,0.591 ± 0.030,0.420 ± 0.030,46.7 ± 4.5,58,0 of 3
+MobileSAM (r = 32),,,,,
+Discocyte,0.928 ± 0.002,0.866 ± 0.004,6.5 ± 0.1,66,0 of 3
+Spherocyte,0.842 ± 0.007,0.728 ± 0.010,28.8 ± 3.1,38,0 of 3
+Echinocyte,0.755 ± 0.010,0.606 ± 0.013,27.1 ± 4.6,53,0 of 3
+Stomatocyte,0.711 ± 0.024,0.553 ± 0.029,43.9 ± 6.4,58,0 of 3
+MobileNet-UNet (r = 16),,,,,
+Discocyte,0.889 ± 0.038,0.802 ± 0.063,80.9 ± 67.3,66,0 of 3
+Spherocyte,0.282 ± 0.488,0.244 ± 0.423,76.1 ± 41.3,38,2 of 3
+Echinocyte,0.487 ± 0.422,0.383 ± 0.332,52.0 ± 41.7,53,1 of 3
+Stomatocyte,0.231 ± 0.400,0.177 ± 0.306,80.3 ± 34.2,58,2 of 3
