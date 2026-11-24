@@ -1,0 +1,14 @@
+﻿Table S16. Signed and absolute integrated-phase errors of touching and isolated matched cells
+Architecture,Objective,Cells,Matched cells per seed,Signed median error (%),Absolute median error (%),Cells within 5% (%)
+EdgeSAM (r = 8),Dice alone,Touching,609–659,−2.23 ± 0.38,5.81 ± 0.31,34.2 ± 1.4
+,,Isolated,"1,388–1,656",−1.58 ± 0.43,2.33 ± 0.28,64.5 ± 7.7
+,Proposed (Dice + cIPP),Touching,674–676,−1.22 ± 0.32,3.58 ± 0.32,49.5 ± 2.7
+,,Isolated,"1,701–1,708",−0.75 ± 0.14,1.53 ± 0.09,86.9 ± 2.3
+MobileSAM (r = 32),Dice alone,Touching,744–769,+0.04 ± 0.22,1.62 ± 0.11,76.0 ± 2.1
+,,Isolated,"1,712–1,714",+0.05 ± 0.13,0.97 ± 0.06,95.9 ± 0.7
+,Proposed (Dice + cIPP),Touching,774–778,−0.24 ± 0.38,1.58 ± 0.13,79.1 ± 1.6
+,,Isolated,"1,714",−0.10 ± 0.23,0.91 ± 0.08,96.7 ± 1.3
+MobileNet-UNet (r = 16),Dice alone,Touching,708–783,−0.04 ± 0.52,1.63 ± 0.17,71.7 ± 2.4
+,,Isolated,"1,238–1,686",+0.17 ± 0.31,0.94 ± 0.03,77.2 ± 8.5
+,Proposed (Dice + cIPP),Touching,801–822,+0.03 ± 0.16,1.28 ± 0.23,85.7 ± 5.0
+,,Isolated,"1,709–1,714",+0.25 ± 0.06,0.80 ± 0.04,97.2 ± 1.0

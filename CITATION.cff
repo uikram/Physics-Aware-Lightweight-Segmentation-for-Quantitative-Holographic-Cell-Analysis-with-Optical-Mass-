@@ -4,21 +4,22 @@ title: "Physics-Aware Lightweight Segmentation for Quantitative Holographic Cell
 authors:
   - family-names: Ikram
     given-names: Usama
-    affiliation: "Intelligent Imaging and Vision Systems Laboratory, Department of Artificial Intelligence, DGIST, Daegu 42988, South Korea"
+    affiliation: "Department of Artificial Intelligence, DGIST, Daegu 42988, South Korea"
   - family-names: Kim
     given-names: Youhyun
-    affiliation: "Intelligent Imaging and Vision Systems Laboratory, Department of Robotics & Mechatronics Engineering, DGIST, Daegu 42988, South Korea"
+    affiliation: "Department of Robotics & Mechatronics Engineering, DGIST, Daegu 42988, South Korea"
   - family-names: Moon
     given-names: Inkyu
-    affiliation: "Intelligent Imaging and Vision Systems Laboratory, Department of Artificial Intelligence, DGIST, Daegu 42988, South Korea"
+    affiliation: "Department of Artificial Intelligence and Department of Robotics & Mechatronics Engineering, DGIST, Daegu 42988, South Korea"
+    email: inkyu.moon@dgist.ac.kr
 repository-code: "https://github.com/uikram/Physics-Aware-Lightweight-Segmentation-for-Quantitative-Holographic-Cell-Analysis-with-Optical-Mass-"
 keywords:
   - quantitative phase imaging
   - digital holographic microscopy
   - physics-aware segmentation
-  - optical mass
-  - LoRA
+  - optical mass preservation
   - lightweight deep learning
+  - LoRA
 preferred-citation:
   type: article
   title: "Physics-Aware Lightweight Segmentation for Quantitative Holographic Cell Analysis with Optical Mass Preservation"

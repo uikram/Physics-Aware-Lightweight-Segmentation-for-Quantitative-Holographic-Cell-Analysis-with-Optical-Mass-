@@ -1,0 +1,8 @@
+﻿Table S3. Invariance of the background correction to added low-order terms
+Added term (0.5 rad),Largest change of the corrected map (rad),"Cell integrated phase, median |change| (%)","Cell integrated phase, 95th percentile |change| (%)","Cell integrated phase, largest |change| (%)","Cell dry mass, largest |change| (pg)"
+Constant offset,2.20 × 10⁻³,0.0001,0.009,0.074,0.021
+Tilt along x,3.60 × 10⁻³,0.0012,0.018,0.245,0.049
+Tilt along y,3.08 × 10⁻³,0.0006,0.013,0.364,0.049
+Curvature along x,3.37 × 10⁻³,0.0005,0.012,0.142,0.062
+Curvature along y,3.82 × 10⁻³,0.0003,0.015,0.176,0.062
+"Saddle, x times y",3.84 × 10⁻³,0.0004,0.014,0.177,0.062

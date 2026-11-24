@@ -1,0 +1,8 @@
+﻿"Table 4. Forward-pass latency, throughput and device memory of the deployed networks"
+Model,Runtime,Median latency (ms),99th-percentile latency (ms),Throughput (images/s),Memory (MiB)
+EdgeSAM (256 × 256 px),PyTorch,9.40 ± 0.25,11.18 ± 1.45,106.4 ± 2.8,43 ± 1
+,ONNX Runtime,3.38 ± 0.05,3.68 ± 0.06,296.2 ± 4.6,119 ± 17
+MobileNet-UNet (256 × 256 px),PyTorch,4.56 ± 0.13,6.51 ± 0.54,219.2 ± 6.4,74 ± 0
+,ONNX Runtime,2.31 ± 0.02,2.48 ± 0.02,432.3 ± 4.4,147 ± 5
+MobileSAM (1024 × 1024 px),PyTorch,20.05 ± 0.21,20.13 ± 0.24,49.9 ± 0.5,358 ± 0
+,ONNX Runtime,25.07 ± 0.21,25.29 ± 0.11,39.9 ± 0.3,"1,162 ± 31"

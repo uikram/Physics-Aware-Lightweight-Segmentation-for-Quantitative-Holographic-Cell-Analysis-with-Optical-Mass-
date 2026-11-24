@@ -1,0 +1,5 @@
+﻿Table S2. Phase range and possible phase wrapping
+Set,Reference cells,Image maximum (rad),"Cell maximum, median (rad)","Cell maximum, 99th percentile (rad)","Cell maximum, largest (rad)",Maps within 0.3 rad of 2π,Images with flagged pixels,Reference cells with flagged pixels
+Training split (182 images),"3,397",5.97,1.96,4.75,5.97,35 of 182,43,54
+Test set (66 images),"3,084",5.95,2.12,4.80,5.22,65 of 66,65,78
+All (248 images),"6,481",5.97,2.04,4.79,5.97,100 of 248,108,132

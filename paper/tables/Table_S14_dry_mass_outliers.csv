@@ -1,0 +1,5 @@
+﻿Table S14. Matched cells whose predicted dry mass differs from the reference by more than 10 pg
+Configuration,Matched cells,> +10 pg,< −10 pg,Share > 10 pg (%),Merged (%),Touching (%),Area ratio,Day 15 (%),"Limits of agreement, all (pg)","Limits of agreement, without > 10 pg (pg)"
+EdgeSAM (r = 8),"7,141",111,18,1.8 (1.5–2.3),77,91,1.61,45,−6.3 to +6.1,−3.2 to +2.4
+MobileSAM (r = 32),"7,470",65,0,0.9 (0.8–0.9),95,95,1.69,62,−4.6 to +5.0,−1.5 to +1.4
+MobileNet-UNet (r = 16),"7,581",68,11,1.0 (0.9–1.3),66,94,1.57,70,−4.2 to +4.7,−1.5 to +1.6
